@@ -1,0 +1,161 @@
+# heavy data & generated artifacts
+nodiq-x/public/dataset/*
+!nodiq-x/public/dataset/micrograph_*.png
+apps/web/public/dataset/*
+!apps/web/public/dataset/micrograph_*.png
+nodiq-x/node_modules/
+apps/web/node_modules/
+node_modules/
+nodiq-x/dist/
+apps/web/dist/
+
+# login-loop video ships with the app (only the 480p loop, ~1.4MB; the
+# 12MB source master stays local and is referenced nowhere in src/)
+nodiq-x/public/videos/*.mp4
+!nodiq-x/public/videos/nodiq-login-loop-480p-backup.mp4
+apps/web/public/videos/*.mp4
+!apps/web/public/videos/nodiq-login-loop-480p-backup.mp4
+
+# SQLite persistence, local backups, logs, archive, and e2e state
+server_data/
+backups/
+!backups/.gitkeep
+archive/
+!archive/.gitkeep
+logs/
+!logs/.gitkeep
+outputs/
+!outputs/.gitkeep
+models/
+!models/.gitkeep
+docker-models/
+tools/.e2e_state.json
+scripts/tools/.e2e_state.json
+scripts/tools/.dsn_fixed
+
+# validated-run outputs: only the summary CSV ships (baked into the Docker
+# image for the dataset-browser accuracy lookups); logs/reports stay local
+nodularity_1000_fixed/*
+!nodularity_1000_fixed/summary_1000_fixed.csv
+data/raw/nodularity_1000_fixed/*
+!data/raw/nodularity_1000_fixed/summary_1000_fixed.csv
+nodularity_report_*/
+
+# legacy experiment archive (4.1GB) — kept on local disk only; the Docker
+# image needs just nodularity.py + nodularity_adaptive.py from this folder
+Nodularity-main/archive/
+Nodularity-main/*
+!Nodularity-main/nodularity.py
+!Nodularity-main/nodularity_adaptive.py
+!Nodularity-main/input_images/
+!Nodularity-main/evaluation/
+third_party/Nodularity/archive/
+third_party/Nodularity/*
+!third_party/Nodularity/nodularity.py
+!third_party/Nodularity/nodularity_adaptive.py
+!third_party/Nodularity/input_images/
+!third_party/Nodularity/evaluation/
+
+# Python caches and bytecode
+__pycache__/
+*.pyc
+*.egg-info/
+src/*.egg-info/
+.pytest_cache/
+scratch/
+
+# Runtime and agent logs
+*.log
+.freebuff/preview*.log*
+.freebuff/server*.log*
+.freebuff/launch.pid.txt
+/.freebuff/
+
+# Secrets and credentials — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Local model weights and large ML artifacts
+*.pth
+*.pt
+*.onnx
+*.safetensors
+
+# Phase 9 merge-experiment scratch (large caches; regenerate via the tool)
+reports/merge_experiment/_prod_cache/
+reports/merge_experiment/overlays/
+outputs/merge_experiment/_prod_cache/
+outputs/merge_experiment/overlays/
+tools/.dsn_fixed
+
+# Virtual environments
+.venv/
+.venv*/
+venv/
+
+# Local agent/tool and editor state
+.agent/
+.agents/
+.gemini/
+.gsd/
+.vscode/
+.idea/
+.shannon/
+shannon/
+
+# Local datasets and uploaded microscopy images
+data/raw/
+!data/raw/.gitkeep
+!data/raw/nodularity_1000_fixed/summary_1000_fixed.csv
+!data/samples/
+!data/samples/**
+!data/processed/**
+!**/.gitkeep
+img_gray_iron/
+img_gray_iron - Copy/
+* - Copy/
+EG_Pore_Segmentation-main/data/
+third_party/EG_Pore_Segmentation/data/
+
+# External cloned projects and local environments
+ASTM-Grain-Size-Estimator-main/
+EG_Pore_Segmentation-main/
+S-metallograph-segmentation-main/
+grain-size-analysis-tools-main/
+carde-main/
+third_party/ASTM-Grain-Size-Estimator/
+third_party/EG_Pore_Segmentation/
+third_party/S-metallograph-segmentation/
+third_party/grain-size-analysis-tools/
+third_party/carde/
+
+# Needed by the Dockerfile (COPY lines) so a fresh clone can build
+!ASTM-Grain-Size-Estimator-main/
+!grain-size-analysis-tools-main/
+!third_party/ASTM-Grain-Size-Estimator/
+!third_party/grain-size-analysis-tools/
+!third_party/carde/
+third_party/carde/docs/notebooks/
+
+# Third-party README images and slides (not used at runtime)
+grain-size-analysis-tools-main/readme_resources/
+third_party/grain-size-analysis-tools/readme_resources/
+
+# Local scanned documents and generated workspace artifacts
+/Scanned_20261018-2035.pdf
+docs/reports/Scanned_20261018-2035.pdf
+/gemini_generated_video_dbd66bea.mp4
+
+# Security assessment and penetration testing reports
+Security-Assessment-Report.*
+*.sarif
+shannon-report-*/
+shannon-run-*/

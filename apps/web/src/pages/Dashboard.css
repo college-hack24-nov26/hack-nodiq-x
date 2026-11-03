@@ -1,0 +1,1073 @@
+/*.dashboard {
+  width: 100%;
+  max-width: 1180px;
+  padding: 32px 36px 48px;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+}
+
+
+.dashboard-greeting {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 26px;
+  margin: 0 0 6px;
+  letter-spacing: -0.01em;
+}
+
+.dashboard-subtext {
+  margin: 0 0 28px;
+  color: var(--text-secondary);
+  font-size: 13.5px;
+}
+
+
+.stat-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 28px;
+}
+
+.stat-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 16px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stat-label {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.stat-value {
+  font-family: var(--font-mono);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.stat-value-danger {
+  color: var(--status-danger);
+}
+
+.stat-suffix {
+  font-size: 15px;
+  color: var(--text-muted);
+  margin-left: 2px;
+}
+
+
+.stat-baseline {
+  height: 3px;
+  border-radius: 2px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--accent-copper) 0px,
+    var(--accent-copper) 3px,
+    transparent 3px,
+    transparent 7px
+  );
+  opacity: 0.55;
+  margin-top: 2px;
+}
+
+
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px 22px;
+  margin-bottom: 20px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.panel-title {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 14px;
+  color: var(--text-primary);
+}
+
+.panel-header .panel-title {
+  margin-bottom: 0;
+}
+
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-copper);
+  color: #1A1006;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.1s ease;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.btn-primary:active {
+  transform: translateY(1px);
+}
+
+
+.inspection-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.inspection-table thead th {
+  text-align: left;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 500;
+  padding: 0 10px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.inspection-table tbody td {
+  padding: 11px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.inspection-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.cell-sample {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.cell-mono {
+  font-family: var(--font-mono);
+}
+
+.cell-confidence {
+  color: var(--accent-cyan);
+}
+
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.chart-panel {
+  margin-bottom: 0;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 140px;
+  padding-top: 8px;
+}
+
+.bar-chart-col {
+  flex: 1;
+  min-width: 6px;
+  background: linear-gradient(180deg, var(--accent-copper) 0%, var(--accent-copper-soft) 100%);
+  border-radius: 3px 3px 0 0;
+}
+
+.trend-chart {
+  width: 100%;
+  height: 140px;
+  overflow: visible;
+}
+
+.trend-chart-line {
+  stroke: var(--accent-cyan);
+  stroke-width: 1.6;
+  vector-effect: non-scaling-stroke;
+}
+
+.trend-chart-fill {
+  fill: var(--accent-cyan-soft);
+  stroke: none;
+}
+
+.trend-chart-dot {
+  fill: var(--bg-panel);
+  stroke: var(--accent-cyan);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+}
+
+
+@media (max-width: 900px) {
+  .stat-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .dashboard {
+    padding: 22px 16px 36px;
+  }
+  .stat-strip {
+    grid-template-columns: 1fr;
+  }
+}*/
+
+.dashboard-page {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.dashboard-header {
+  min-height: 90px;
+  padding: 24px 32px;
+  border-bottom: 1px solid var(--border);
+  background: var(--color-bg);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+.dashboard-header p {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.new-analysis-btn {
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-text);
+
+  padding: 10px 24px;
+
+  border-radius: 6px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  /* Long header copy squeezes this button (Anomalies) — keep it one line */
+  flex-shrink: 0;
+  white-space: nowrap;
+
+  font-family: inherit;
+  font-size: 14px;
+
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.new-analysis-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.dashboard-content {
+  /* padding-top: 40px;
+  padding-left: 150px;
+  padding-right: 150px;
+  padding-bottom: 40px; */
+  padding: 40px;
+}
+
+/* =========================
+   Metrics
+========================= */
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric-label {
+  color: var(--color-text-secondary);
+
+  /* Sentence case at the 12px label step (audit issues 1/3): the 18px
+     uppercase mono labels out-shouted the 32px values below them */
+  font-size: var(--fs-label);
+  line-height: 16px;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.metric-value {
+  color: var(--color-text);
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.metric-value-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.metric-success {
+  color: var(--color-success);
+
+  display: flex;
+  align-items: center;
+
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+}
+
+.metric-success .material-symbols-outlined {
+  font-size: 14px;
+}
+
+.anomaly-metric {
+  border-left: 2px solid var(--color-error);
+}
+
+.metric-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.anomaly-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-error);
+
+  animation: pulse 1.5s infinite;
+}
+
+.needs-review {
+  color: var(--color-text-secondary);
+
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+}
+
+/* =========================
+   Panels
+========================= */
+
+.dashboard-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.panel-header {
+  min-height: 56px;
+
+  padding: 16px;
+
+  border-bottom: 1px solid var(--border);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-header h2 {
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  color: var(--color-text);
+
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 500;
+}
+
+/* =========================
+   Chart
+========================= */
+
+/*.chart-panel {
+  height: 450px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+.chart-range {
+  display: flex;
+  gap: 8px;
+}
+
+.range-btn {
+  padding: 4px 8px;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+
+  font-family: var(--font-ui);
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.range-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+.range-btn.active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.chart-container {
+  height: calc(100% - 57px);
+  position: relative;
+  padding: 20px 24px 24px 42px;
+  box-sizing: border-box;
+}
+
+.nodularity-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.chart-labels {
+  position: absolute;
+
+  top: 20px;
+  bottom: 24px;
+  left: 42px;
+
+  padding-bottom: 28px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  color: var(--color-text-secondary);
+
+  font-family: var(--font-mono);
+  font-size: 12px;
+
+  pointer-events: none;
+}*/
+
+
+
+
+/* =========================
+   Lower Grid
+========================= */
+
+.dashboard-lower-grid {
+  display: grid;
+
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
+
+  gap: 16px;
+}
+
+/* =========================
+   Recent Analyses
+========================= */
+
+.recent-analyses {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.view-all-btn {
+  border: none;
+  background: transparent;
+
+  color: var(--color-primary);
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.view-all-btn:hover {
+  color: var(--color-primary-hover);
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  white-space: nowrap;
+
+  font-family: var(--font-ui);
+  font-size: 12px;
+}
+
+/* Technical data cells stay on the instrument tier (content-type rule):
+   IDs, filenames/timestamps and measured values render in Plex Mono, while
+   status/empty-state text follows the UI tier. */
+td.sample-id,
+td.secondary-text,
+td.num {
+  font-family: var(--font-mono);
+}
+
+td[colspan].secondary-text {
+  font-family: var(--font-ui);
+}
+
+thead {
+  background: var(--border);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+th,
+td {
+  padding: 10px 16px;
+  text-align: left;
+}
+
+/* Numeric columns anchor on the right so magnitudes compare at a glance
+   (audit issue 9) */
+th.num {
+  text-align: right;
+}
+
+td.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+th {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  padding: 0;
+  border: 0;
+}
+
+/* Sortable headers (audit issue 11): the whole header cell is a button —
+   chevron shows affordance + live direction; aria-sort carries it to AT */
+th .th-sort {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  padding: 10px 8px;
+
+  border: 0;
+  background: transparent;
+
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+
+  cursor: pointer;
+}
+
+th.num .th-sort {
+  justify-content: flex-end;
+}
+
+th .th-sort .sort-glyph {
+  font-size: 14px;
+
+  opacity: 0.35;
+
+  transition: opacity 0.15s ease;
+}
+
+th .th-sort:hover .sort-glyph,
+th .th-sort:focus-visible .sort-glyph {
+  opacity: 0.7;
+}
+
+th .th-sort .sort-glyph.on {
+  opacity: 1;
+  color: var(--color-primary);
+}
+
+th .th-sort:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: -2px;
+}
+
+tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+  background: var(--color-border-strong);
+}
+
+.review-row {
+  background: var(--color-elevated);
+}
+
+.sample-id {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.secondary-text {
+  color: var(--color-text-secondary);
+}
+
+.error-text {
+  color: var(--color-error);
+}
+
+.warning-text {
+  color: var(--color-primary-hover);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.status-dot.success {
+  background: var(--color-success);
+}
+
+.status-dot.error {
+  background: var(--color-error);
+}
+
+.processing-icon {
+  font-size: 14px;
+  color: var(--color-primary);
+
+  animation: spin 1.5s linear infinite;
+}
+
+/* =========================
+   Recent Activity
+========================= */
+
+.recent-activity {
+  min-height: 300px;
+}
+
+.activity-list {
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  position: relative;
+}
+
+.activity-list::before {
+  content: "";
+
+  position: absolute;
+
+  left: 27px;
+  top: 16px;
+  bottom: 16px;
+
+  width: 1px;
+
+  background: var(--border);
+}
+
+.activity-item {
+  display: flex;
+  gap: 8px;
+
+  position: relative;
+  z-index: 1;
+}
+
+.activity-item p {
+  margin: 0 0 2px;
+
+  color: var(--color-text);
+
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.activity-icon {
+  width: 24px;
+  height: 24px;
+
+  flex-shrink: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 50%;
+
+  background: var(--color-bg);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.activity-icon.orange {
+  border-color: var(--color-primary);
+}
+
+.activity-icon.orange span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  /* the material-symbols ligature renders at 24px and overflows the 8px
+     status dot (icon painted over the row text) — hide the glyph, keep
+     the dot */
+  font-size: 0;
+  line-height: 0;
+}
+
+.activity-icon.red {
+  border-color: var(--color-error);
+}
+
+.activity-icon.red .material-symbols-outlined {
+  color: var(--color-error);
+  font-size: 14px;
+}
+
+/* =========================
+   Quick Actions
+========================= */
+
+.quick-actions {
+  padding: 0 16px 16px;
+}
+
+.quick-actions .panel-header {
+  margin: 0 -16px 16px;
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+/* One shared action-button recipe (audit issue 2): same height, radius,
+   border and type for the group — variants differ only in emphasis. */
+.quick-actions-grid button {
+  height: 56px;
+
+  border: 1px solid var(--color-border-strong);
+  border-radius: 6px;
+
+  background: transparent;
+  color: var(--color-text-secondary);
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+/* Icons match the label size so the containers feel filled, not hollow
+   (audit issue 16) */
+.quick-actions-grid button .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.quick-actions-grid button:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-secondary);
+  background: var(--hover-veil);
+}
+
+/* The group's primary action gets the solid brand fill (audit issue 15):
+   it already carries the largest label, now it also reads as THE action */
+.quick-actions-grid .full-action {
+  grid-column: span 2;
+
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-text);
+}
+
+.quick-actions-grid .full-action:hover {
+  background: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: var(--color-text);
+}
+
+/* =========================
+   Active Anomalies
+========================= */
+
+.active-anomalies {
+  border-top: 4px solid var(--color-error);
+}
+
+.anomaly-count {
+  padding: 2px 8px;
+
+  border-radius: 6px;
+
+  background: var(--color-error);
+  color: var(--color-bg);
+
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+}
+
+.anomaly-list {
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+
+  /* Each report is its own item, not one dense block (audit issue 7) */
+  gap: 12px;
+}
+
+.anomaly-card {
+  padding: 12px 14px;
+
+  border: 1px solid var(--border);
+  border-radius: 6px;
+
+  background: var(--color-elevated);
+
+  display: flex;
+  flex-direction: column;
+
+  /* Internal breathing room between ID / description / filename
+     (audit issue 6) */
+  gap: 8px;
+
+  cursor: pointer;
+
+  transition: border-color 0.2s ease;
+}
+
+.anomaly-card:hover {
+  border-color: var(--color-border-strong);
+}
+
+.anomaly-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.anomaly-card p {
+  margin: 0;
+
+  color: var(--color-text);
+
+  font-size: 13px;
+
+  /* Relaxed leading + measured line length make the technical copy scannable
+     (audit issue 5) */
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.anomaly-card p strong {
+  color: var(--color-primary-hover);
+  font-weight: 600;
+}
+
+.anomaly-card .secondary-text {
+  font-size: var(--fs-label);
+}
+
+.severity {
+  padding: 1px 4px;
+
+  border: 1px solid;
+  border-radius: 6px;
+
+  background: var(--color-bg);
+
+  font-family: var(--font-ui);
+  font-size: var(--fs-micro);
+}
+
+.severity.high {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.severity.medium {
+  color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+}
+
+/* =========================
+   Animations
+========================= */
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 1200px) {
+  .metrics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .dashboard-lower-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 20px 16px;
+
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 16px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .new-analysis-btn {
+    width: 100%;
+  }
+
+  .dashboard-content {
+    padding: 16px;
+  }
+
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .metric-value {
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 500px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-header h1 {
+    font-size: 24px;
+    line-height: 32px;
+  }
+}

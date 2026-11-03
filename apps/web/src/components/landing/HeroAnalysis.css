@@ -1,0 +1,212 @@
+/* ============================================================
+   HeroAnalysis — Cinematic Metallography Video Feed
+   Seamlessly integrates high-definition industrial microstructure
+   video with high-precision optical HUD overlay.
+   ============================================================ */
+
+.ha__video-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #080b0d;
+  cursor: pointer;
+  user-select: none;
+}
+
+.ha__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 0.94;
+  transition: opacity 0.4s ease, transform 0.3s ease;
+}
+
+.ha__video--ready {
+  opacity: 1;
+}
+
+.ha__video-stage:hover .ha__video {
+  transform: scale(1.015);
+}
+
+/* Subtle optical scanlines texture over video */
+.ha__scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0) 50%,
+    rgba(0, 0, 0, 0.25) 50%,
+    rgba(0, 0, 0, 0.25)
+  );
+  background-size: 100% 4px;
+  opacity: 0.45;
+  mix-blend-mode: overlay;
+  z-index: 2;
+}
+
+/* Vignette to smoothly feather video edges into the hardware bezel */
+.ha__vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(10, 14, 16, 0.75) 100%);
+  z-index: 3;
+}
+
+/* HUD Overlay */
+.ha__hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* Scale Calibration Bar */
+.ha__hud-scalebar {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+}
+
+.ha__scale-rule {
+  position: relative;
+  width: 72px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.ha__scale-bar {
+  width: 100%;
+  height: 1.5px;
+  background: var(--orange, #ff7a18);
+  box-shadow: 0 0 8px rgba(255, 122, 24, 0.6);
+}
+
+.ha__scale-tick {
+  position: absolute;
+  width: 1.5px;
+  height: 8px;
+  background: var(--orange, #ff7a18);
+  box-shadow: 0 0 6px rgba(255, 122, 24, 0.6);
+}
+
+.ha__scale-tick.left { left: 0; }
+.ha__scale-tick.right { right: 0; }
+
+.ha__scale-text {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #ff9d43;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Reticle corner brackets */
+.ha__reticle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid rgba(255, 122, 24, 0.45);
+  pointer-events: none;
+}
+
+.ha__reticle--tl {
+  top: 12px;
+  left: 12px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.ha__reticle--tr {
+  top: 12px;
+  right: 12px;
+  border-left: none;
+  border-bottom: none;
+}
+
+.ha__reticle--bl {
+  bottom: 12px;
+  left: 12px;
+  border-right: none;
+  border-top: none;
+}
+
+.ha__reticle--br {
+  bottom: 12px;
+  right: 12px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Subtle center crosshair */
+.ha__crosshair {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.ha__crosshair-x {
+  position: absolute;
+  top: 9px;
+  left: 0;
+  width: 20px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.ha__crosshair-y {
+  position: absolute;
+  top: 0;
+  left: 9px;
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+
+
+/* Feedback on click toggle */
+.ha__play-status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.85);
+  padding: 8px 16px;
+  border-radius: 20px;
+  background: rgba(15, 20, 24, 0.9);
+  border: 1px solid rgba(255, 122, 24, 0.45);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.ha__play-status--visible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}

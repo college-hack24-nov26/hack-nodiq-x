@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODIQ-X — Phase 2 + 3 Camera-Only Report</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0d1117; color: #e6edf3; font: 15px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 28px 80px; }
+  h1 { font-size: 26px; margin: 0 0 4px; color: #fff; }
+  h2 { font-size: 19px; margin: 40px 0 10px; color: #7ee787; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+  h3 { font-size: 16px; margin: 22px 0 8px; color: #79c0ff; }
+  .sub { color: #8b949e; margin-bottom: 8px; }
+  .banner { background: #12261e; border: 1px solid #2ea043; border-radius: 10px; padding: 14px 18px; margin: 18px 0 26px; font-weight: 600; letter-spacing: .4px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid #21262d; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #161b22; color: #c9d1d9; }
+  tr:nth-child(even) td { background: #10151c; }
+  .pass { color: #7ee787; font-weight: 700; white-space: nowrap; }
+  code { background: #161b22; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-size: 13px; color: #79c0ff; }
+  .note { background: #1c1a12; border: 1px solid #d29922; border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
+  .ok { background: #12261e; border: 1px solid #2ea043; border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
+  ul { margin: 8px 0; }
+  li { margin: 4px 0; }
+  .muted { color: #8b949e; font-size: 13px; }
+  .kpis { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .kpi { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 10px 16px; min-width: 130px; }
+  .kpi b { display: block; font-size: 20px; color: #7ee787; }
+  .kpi span { color: #8b949e; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NODIQ-X — REVISED PHASE 2 + PHASE 3 REPORT</h1>
+  <div class="sub">Camera-Only Validation at Home · microscope validation DEFERRED by user decision</div>
+  <div class="sub">2026-10-01 · branch <code>supabase-migration</code> · mvBlueFOX-ML/IGC205C · S/N 29605128 · agent 127.0.0.1:8765</div>
+
+  <div class="banner">PHASE 2 + PHASE 3 CAMERA-ONLY COMPLETE — STOP</div>
+
+  <div class="kpis">
+    <div class="kpi"><b>293 / 293</b><span>engine tests (Part A)</span></div>
+    <div class="kpi"><b>56 / 56</b><span>pinning tests re-run today</span></div>
+    <div class="kpi"><b>20 / 20</b><span>camera-only test matrix PASS</span></div>
+    <div class="kpi"><b>0</b><span>lint errors · build OK</span></div>
+  </div>
+
+  <h2>A · Scope</h2>
+  <p>Validate the camera integration as an <b>extra image input source</b> — camera-only, at home,
+  <b>without</b> the physical microscope. All microscope-specific validation (illumination, focus,
+  positioning, real specimens) is <b>explicitly deferred</b>.</p>
+  <p class="ok">Invariant held: <code>captureImage() → Blob → File → runOnFile() → startAnalysis() → POST /api/analyze → existing engine</code>. No second pipeline; engine untouched.</p>
+
+  <h2>B · Architecture (verified, unchanged)</h2>
+  <ul>
+    <li>Agent <code>agent_server.py</code>: stdlib HTTP on 127.0.0.1:8765 — <code>/status</code>, <code>/preview</code> (JPEG ≤1024px), <code>/capture</code> (PNG).</li>
+    <li>Phase 3 device-session cache: device stays open 15 s (<code>NODIQ_CAMERA_IDLE_CLOSE_S</code>), idle-close timer releases it for other apps.</li>
+    <li>SDK: mvIMPACT Acquire 3.7.2.4495 · RGBx888Packed 4-byte stride handled · open() returns None on success.</li>
+    <li>Frontend: <code>microscopeAgent.js</code> service + microscope panel in <code>Analysis.jsx</code>.</li>
+  </ul>
+
+  <h2>C · Test matrix</h2>
+  <table>
+    <tr><th>#</th><th>Test</th><th>Result</th></tr>
+    <tr><td>1–3</td><td><code>/status</code> live values · <code>/capture</code> freshness (distinct ~3 MB frames) · <code>/preview</code> 1024×768 JPEG ~14 KB</td><td class="pass">PASS</td></tr>
+    <tr><td>4–6</td><td>CORS allow-list (no wildcard) · PNA preflight · CSP <code>connect-src</code> loopback agent (server.py only change)</td><td class="pass">PASS</td></tr>
+    <tr><td>7–8</td><td>Panel: ● Connected, model/S/N/resolution · live preview "PREVIEW: LIVE (1 s refresh)"</td><td class="pass">PASS</td></tr>
+    <tr><td>9–10</td><td>CAPTURE → File → <code>runOnFile</code> staging (<code>microscope_*.png</code>) · dark-frame hint shown in panel <i>and</i> persisted near staged image</td><td class="pass">PASS</td></tr>
+    <tr><td>11</td><td>Camera disconnect (real USB-bus drop observed): <code>connected:false</code>, clean 503 JSON, ○ Camera disconnected + RETRY, no crash</td><td class="pass">PASS</td></tr>
+    <tr><td>12</td><td><b>Camera busy E2E</b>: holder app owns device → <code>/capture</code>,<code>/preview</code> 409 <code>camera_busy</code>, <code>/status</code> <code>resolution:null</code> · browser CAPTURE → friendly "being used by another application" + RETRY · preview loop keeps retrying through the busy window and <b>self-recovers</b> → next CAPTURE succeeds</td><td class="pass">PASS</td></tr>
+    <tr><td>13–14</td><td>Agent offline: typed "Cannot reach the camera agent … python agent_server.py" + RETRY · agent restart → panel reopen → ● Connected + live preview</td><td class="pass">PASS</td></tr>
+    <tr><td>15</td><td>Upload-path regression (same session): staging + analysis unchanged</td><td class="pass">PASS</td></tr>
+    <tr><td>16</td><td>Parity — see D</td><td class="pass">PASS</td></tr>
+    <tr><td>17–19</td><td>Engine suite 293/293 (Part A) + 56/56 pinning re-run · oxlint 0 errors · <code>npm run build</code> OK</td><td class="pass">PASS</td></tr>
+    <tr><td>20</td><td>Dark-frame gate E2E: fresh dark capture → <code>/api/analyze</code> → graceful "Not a valid microstructure image…" (no crash, no hang)</td><td class="pass">PASS</td></tr>
+  </table>
+
+  <h2>D · Parity — PROVEN, with one root-caused clarification</h2>
+  <p><b>Byte-for-byte funnel parity is PROVEN</b> (2026-09-30, same server process, same engine,
+  same exact PNG <code>cb30dc355d723be5.png</code>):</p>
+  <table>
+    <tr><th>Path</th><th>count</th><th>ISO</th><th>JIS</th><th>accuracy</th><th>confidence</th></tr>
+    <tr><td>Microscope capture</td><td>21</td><td>15.56</td><td>60.0</td><td>95</td><td>100</td></tr>
+    <tr><td>Same bytes via normal upload</td><td>21</td><td>15.56</td><td>60.0</td><td>95</td><td>100</td></tr>
+  </table>
+  <div class="note"><b>Engine-version finding (root-caused 2026-10-01 — not a funnel defect).</b><br>
+  Re-running the stored bytes today returned <b>12</b> / 15.49 / 55.83 / acc 100 (deterministic, twice-confirmed).
+  Root cause: <code>server.py</code> runs the engine <b>in-process</b> (<code>NODIQ_EXEC_MODE</code> default
+  <code>thread</code>) — the engine loads into server memory at boot. Yesterday's 18:48 "post-fix parity rerun"
+  ran in a server booted <b>before</b> the 18:07 Part A fix, silently using the pre-fix in-memory engine.
+  Evidence: fresh processes on current code give 12, 12, 12 (thread caps irrelevant); no engine/package drift;
+  all 56 pinning tests pass on disk code. The 21→12 delta is exactly the restored 800px floor (Part A)
+  excluding 9 sub-floor particles (self-check reference 20→12, doubles 1→0, ISO ~unchanged).<br><br>
+  <b>Conclusion: same funnel + same bytes + same engine = identical numbers (proven both directions).
+  Cross-boot engine-version deltas are expected and are not parity failures.</b></div>
+
+  <h2>E · Part A recap (engine)</h2>
+  <p>Pre-existing uncommitted edits (150px floor) caused 2 locked-bench failures. User chose
+  <b>"Restore 800px floor"</b>: all 5 count-path sites use <code>min_nodule_area</code> again;
+  <code>recover_and_merge</code> back to <code>AREA_FLOOR_RATIO</code>; <code>SPLIT_TOUCHING_PAIRS=False</code>
+  gate (reversible); recovery darkness-ceiling relaxation retained. hi5 re-pinned to measured 49 / 42.86.
+  Suite: <b>293/293</b>.</p>
+
+  <h2>F · Known limitations (camera-only scope)</h2>
+  <ul>
+    <li>Stale busy-error text can remain in the panel until the next action refreshes it (cosmetic; the loop recovers automatically).</li>
+    <li>Dark frames (lens cap / no microscope light) are correctly hinted and correctly rejected by the engine — real-specimen quality untested until the microscope phase.</li>
+    <li>Preview is 1 Hz polling JPEG by design (reliability over fanciness, per spec).</li>
+  </ul>
+
+  <h2>G · Explicitly DEFERRED (needs the microscope)</h2>
+  <ul>
+    <li>Illumination / exposure behavior on real specimens (no exposure/gain controls built — per scope).</li>
+    <li>Focus &amp; positioning workflow ergonomics at the eyepiece.</li>
+    <li>Calibration / µm-per-px wiring, mm-scale measurements.</li>
+    <li>Live parity on a specimen image.</li>
+  </ul>
+
+  <h2>H · How to run</h2>
+  <p>See <code>.freebuff/run.md</code> — three processes: Flask :8001 (<code>python server.py</code>),
+  Vite :5173 (<code>cd nodiq-x &amp;&amp; npm run dev</code>), camera agent :8765
+  (<code>cd nodiq-camera-agent &amp;&amp; python agent_server.py</code>). The microscope flow needs the camera
+  free: close ImpactControlCenter / wxPropView first.</p>
+
+  <p class="muted">Full detail: <code>nodiq-camera-agent/phase23_report.md</code> · Prior phases:
+  <code>phase1_report.html</code>, <code>phase2_report.html</code></p>
+</div>
+</body>
+</html>

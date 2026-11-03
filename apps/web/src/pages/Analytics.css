@@ -1,0 +1,438 @@
+/*
+  Analytics page — scoped styles layered on top of the shared Dashboard.css
+  design system. Only touches .anx-* classes, so Dashboard / Anomalies /
+  BatchAnalysis / Settings keep their exact look.
+*/
+
+/* ---------------- page frame ---------------- */
+
+.analytics-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.analytics-header {
+  min-height: 90px;
+  padding: 24px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.analytics-header-text h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+.analytics-header-text p {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.analytics-new-btn {
+  border: none;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  padding: 10px 22px;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.analytics-new-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+/* ---------------- content grid ---------------- */
+
+.analytics-content {
+  padding: 28px 40px 48px;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ---------------- metric cards ---------------- */
+
+.analytics-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Scoped to this page: the bare .metric-label collided with Dashboard's
+   and Analysis' own .metric-label (last rule in the bundle won and the
+   type scale looked random between pages). */
+.analytics-page .metric-card .metric-label {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.08em;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.metric-card .metric-value {
+  color: var(--color-text);
+  font-size: 30px;
+  line-height: 36px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------- panels ---------------- */
+
+.analytics-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.analytics-panel-header {
+  min-height: 60px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.analytics-panel-header h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.analytics-panel-sub {
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.analytics-panel-body {
+  padding: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---------------- histogram ---------------- */
+
+.analytics-hist {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analytics-hist-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 170px;
+}
+
+.analytics-hist-col {
+  flex: 1;
+  min-width: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+}
+
+.analytics-hist-count {
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.analytics-hist-bar {
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  opacity: 0.9;
+}
+
+.analytics-hist-bar.empty {
+  opacity: 0.22;
+}
+
+.analytics-hist-bar.pass {
+  background: var(--color-success);
+}
+
+.analytics-hist-bar.fail {
+  background: var(--color-primary);
+}
+
+.analytics-hist-axis {
+  display: flex;
+  gap: 4px;
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+}
+
+.analytics-hist-tick {
+  flex: 1;
+  min-width: 8px;
+  text-align: center;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.analytics-legend {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 14px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.analytics-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.analytics-legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.analytics-legend i.pass {
+  background: var(--color-success);
+}
+.analytics-legend i.fail {
+  background: var(--color-primary);
+}
+
+/* ---------------- SPC toolbar ---------------- */
+
+.analytics-toolbar {
+  padding: 12px 20px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.analytics-toolbar-label {
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-right: 4px;
+}
+
+.analytics-chip {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--color-bg);
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.analytics-chip:hover {
+  color: var(--color-text);
+  border-color: #323d43;
+}
+
+.analytics-chip.active {
+  color: #ff7a18;
+  border-color: #ff7a18;
+}
+
+/* ---------------- SPC chart ---------------- */
+
+.analytics-chart-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.analytics-chart-wrap svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ---------------- notes under the SPC chart ---------------- */
+
+.analytics-notes {
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.analytics-notes li {
+  color: var(--color-text-secondary);
+  font-size: 12.5px;
+}
+
+/* ---------------- stats table ---------------- */
+
+.analytics-panel .table-container {
+  overflow-x: auto;
+}
+
+.analytics-panel table {
+  width: 100%;
+  border-collapse: collapse;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.analytics-panel thead {
+  background: var(--border);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.analytics-panel th,
+.analytics-panel td {
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.analytics-panel th {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.analytics-panel tbody tr {
+  border-bottom: 1px solid var(--border);
+  transition: background 0.15s ease;
+}
+
+.analytics-panel tbody tr:last-child {
+  border-bottom: none;
+}
+
+.analytics-panel tbody tr:hover {
+  background: var(--color-border-strong);
+}
+
+.analytics-panel .sample-id {
+  color: #ff7a18;
+  font-weight: 500;
+}
+
+/* ---------------- helper text ---------------- */
+
+.analytics-empty {
+  color: var(--color-text-secondary);
+}
+
+.analytics-error {
+  color: var(--color-error);
+}
+
+/* carried over from the Dashboard palette (Analytics no longer imports
+   Dashboard.css) */
+.error-text,
+.metric-card .metric-value.error-text {
+  color: var(--color-error);
+}
+
+.warning-text {
+  color: var(--color-primary-hover);
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 1100px) {
+  .analytics-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .analytics-header {
+    padding: 20px 24px;
+  }
+
+  .analytics-content {
+    padding: 20px 24px 40px;
+  }
+}
+
+@media (max-width: 720px) {
+  .analytics-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px;
+  }
+
+  .analytics-new-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .analytics-content {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .analytics-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .analytics-metrics .metric-value {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-metrics {
+    grid-template-columns: 1fr;
+  }
+}

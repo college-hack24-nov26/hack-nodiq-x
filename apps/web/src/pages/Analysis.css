@@ -1,0 +1,1948 @@
+/* =========================================================
+   NODIQ-X ANALYSIS PAGE
+   Custom CSS for the provided Analysis.jsx
+========================================================= */
+
+/* ---------------------------------------------------------
+   GLOBAL
+--------------------------------------------------------- */
+
+.analysis-page {
+  /* Local aliases resolve from the canonical tokens → full theme support.
+     Only true dark-room surfaces (viewer, scanner bed) pin explicit values. */
+  --nodiq-bg: var(--color-bg);
+  --nodiq-sidebar: var(--color-surface);
+  --nodiq-surface: var(--color-bg-3);
+  --nodiq-surface-elevated: var(--color-elevated);
+
+  --nodiq-border: var(--color-border);
+  --nodiq-border-subtle: var(--color-border);
+
+  --nodiq-orange: var(--color-primary);
+  --nodiq-orange-hover: var(--color-primary-hover);
+  --nodiq-orange-soft: var(--color-primary-dim);
+  --nodiq-orange-light: var(--color-primary-hover);
+
+  --nodiq-text: var(--color-text);
+  --nodiq-text-secondary: var(--color-text-secondary);
+  --nodiq-text-muted: var(--color-text-secondary);
+  --nodiq-text-subtle: var(--color-text-tertiary);
+
+  --nodiq-orange-dark: #532200;
+
+  --nodiq-cyan: var(--color-primary);
+  --nodiq-cyan-light: var(--color-primary-hover);
+  --nodiq-green: var(--color-success);
+
+  min-height: 100vh;
+  background: var(--nodiq-bg);
+  color: var(--nodiq-text);
+  font-family: var(--font-body);
+}
+
+
+/* ---------------------------------------------------------
+   CUSTOM SCROLLBAR
+--------------------------------------------------------- */
+
+.analysis-page::-webkit-scrollbar {
+  width: 7px;
+}
+
+.analysis-page::-webkit-scrollbar-track {
+  background: var(--nodiq-bg, var(--color-bg));
+}
+
+.analysis-page::-webkit-scrollbar-thumb {
+  background: var(--nodiq-border, var(--color-border));
+  border-radius: 4px;
+}
+
+.analysis-page::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+
+/* ---------------------------------------------------------
+   TECHNICAL GRID
+--------------------------------------------------------- */
+
+.analysis-grid {
+  background-image:
+    linear-gradient(
+      rgba(0, 188, 212, 0.045) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 188, 212, 0.045) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+
+/* ---------------------------------------------------------
+   ANALYSIS CARD
+--------------------------------------------------------- */
+
+.analysis-card {
+  background: var(--nodiq-surface);
+  border: 1px solid var(--nodiq-border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.analysis-card:hover {
+  border-color: rgba(0, 188, 212, 0.25);
+}
+
+
+/* ---------------------------------------------------------
+   PREPROCESSING ADVISORIES (annotation blanking, quality notes)
+   Successful preprocessing, not failure: quiet info treatment on
+   theme tokens — readable in both themes, no red error styling.
+--------------------------------------------------------- */
+
+.analysis-advisories {
+  margin-bottom: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analysis-advisory {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  padding: 10px 14px;
+
+  background: var(--color-primary-dim);
+  border: 1px solid var(--color-primary-ring);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 6px;
+}
+
+.analysis-advisory-icon {
+  flex-shrink: 0;
+
+  font-size: 16px;
+  margin-top: 1px;
+
+  color: var(--color-primary);
+}
+
+.analysis-advisory-title {
+  color: var(--color-text);
+
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+}
+
+.analysis-advisory-body {
+  margin-top: 1px;
+
+  color: var(--color-text-secondary);
+
+  font-size: 12px;
+  line-height: 18px;
+}
+
+@media (max-width: 640px) {
+  .analysis-advisory {
+    padding: 9px 12px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   PAGE HEADER
+--------------------------------------------------------- */
+
+.analysis-header-accent {
+  width: 5px;
+  height: 24px;
+  background: var(--nodiq-cyan);
+  box-shadow: 0 0 12px rgba(0, 188, 212, 0.25);
+}
+
+.analysis-eyebrow {
+  color: var(--nodiq-cyan);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   BUTTONS
+--------------------------------------------------------- */
+
+.nodiq-button-primary {
+  background: var(--nodiq-cyan);
+  color: #061114;
+  border: 1px solid var(--nodiq-cyan);
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.nodiq-button-primary:hover {
+  background: var(--nodiq-cyan-light);
+  box-shadow: 0 0 18px rgba(0, 188, 212, 0.3);
+  transform: translateY(-1px);
+}
+
+.nodiq-button-primary:active {
+  transform: translateY(0);
+}
+
+.nodiq-button-secondary {
+  background: transparent;
+  color: var(--nodiq-text-secondary);
+  border: 1px solid var(--nodiq-border-light);
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.nodiq-button-secondary:hover {
+  color: var(--nodiq-text);
+  border-color: var(--nodiq-cyan);
+  background: rgba(0, 188, 212, 0.035);
+}
+
+
+/* ---------------------------------------------------------
+   UPLOAD AREA
+--------------------------------------------------------- */
+
+.upload-zone {
+  /* Scanner-bed: intentionally dark under both themes, so the inner
+     text tokens are pinned to their dark values for legibility. */
+  --color-text: #E8ECEE;
+  --color-text-secondary: #9AA6AC;
+  --color-text-tertiary: #6B7679;
+
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #051014;
+  border: 1px dashed #3c555d;
+  border-radius: 8px;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.upload-zone:hover {
+  border-color: var(--nodiq-cyan);
+  background: #061316;
+  box-shadow:
+    inset 0 0 40px rgba(0, 188, 212, 0.035),
+    0 0 20px rgba(0, 188, 212, 0.08);
+}
+
+/* Active drag: unmistakable drop-target state (same cyan family as hover,
+   stronger — the whole zone announces it accepts the file). */
+.upload-zone.drag-active {
+  border-color: var(--nodiq-cyan);
+  border-style: solid;
+  background: #07262b;
+  box-shadow:
+    inset 0 0 60px rgba(0, 188, 212, 0.12),
+    0 0 0 2px rgba(0, 188, 212, 0.35);
+}
+
+.upload-zone.drag-active .upload-icon {
+  transform: translateY(-4px);
+  color: var(--nodiq-cyan);
+}
+
+.upload-zone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 188, 212, 0.05) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 188, 212, 0.05) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+
+  pointer-events: none;
+}
+
+.upload-zone::after {
+  content: "";
+  position: absolute;
+
+  width: 420px;
+  height: 420px;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  background: radial-gradient(
+    circle,
+    rgba(0, 188, 212, 0.08),
+    transparent 65%
+  );
+
+  pointer-events: none;
+  opacity: 0;
+
+  transition: opacity 0.35s ease;
+}
+
+.upload-zone:hover::after {
+  opacity: 1;
+}
+
+.upload-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 560px;
+  padding: 40px;
+}
+
+.upload-icon {
+  width: 64px;
+  height: 64px;
+
+  margin: 0 auto 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--nodiq-surface, var(--color-bg-3));
+  border: 1px solid var(--nodiq-border, var(--color-border));
+  border-radius: 5px;
+
+  color: var(--nodiq-cyan);
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.upload-zone:hover .upload-icon {
+  border-color: var(--nodiq-cyan);
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.15);
+}
+
+
+/* ---------------------------------------------------------
+   IMAGE VIEWER
+--------------------------------------------------------- */
+
+.microstructure-viewer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 570px;
+
+  background:
+    radial-gradient(
+      circle at center,
+      #15272d 0%,
+      #081216 45%,
+      #050e12 100%
+    );
+
+  overflow: hidden;
+}
+
+.microstructure-image-wrapper {
+  position: relative;
+
+  max-width: 100%;
+  max-height: 100%;
+
+  border: 1px solid #303b40;
+
+  background: #111;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.45),
+    0 0 30px rgba(0, 188, 212, 0.025);
+}
+
+.microstructure-image {
+  display: block;
+
+  max-width: 100%;
+  max-height: 500px;
+
+  object-fit: contain;
+
+  transition: transform 0.3s ease;
+}
+
+
+/* ---------------------------------------------------------
+   IMAGE VIEWER CROSSHAIR
+--------------------------------------------------------- */
+
+.viewer-crosshair-horizontal {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  height: 1px;
+
+  background: rgba(0, 188, 212, 0.15);
+
+  pointer-events: none;
+}
+
+.viewer-crosshair-vertical {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 50%;
+
+  width: 1px;
+
+  background: rgba(0, 188, 212, 0.15);
+
+  pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   VIEWER TOOLBAR
+--------------------------------------------------------- */
+
+.viewer-toolbar {
+  position: absolute;
+  z-index: 20;
+
+  top: 16px;
+  left: 16px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 4px;
+
+  background: rgba(16, 27, 32, 0.95);
+  border: 1px solid var(--nodiq-border-light);
+
+  border-radius: 5px;
+
+  backdrop-filter: blur(8px);
+
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.viewer-tool-button {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--nodiq-text-secondary);
+
+  border-radius: 4px;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.viewer-tool-button:hover {
+  color: var(--nodiq-cyan);
+  background: var(--nodiq-surface-elevated, var(--color-elevated));
+}
+
+
+/* ---------------------------------------------------------
+   OVERLAY TOGGLE
+--------------------------------------------------------- */
+
+.overlay-toggle {
+  width: 36px;
+  height: 20px;
+
+  position: relative;
+
+  background: var(--nodiq-border, var(--color-border-strong));
+
+  border-radius: 20px;
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.overlay-toggle.active {
+  background: var(--nodiq-cyan);
+}
+
+.overlay-toggle-knob {
+  position: absolute;
+
+  top: 2px;
+  left: 2px;
+
+  width: 16px;
+  height: 16px;
+
+  background: var(--color-text);
+
+  border-radius: 50%;
+
+  transition: transform 0.2s ease;
+}
+
+.overlay-toggle.active .overlay-toggle-knob {
+  transform: translateX(16px);
+}
+
+
+/* ---------------------------------------------------------
+   VIEWER STATUS BAR
+--------------------------------------------------------- */
+
+.viewer-status-bar {
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 16px;
+
+  background: rgba(16, 27, 32, 0.95);
+
+  border-top: 1px solid var(--nodiq-border-light);
+}
+
+.sensor-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+
+  color: var(--nodiq-text-muted);
+}
+
+.sensor-status-dot {
+  width: 6px;
+  height: 6px;
+
+  background: var(--nodiq-green);
+
+  border-radius: 50%;
+
+  box-shadow: 0 0 8px rgba(57, 194, 127, 0.45);
+}
+
+
+/* ---------------------------------------------------------
+   VIEWER ACTION BAR
+   Primary/secondary actions live OUTSIDE the viewer frame so
+   they never float over the micrograph or status bar. Primary
+   action right-aligned, secondary beside it, filename left.
+--------------------------------------------------------- */
+
+.viewer-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  margin-top: 16px;
+  padding: 12px 16px;
+
+  background: var(--nodiq-surface, var(--color-bg-3));
+  border: 1px solid var(--nodiq-border, var(--color-border));
+  border-radius: 6px;
+}
+
+.viewer-action-bar__file {
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--nodiq-text-subtle, var(--color-text-tertiary));
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+}
+
+.viewer-action-bar__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.viewer-action-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 150px;
+}
+
+.viewer-action-btn--primary {
+  min-width: 190px;
+  box-shadow: 0 0 0 1px var(--nodiq-orange-soft, rgba(255, 122, 24, 0.12)),
+    0 8px 20px rgba(255, 122, 24, 0.14);
+}
+
+@media (max-width: 640px) {
+  .viewer-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .viewer-action-bar__actions {
+    flex-direction: column-reverse;
+  }
+
+  .viewer-action-btn,
+  .viewer-action-btn--primary {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   FORM INPUTS
+--------------------------------------------------------- */
+
+.analysis-input,
+.analysis-select,
+.analysis-textarea {
+  width: 100%;
+
+  background: var(--nodiq-bg, var(--color-bg));
+
+  border: 1px solid var(--nodiq-border-light);
+
+  color: var(--nodiq-text);
+
+  border-radius: 4px;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.analysis-input:focus,
+.analysis-select:focus,
+.analysis-textarea:focus {
+  border-color: var(--nodiq-cyan);
+
+  box-shadow:
+    0 0 0 1px rgba(0, 188, 212, 0.15);
+}
+
+.analysis-input::placeholder,
+.analysis-textarea::placeholder {
+  color: #536168;
+}
+
+.analysis-select {
+  appearance: none;
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, #7f8d93 50%),
+    linear-gradient(135deg, #7f8d93 50%, transparent 50%);
+
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 9px) 50%;
+
+  background-size:
+    5px 5px,
+    5px 5px;
+
+  background-repeat: no-repeat;
+
+  padding-right: 35px;
+}
+
+
+/* ---------------------------------------------------------
+   ANALYSIS PIPELINE
+--------------------------------------------------------- */
+
+.pipeline {
+  position: relative;
+}
+
+.pipeline::before {
+  content: "";
+
+  position: absolute;
+
+  left: 9px;
+  top: 10px;
+  bottom: 10px;
+
+  width: 1px;
+
+  background: var(--nodiq-border, var(--color-border-strong));
+}
+
+.pipeline-step {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  min-height: 32px;
+}
+
+.pipeline-step-active {
+  padding: 8px;
+
+  margin-left: -8px;
+  margin-right: -8px;
+
+  background: var(--nodiq-surface, var(--color-bg-3));
+
+  border: 1px solid #294047;
+
+  border-radius: 4px;
+}
+
+.pipeline-dot {
+  position: relative;
+  z-index: 2;
+
+  width: 20px;
+  height: 20px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 2px solid var(--nodiq-border, var(--color-border-strong));
+
+  background: var(--nodiq-surface-elevated, var(--color-elevated));
+}
+
+.pipeline-dot.complete {
+  background: var(--nodiq-green);
+  border-color: var(--nodiq-green);
+}
+
+.pipeline-dot.active {
+  background: var(--color-bg);
+  border-color: var(--nodiq-cyan);
+
+  box-shadow:
+    0 0 10px rgba(0, 188, 212, 0.5);
+}
+
+.pipeline-dot.active::after {
+  content: "";
+
+  width: 6px;
+  height: 6px;
+
+  background: var(--nodiq-cyan);
+
+  border-radius: 50%;
+
+  animation: pipelinePulse 1.2s infinite;
+}
+
+@keyframes pipelinePulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.45;
+    transform: scale(0.7);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RESULTS
+--------------------------------------------------------- */
+
+.results-section {
+  margin-top: 48px;
+}
+
+.results-divider {
+  height: 1px;
+  flex: 1;
+
+  background: var(--nodiq-border);
+}
+
+.results-title {
+  text-align: center;
+}
+
+.results-title h2 {
+  color: var(--nodiq-text);
+
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.results-title p {
+  margin-top: 4px;
+
+  color: var(--nodiq-text-muted);
+
+  font-size: 14px;
+}
+
+
+/* ---------------------------------------------------------
+   METRIC CARDS
+--------------------------------------------------------- */
+
+.metric-card {
+  position: relative;
+
+  min-height: 145px;
+
+  padding: 16px;
+
+  background: var(--nodiq-surface);
+
+  border: 1px solid var(--nodiq-border);
+
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.metric-card:hover {
+  border-color: rgba(0, 188, 212, 0.25);
+
+  transform: translateY(-1px);
+}
+
+.metric-card.emphasis {
+  border-color: rgba(0, 188, 212, 0.5);
+
+  box-shadow:
+    inset 0 1px 0 rgba(0, 188, 212, 0.05);
+}
+
+/* Scoped to this page: the bare .metric-label collided with Dashboard's
+   and Analytics' own .metric-label (last rule in the bundle won and the
+   type scale looked random between pages). */
+.analysis-page .metric-label {
+  font-family: var(--font-ui);
+
+  font-size: 15px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.08em;
+
+  color: var(--nodiq-text-muted);
+}
+
+.metric-card.emphasis .metric-label {
+  color: var(--nodiq-cyan);
+}
+
+.metric-value {
+  margin-top: 16px;
+
+  font-size: 30px;
+
+  font-weight: 600;
+
+  line-height: 1;
+
+  color: var(--nodiq-text);
+}
+
+.metric-unit {
+  margin-left: 4px;
+
+  font-size: 16px;
+
+  font-weight: 400;
+
+  color: var(--nodiq-text-muted);
+}
+
+.metric-description {
+  margin-top: 12px;
+
+  font-size: 11px;
+
+  color: #748187;
+}
+
+.metric-progress {
+  height: 4px;
+
+  margin-top: 16px;
+
+  background: var(--color-bg-4);
+
+  border-radius: 4px;
+
+  overflow: hidden;
+}
+
+.metric-progress-bar {
+  height: 100%;
+
+  background: var(--nodiq-cyan);
+
+  transition: width 0.8s ease;
+}
+
+
+/* ---------------------------------------------------------
+   INTELLIGENCE PANEL
+--------------------------------------------------------- */
+
+.intelligence-panel {
+  background: var(--nodiq-surface);
+
+  border: 1px solid var(--nodiq-border-light);
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.intelligence-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 16px;
+
+  background: var(--nodiq-surface, var(--color-bg-3));
+
+  border-bottom: 1px solid var(--nodiq-border-light);
+}
+
+.intelligence-title {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.intelligence-title::before {
+  content: "";
+
+  width: 6px;
+  height: 20px;
+
+  background: var(--nodiq-cyan);
+}
+
+.ai-confidence {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 5px 10px;
+
+  background: var(--nodiq-surface, var(--color-bg-3));
+
+  border: 1px solid var(--nodiq-border-light);
+
+  border-radius: 4px;
+}
+
+.ai-confidence-label {
+  font-family: var(--font-ui);
+
+  font-size: 10px;
+
+  color: var(--nodiq-text-muted);
+
+  text-transform: uppercase;
+}
+
+.ai-confidence-value {
+  font-family: var(--font-mono);
+
+  font-size: 12px;
+
+  color: var(--nodiq-cyan);
+}
+
+
+/* ---------------------------------------------------------
+   INSIGHTS
+--------------------------------------------------------- */
+
+.insight-item {
+  display: flex;
+
+  gap: 12px;
+
+  align-items: flex-start;
+}
+
+.insight-icon {
+  flex-shrink: 0;
+
+  width: 20px;
+  height: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--nodiq-green);
+}
+
+.insight-title {
+  font-size: 12px;
+
+  font-weight: 500;
+
+  color: var(--nodiq-text);
+}
+
+.insight-description {
+  margin-top: 4px;
+
+  font-size: 12px;
+
+  line-height: 1.55;
+
+  color: var(--nodiq-text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   SEGMENTATION
+--------------------------------------------------------- */
+
+.segmentation-panel {
+  background: var(--nodiq-surface);
+
+  border: 1px solid var(--nodiq-border);
+
+  border-radius: 6px;
+
+  overflow: hidden;
+}
+
+.segmentation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 12px 16px;
+
+  border-bottom: 1px solid var(--nodiq-border-light);
+}
+
+.segmentation-viewer {
+  position: relative;
+
+  display: flex;
+
+  height: 330px;
+
+  background: #050e12;
+
+  overflow: hidden;
+}
+
+.segmentation-half {
+  position: relative;
+
+  width: 50%;
+
+  overflow: hidden;
+}
+
+.segmentation-half:first-child {
+  border-right: 1px solid rgba(0, 188, 212, 0.4);
+}
+
+.segmentation-half img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.segmentation-label {
+  position: absolute;
+
+  top: 12px;
+
+  padding: 5px 8px;
+
+  background: rgba(9, 21, 25, 0.9);
+
+  border: 1px solid var(--nodiq-border-light);
+
+  border-radius: 3px;
+
+  font-family: var(--font-ui);
+
+  font-size: 10px;
+
+  color: var(--nodiq-text-secondary);
+
+  text-transform: uppercase;
+}
+
+.segmentation-label.original {
+  left: 12px;
+}
+
+.segmentation-label.ai {
+  right: 12px;
+
+  color: var(--nodiq-cyan);
+
+  background: rgba(0, 188, 212, 0.08);
+
+  border-color: rgba(0, 188, 212, 0.3);
+}
+
+
+/* ---------------------------------------------------------
+   SEGMENTATION GRID
+--------------------------------------------------------- */
+
+.segmentation-grid {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.4;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 188, 212, 0.15) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 188, 212, 0.15) 1px,
+      transparent 1px
+    );
+
+  background-size: 20px 20px;
+}
+
+
+/* ---------------------------------------------------------
+   SEGMENTATION DIVIDER
+--------------------------------------------------------- */
+
+.segmentation-divider {
+  position: absolute;
+
+  top: 0;
+  bottom: 0;
+  left: 50%;
+
+  width: 1px;
+
+  background: var(--nodiq-cyan);
+
+  transform: translateX(-50%);
+
+  z-index: 10;
+}
+
+.segmentation-divider-handle {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--nodiq-cyan);
+
+  color: #061114;
+
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+
+  box-shadow:
+    0 0 15px rgba(0, 188, 212, 0.5);
+}
+
+
+/* ---------------------------------------------------------
+   LEGEND
+--------------------------------------------------------- */
+
+.analysis-legend {
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+}
+
+.analysis-legend-item {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  font-family: var(--font-ui);
+
+  font-size: 10px;
+
+  color: var(--nodiq-text-muted);
+}
+
+.analysis-legend-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   DETECTION STATISTICS
+--------------------------------------------------------- */
+
+.detection-statistics {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  background: var(--nodiq-surface);
+
+  border: 1px solid var(--nodiq-border);
+
+  border-radius: 5px;
+
+  overflow: hidden;
+}
+
+.detection-stat {
+  padding: 18px;
+
+  border-right: 1px solid var(--nodiq-border);
+}
+
+.detection-stat:last-child {
+  border-right: none;
+}
+
+.detection-stat-label {
+  display: block;
+
+  font-family: var(--font-ui);
+
+  font-size: 10px;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  color: #68767c;
+}
+
+.detection-stat-value {
+  display: block;
+
+  margin-top: 8px;
+
+  font-size: 21px;
+
+  font-weight: 600;
+
+  color: var(--nodiq-text);
+}
+
+.detection-stat-value.accent {
+  color: var(--nodiq-cyan);
+}
+
+
+/* ---------------------------------------------------------
+   CHARTS
+--------------------------------------------------------- */
+
+.chart-card {
+  background: var(--nodiq-surface);
+
+  border: 1px solid var(--nodiq-border);
+
+  border-radius: 5px;
+
+  padding: 20px;
+}
+
+.chart-area {
+  height: 220px;
+
+  display: flex;
+  align-items: flex-end;
+
+  gap: 8px;
+
+  padding: 0 12px 8px;
+
+  border-left: 1px solid var(--nodiq-border-light);
+  border-bottom: 1px solid var(--nodiq-border-light);
+}
+
+.chart-bar {
+  flex: 1;
+
+  min-width: 4px;
+
+  background: rgba(0, 188, 212, 0.6);
+
+  transition:
+    background 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.chart-bar:hover {
+  background: var(--nodiq-cyan);
+
+  opacity: 1;
+}
+
+
+/* ---------------------------------------------------------
+   DONUT CHART
+--------------------------------------------------------- */
+
+.matrix-donut {
+  width: 160px;
+  height: 160px;
+
+  position: relative;
+
+  margin: 20px auto;
+
+  border-radius: 50%;
+
+  background:
+    conic-gradient(
+      #e0c0b0 0deg 230.4deg,
+      #763300 230.4deg 360deg
+    );
+
+  box-shadow:
+    0 0 25px rgba(0, 188, 212, 0.025);
+}
+
+.matrix-donut::after {
+  content: "";
+
+  position: absolute;
+
+  inset: 32px;
+
+  background: var(--nodiq-surface);
+
+  border-radius: 50%;
+}
+
+.matrix-donut-content {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 2;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.matrix-donut-value {
+  font-size: 24px;
+
+  font-weight: 600;
+
+  color: var(--nodiq-text);
+}
+
+.matrix-donut-label {
+  margin-top: 2px;
+
+  font-family: var(--font-ui);
+
+  font-size: 10px;
+
+  color: #68767c;
+
+  text-transform: uppercase;
+}
+
+
+/* ---------------------------------------------------------
+   COMPLETION PANEL
+--------------------------------------------------------- */
+
+.completion-panel {
+  margin-top: 40px;
+  margin-bottom: 16px;
+
+  padding: 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  background: var(--nodiq-surface);
+
+  border: 1px solid var(--nodiq-border-light);
+
+  border-radius: 7px;
+}
+
+.completion-status {
+  display: flex;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.completion-icon {
+  color: var(--nodiq-green);
+
+  font-size: 22px;
+}
+
+.completion-title {
+  font-size: 14px;
+
+  font-weight: 500;
+
+  color: var(--nodiq-text);
+}
+
+.completion-description {
+  margin-top: 4px;
+
+  font-size: 12px;
+
+  color: var(--nodiq-text-muted);
+}
+
+
+/* ---------------------------------------------------------
+   GENERATE REPORT BUTTON
+--------------------------------------------------------- */
+
+.generate-report-button {
+  background: var(--nodiq-cyan);
+
+  color: #061114;
+
+  border: 1px solid var(--nodiq-cyan);
+
+  transition:
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.generate-report-button:hover {
+  background: var(--nodiq-cyan-light);
+
+  box-shadow:
+    0 0 20px rgba(0, 188, 212, 0.35);
+
+  transform: translateY(-1px);
+}
+
+
+/* ---------------------------------------------------------
+   PROCESSING ANIMATION
+--------------------------------------------------------- */
+
+.analysis-processing {
+  animation: processingGlow 1.8s infinite;
+}
+
+@keyframes processingGlow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 rgba(0, 188, 212, 0);
+  }
+
+  50% {
+    box-shadow:
+      0 0 22px rgba(0, 188, 212, 0.12);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SPINNING ICON
+--------------------------------------------------------- */
+
+.analysis-spin {
+  animation: analysisSpin 1s linear infinite;
+}
+
+@keyframes analysisSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   SUCCESS PULSE
+--------------------------------------------------------- */
+
+.success-pulse {
+  animation: successPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes successPulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 rgba(57, 194, 127, 0);
+  }
+
+  50% {
+    box-shadow: 0 0 12px rgba(57, 194, 127, 0.25);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   FADE-IN SECTIONS
+--------------------------------------------------------- */
+
+.analysis-section-enter {
+  animation: sectionEnter 0.55s ease both;
+}
+
+@keyframes sectionEnter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 1280px) {
+  .microstructure-viewer {
+    min-height: 520px;
+  }
+
+  .upload-zone {
+    min-height: 440px;
+  }
+}
+
+
+@media (max-width: 1024px) {
+  .detection-statistics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .detection-stat:nth-child(2) {
+    border-right: none;
+  }
+
+  .detection-stat:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--nodiq-border);
+  }
+
+  .completion-panel {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .upload-zone {
+    min-height: 400px;
+  }
+
+  .upload-content {
+    padding: 25px;
+  }
+
+  .microstructure-viewer {
+    min-height: 440px;
+  }
+
+  .segmentation-viewer {
+    height: 280px;
+  }
+
+  .analysis-legend {
+    flex-wrap: wrap;
+  }
+
+  .viewer-status-bar {
+    overflow-x: auto;
+  }
+}
+
+
+@media (max-width: 640px) {
+  .upload-zone {
+    min-height: 360px;
+  }
+
+  .upload-content {
+    padding: 20px;
+  }
+
+  .upload-icon {
+    width: 54px;
+    height: 54px;
+  }
+
+  .detection-statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .detection-stat {
+    border-right: none;
+
+    border-bottom: 1px solid var(--nodiq-border);
+  }
+
+  .detection-stat:last-child {
+    border-bottom: none;
+  }
+
+  .segmentation-viewer {
+    height: 240px;
+  }
+
+  .completion-panel {
+    padding: 16px;
+  }
+}
+
+
+/* ---------------------------------------------------------
+   ACCESSIBILITY
+--------------------------------------------------------- */
+
+.analysis-page button:focus-visible,
+.analysis-page input:focus-visible,
+.analysis-page select:focus-visible,
+.analysis-page textarea:focus-visible {
+  outline: 2px solid var(--nodiq-cyan);
+
+  outline-offset: 2px;
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .analysis-page *,
+  .analysis-page *::before,
+  .analysis-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
+
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   FULL WIDTH ANALYSIS PAGE
+========================================================= */
+
+.analysis-page {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 32px 40px 60px;
+}
+
+.analysis-page > * {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .analysis-page {
+    padding: 20px 16px 40px;
+  }
+}
+[data-theme="light"] .segmentation-label {
+  background: rgba(255, 255, 255, 0.92);
+}
+
+/* ---------------------------------------------------------
+   ROUNDNESS HISTOGRAM (professional rebuild)
+   Gridlines, y-count ticks, per-bucket x labels, gradient
+   bars, count labels, mean marker. Theme-aware via vars.
+--------------------------------------------------------- */
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.chart-header__chip {
+  font-size: 9px;
+  color: var(--color-text-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 2px 8px;
+  letter-spacing: 0.4px;
+}
+
+.chart-empty-state {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-tertiary);
+  font-size: 11px;
+  border: 1px dashed var(--color-border);
+  border-radius: 4px;
+}
+
+.histogram {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto auto;
+  column-gap: 8px;
+  row-gap: 4px;
+  height: 250px;
+}
+
+.histogram__y-axis {
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 2px;
+}
+
+.histogram__y-tick {
+  font-size: 8px;
+  color: var(--color-text-tertiary);
+  transform: translateY(4px);
+}
+
+.histogram__plot {
+  grid-row: 1;
+  position: relative;
+  border-left: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.histogram__gridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-top: 1px dashed var(--color-border);
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.histogram__bars {
+  position: absolute;
+  inset: 0 4px 0 4px;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.histogram__slot {
+  flex: 1;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.histogram__count {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 8px;
+  line-height: 1;
+  color: var(--color-text-tertiary);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.histogram__slot:hover .histogram__count {
+  color: var(--nodiq-cyan);
+}
+
+.chart-bar {
+  width: 100%;
+  max-width: 42px;
+  border-radius: 3px 3px 0 0;
+  background: linear-gradient(180deg, rgba(0, 188, 212, 0.95) 0%, rgba(0, 188, 212, 0.45) 100%);
+  border: 1px solid rgba(0, 188, 212, 0.55);
+  border-bottom: none;
+  transition: background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chart-bar:hover {
+  background: var(--nodiq-cyan);
+  box-shadow: 0 0 0 1px var(--nodiq-cyan);
+}
+
+.chart-bar--zero {
+  height: 3px !important;
+  background: var(--color-border);
+  border-color: var(--color-border);
+  opacity: 0.8;
+}
+
+.histogram__mean {
+  position: absolute;
+  top: -6px;
+  bottom: -2px;
+  width: 0;
+  border-left: 1px dashed var(--nodiq-cyan);
+  opacity: 0.85;
+  pointer-events: auto;
+}
+
+.histogram__mean-label {
+  position: absolute;
+  top: 0;
+  left: 4px;
+  font-size: 8px;
+  color: var(--nodiq-cyan);
+  white-space: nowrap;
+}
+
+.histogram__x-axis {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 4px 0;
+}
+
+.histogram__x-tick {
+  font-size: 8px;
+  color: var(--color-text-tertiary);
+}
+
+.histogram__x-title {
+  grid-column: 2;
+  text-align: center;
+  font-size: 8px;
+  letter-spacing: 0.8px;
+  color: var(--color-text-tertiary);
+}

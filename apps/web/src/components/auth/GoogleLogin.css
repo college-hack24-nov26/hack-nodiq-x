@@ -1,0 +1,27 @@
+.google-login {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0.75rem 1rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text);
+  transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+}
+.google-login:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+  background: var(--color-elevated);
+}
+
+/* Light theme: keep text dark on the light elevated surface — the old
+   hardcoded #2A343A hover background made text invisible in light mode. */
+[data-theme="light"] .google-login:hover {
+  background: #E7EBED;
+  border-color: var(--color-primary);
+}

@@ -1,0 +1,6 @@
+@import './styles/globals.css';
+@import './styles/animations.css';
+@import './components/common/Button.css';
+/* Fonts load once via <link> in index.html (two-tier system: Inter 400-700
+   for UI + IBM Plex Mono 400-600 for technical data + Material Symbols).
+   No CSS @import font duplication. */

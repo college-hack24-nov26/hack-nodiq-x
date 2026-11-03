@@ -1,0 +1,126 @@
+.chart-panel {
+  height: 450px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 20px 22px 16px;
+  box-sizing: border-box;
+}
+
+.chart-panel .panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.chart-panel .panel-header h2 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.chart-range {
+  display: flex;
+  gap: 8px;
+}
+
+.range-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+
+.range-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+}
+
+.range-btn.active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: var(--color-primary-dim);
+}
+
+.range-btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.chart-container {
+  height: calc(100% - 57px);
+  position: relative;
+  padding: 20px 24px 24px 42px;
+  box-sizing: border-box;
+}
+
+.nodularity-chart {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+/* Theme-aware chart strokes — SVG presentation attrs come from CSS here */
+.nodularity-chart__grid {
+  stroke: var(--color-border);
+  opacity: 0.6;
+}
+
+.nodularity-chart__line {
+  stroke: var(--color-primary);
+}
+
+.nodularity-chart__dot {
+  fill: var(--color-primary);
+  stroke: var(--color-surface);
+}
+
+.nodularity-chart__area-stop-top {
+  stop-color: var(--color-primary);
+  stop-opacity: 0.2;
+}
+
+.nodularity-chart__area-stop-bottom {
+  stop-color: var(--color-primary);
+  stop-opacity: 0;
+}
+
+.chart-labels {
+  position: absolute;
+  top: 20px;
+  bottom: 24px;
+  left: 42px;
+  padding-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: var(--color-text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.chart-empty {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-md);
+}

@@ -1,0 +1,24 @@
+.otp { display: flex; flex-direction: column; gap: 1.5rem; align-items: center; text-align: center; }
+
+.otp__hint { font-size: var(--fs-small); color: var(--color-text-secondary); }
+
+.otp__boxes { display: flex; gap: 0.6rem; }
+
+.otp__box {
+  width: 44px;
+  height: 52px;
+  text-align: center;
+  font-size: 1.25rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.otp__box:focus { outline: none; border-color: var(--color-primary); }
+
+.otp__submit { width: 100%; }
+
+.otp__resend { font-size: var(--fs-small); color: var(--color-text-tertiary); }
+.otp__resend span { color: var(--color-primary); font-weight: 600; }
+.otp__resend:hover span { color: var(--color-primary-hover); }

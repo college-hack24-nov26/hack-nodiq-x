@@ -1,0 +1,21 @@
+services:
+  nodiq-x:
+    build:
+      context: ..
+      dockerfile: deploy/Dockerfile
+    container_name: nodiq-x
+    ports:
+      - "8001:8001"
+    volumes:
+      # SQLite DB, uploads, full-analysis payloads survive container rebuilds
+      - nodiq_data:/app/server_data
+      # server.py reads the Firebase web API key from the .env FILE
+      # (_get_firebase_api_key parses ROOT/.env). env_file only sets env vars,
+      # so bind-mount the file read-only for /api/auth/firebase.
+      - ../.env:/app/.env:ro
+    env_file:
+      - ../.env # SMTP_* for feedback + SPC email alerts, AI_* keys
+    restart: unless-stopped
+
+volumes:
+  nodiq_data:

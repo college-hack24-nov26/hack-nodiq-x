@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phase 6A Report — Large Microscope Live Preview</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0d1117; color: #d7dde3; font: 15px/1.65 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 48px 28px 80px; }
+  h1 { font-size: 26px; margin: 0 0 4px; color: #f0f6fc; }
+  h2 { font-size: 18px; margin: 40px 0 12px; color: #58c4dd; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+  .meta { font-family: ui-monospace, Consolas, monospace; font-size: 12px; color: #8b949e; margin-bottom: 28px; }
+  .pass { color: #3fb950; font-weight: 600; }
+  .fixed { color: #d29922; font-weight: 600; }
+  .warn  { color: #d29922; font-weight: 600; }
+  .nt { color: #f85149; font-weight: 700; }
+  .note { color: #8b949e; }
+  code, .mono { font-family: ui-monospace, Consolas, monospace; font-size: 13px; background: #161b22; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 13.5px; }
+  th, td { border: 1px solid #21262d; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #161b22; color: #f0f6fc; }
+  tr:nth-child(even) td { background: #10151c; }
+  .verdict { border: 1px solid #d29922; background: rgba(210,153,34,.07); border-radius: 8px; padding: 16px 20px; margin-top: 36px; }
+  .verdict h2 { border: none; margin: 0 0 6px; color: #d29922; }
+  .stop { font-family: ui-monospace, Consolas, monospace; color: #f85149; font-weight: 700; letter-spacing: .08em; }
+  ul, ol { margin: 8px 0; padding-left: 22px; }
+  li { margin: 4px 0; }
+  .ascii { font-family: ui-monospace, Consolas, monospace; font-size: 12.5px; color: #9aa6ac; background: #10151c; border: 1px solid #21262d; border-radius: 6px; padding: 12px 16px; white-space: pre; overflow-x: auto; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Phase 6A — Large Microscope Live Preview</h1>
+<div class="meta">
+  Date: 2026-10-01 · Branch: <code>supabase-migration</code> ·
+  Camera: MATRIX VISION mvBlueFOX-ML/IGC205C · S/N 29605128 · Agent 127.0.0.1:8765<br>
+  Baseline honored: Phases 1–5 frozen · <strong>No engine changes · No second pipeline ·
+  No capture/preview data changes.</strong> Pure UI-size enhancement.
+</div>
+
+<h2>1. Why the preview was enlarged</h2>
+<p>The operator uses the live preview to focus, position the field, and judge illumination.
+The old panel lived inside the 560px <code>.upload-content</code> column with its own 420px cap,
+leaving an ~445×333 display area — too small for comfortable focusing on a desktop display.
+Phase 6A makes the preview the dominant element of the microscope panel, as requested.</p>
+<p class="note"><strong>Scope note (per spec §D):</strong> the larger on-screen view does NOT change the
+physical field of view, magnification, or the number of nodules captured — it only improves operator
+visibility. No claim of "more nodules because the preview is bigger" is made.</p>
+
+<h2>2. Change made (one presentation change, one structural move)</h2>
+<p>File: <span class="mono">nodiq-x/src/pages/Analysis.jsx</span> — the only file changed.</p>
+<ol>
+  <li>Microscope panel <code>maxWidth: "420px"</code> → <code>"860px"</code> (the wide-panel cap already used by the dataset picker on this page).</li>
+  <li>The panel moved from inside <code>.upload-content</code> (centered 560px column) to a <strong>full-width sibling of the upload zone</strong> (same <code>!uploaded</code> branch, fragment-wrapped). It now spans the card content width up to 860px and shrinks responsively below that.</li>
+</ol>
+<p class="note">The preview element itself already had the correct responsive recipe — unchanged:
+<code>width: 100%</code> + <code>aspect-ratio: 4 / 3</code> + inner <code>&lt;img&gt;</code> with <code>objectFit: "contain"</code>.</p>
+
+<h2>3. Before / after (measured in the live DOM, real camera session)</h2>
+<table>
+  <tr><th>Viewport</th><th>Before (measured)</th><th>After (measured)</th><th>Gain</th></tr>
+  <tr><td>1600 px window</td><td>445 × 333 px</td><td class="pass"><strong>825 × 618 px</strong></td><td>~3.4× area</td></tr>
+  <tr><td>1024 px window</td><td>~445 × 333 (capped)</td><td class="pass"><strong>790 × 592 px</strong></td><td>~3.2× area, still shrinking</td></tr>
+  <tr><td>840 px window</td><td>445 × 333</td><td>445 × 333 (column-bound)</td><td>equal; no overflow</td></tr>
+</table>
+<p>Measured aspect ratio after: <strong>1.334 (4:3 = 1.333)</strong> — no stretching (2% tolerance check).
+No page-level horizontal scrolling at 840/1024/1600 px.</p>
+<div class="ascii">MICROSCOPE   ● Connected
+Camera: mvBlueFOX-ML/IGC205C · S/N 29605128 · 2592 × 1944
+┌─────────────────────────────────────────────┐
+│          LARGE LIVE PREVIEW (4:3)           │
+└─────────────────────────────────────────────┘
+PREVIEW: LIVE (1 s refresh)
+[ CAPTURE IMAGE ]</div>
+
+<h2>4. Camera data — unchanged (verification)</h2>
+<table>
+  <tr><th>Item</th><th>Evidence</th></tr>
+  <tr><td>/preview still ~1024×768 JPEG</td><td class="pass">Verified this session pre-drop: HTTP 200, 50 760 B, <strong>(1024, 768)</strong> via PIL</td></tr>
+  <tr><td>Capture still full-resolution</td><td class="pass">Capture→analysis handler chain byte-identical in git diff; Phase 5 captured 2592×1944 PNG through this exact path; camera.py untouched since 09-30</td></tr>
+  <tr><td>RGBx stride handling</td><td class="pass">camera.py untouched (mtime 2026-09-30)</td></tr>
+  <tr><td>Analysis pipeline</td><td class="pass">nodularity_pipeline.py / analysis_child.py untouched; no /api/analyze-microscope created</td></tr>
+  <tr><td>Frontend funnel</td><td class="pass">captureImage() → Blob → File → runOnFile() → startAnalysis() → api.analyzeUpload() — zero diff on this chain</td></tr>
+  <tr><td>No artificial upscaling</td><td class="pass">Same 1024×768 JPEG rendered larger by CSS only (object-fit: contain); no AI/sharpen/interpolate/enhance</td></tr>
+</table>
+
+<h2>5. Phase 5 behavior — preserved</h2>
+<ul>
+  <li>Preview starts on MICROSCOPE click, 1 Hz sequential polls, stops on panel close/unmount — untouched.</li>
+  <li>CAPTURE IMAGE remains directly below the preview; disabled while capturing/disconnected; post-capture wording <code>✓ Capture ready — click START ANALYSIS to analyze.</code> (Phase 5 fix intact).</li>
+  <li>Error states untouched: offline (start hint + RETRY), disconnected (+ RETRY), busy (409 + friendly message + RETRY), preview error (<code>PREVIEW: UNAVAILABLE — will retry</code>).</li>
+  <li>No WebSockets / no streaming infrastructure introduced.</li>
+  <li class="pass">Live demonstration during this phase's hardware drop (§8): every state stayed typed and recoverable — preview flipped to "UNAVAILABLE — will retry", CAPTURE disabled itself, page never crashed.</li>
+</ul>
+
+<h2>6. Real microscope visual validation</h2>
+<p><span class="pass">Validated earlier this session (camera connected, before the drop):</span></p>
+<ul>
+  <li>MICROSCOPE click → connected state + live specimen visible on the <strong>enlarged</strong> panel (825×618 at 1600px).</li>
+  <li>Live capture through the enlarged panel → START ANALYSIS → full result (Phase 5 §5 regression run; 6A changed only panel size/position).</li>
+  <li>Responsive measurements at 1600/1024/840 px.</li>
+</ul>
+<p><span class="nt">NOT TESTED — hardware removed by user mid-session:</span></p>
+<ul>
+  <li>Physical focus adjustment observed in the enlarged preview.</li>
+  <li>Physical stage movement observed in the enlarged preview.</li>
+  <li>Illumination adjustment observed in the enlarged preview.</li>
+  <li>A fresh capture + START ANALYSIS on the enlarged layout after the drop.</li>
+</ul>
+<p class="note">The camera dropped off the USB bus a third time today (fresh SDK <code>deviceCount() = 0</code>) and the
+user confirmed it is unavailable. Per the port-hygiene rule the hardware was not force-recovered. The underlying
+behaviors (preview freshness; physical response to focus/stage/illumination; capture→analysis) were all validated in
+Phases 3–5 — what remains untested is only their appearance inside the larger panel.</p>
+
+<h2>7. Regression results</h2>
+<table>
+  <tr><th>Gate</th><th>Result</th></tr>
+  <tr><td><span class="mono">npx oxlint src/pages/Analysis.jsx</span></td><td class="pass">0 errors (2 pre-existing warnings)</td></tr>
+  <tr><td><span class="mono">npm run build</span></td><td class="pass">PASS (567 modules, built clean)</td></tr>
+  <tr><td>Full <span class="mono">python -m pytest -q</span></td><td class="pass">298/298 PASS in 644 s (includes 56/56 pinning + 5/5 camera-state tests)</td></tr>
+</table>
+
+<h2>8. Limitations</h2>
+<ol>
+  <li><strong>Real-hardware checks on the enlarged layout</strong> (focus/stage/illumination response, post-drop capture): <span class="nt">NOT TESTED</span> — camera unavailable (§6). UI-side and camera-side code paths are otherwise fully validated.</li>
+  <li>Camera hardware flakiness (3 USB-bus drops today, <code>DEV_INTERNAL_ERROR</code> / <code>deviceCount()=0</code>) is physical/driver — outside software scope; recovery is user replug (proven twice today). During such drops the header dot can still show <code>● Connected</code> while the preview reports unavailable — the documented Phase 5 §8 residual (stale SDK enumeration); typed and recoverable either way.</li>
+  <li>Panel cap is 860px (matches the dataset picker, stays inside the card, no horizontal scroll); a full-bleed edge-to-edge preview was not requested and would fight the page grid.</li>
+</ol>
+
+<div class="verdict">
+  <h2>9. Final status: PASS — with one declared gap</h2>
+  <p>All software acceptance criteria met: larger preview, available panel width, exact 4:3, no stretch,
+  responsive, no horizontal scroll, capture and pipeline untouched, Phase 5 error states preserved,
+  lint/build/pytest green. The four physical-microscope observations in §6 are <span class="nt">NOT TESTED</span>
+  and require the camera.</p>
+  <p class="stop">STOP — no further phase started.</p>
+</div>
+
+</div>
+</body>
+</html>

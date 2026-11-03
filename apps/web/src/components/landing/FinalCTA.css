@@ -1,0 +1,33 @@
+.final-cta__panel {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-lg);
+  padding: var(--space-2xl) var(--space-lg);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.final-cta__grain {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(255,122,24,0.14), transparent 60%);
+  pointer-events: none;
+}
+
+.final-cta__panel h2 {
+  position: relative;
+  font-size: var(--fs-h2);
+  max-width: 640px;
+}
+
+.final-cta__panel p {
+  position: relative;
+  font-size: var(--fs-body-lg);
+}
+
+.final-cta__panel > .btn { position: relative; }

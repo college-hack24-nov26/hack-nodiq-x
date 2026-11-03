@@ -1,0 +1,7 @@
+HTTP/1.1 409 Conflict
+Server: NODIQ-CameraAgent/2.0 Python/3.11.8
+Date: Wed, 30 Sep 2026 10:12:00 GMT
+Content-Type: application/json; charset=utf-8
+Content-Length: 167
+Cache-Control: no-store
+

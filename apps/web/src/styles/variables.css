@@ -1,0 +1,216 @@
+:root {
+  /* ===== Color System (dark is the default theme) =====
+     CANONICAL design-token source. Legacy systems (tokens.css, Home.css
+     :root palette) have been retired and now alias these values. */
+  --color-bg: #101416;
+  --color-bg-2: #12191C;
+  --color-bg-3: #151E22;
+  --color-bg-4: #1A2428;
+  --color-bg-5: #1E2A2E;
+  --color-bg-6: #212E32;
+  --color-surface: #1B2226;
+  --color-elevated: #252E33;
+  --color-border: #2E383D;
+  --color-border-strong: #3A454B;
+
+  --color-primary: #FF7A18;
+  --color-primary-hover: #FF922E;
+  --color-primary-dim: rgba(255, 122, 24, 0.12);
+  --color-primary-ring: rgba(255, 122, 24, 0.35);
+
+  --color-text: #E8ECEE;
+  --color-text-secondary: #9AA6AC;
+  /* Tertiary: readability floor for metadata/labels (was #6B7679, ~3.2:1)
+     — subtle but comfortably legible on #101416. */
+  --color-text-tertiary: #7E898E;
+
+  --color-success: #39C27F;
+  --color-warning: #F2B84B;
+  --color-error: #EF5350;
+  --color-info: #3BA5FF;
+
+  /* ===== Typography — TWO-TIER SYSTEM =====
+     The distinction is CONTENT TYPE, never page type:
+       --font-ui   → Inter, the primary product font. Headings, nav, buttons,
+                     forms, cards, descriptions, landing copy (~80-90% of text).
+       --font-tech → IBM Plex Mono, the technical instrument layer. Analysis
+                     IDs, measurements, percentages, resolution, engine
+                     versions, ISO/JIS labels (~10-20% of text).
+     Compatibility aliases (--font-body / --font-display / --font-mono) are
+     kept as NAMES for the ~200 existing rules and resolve semantically. */
+  --font-ui: 'Inter', 'Segoe UI', sans-serif;
+  --font-tech: 'IBM Plex Mono', 'Menlo', 'Consolas', monospace;
+  --font-oswald: 'Oswald', 'Inter', sans-serif;
+
+  /* Semantic aliases — do not re-point these at other families. */
+  --font-display: var(--font-ui);   /* display/headings = UI font */
+  --font-body: var(--font-ui);      /* body copy = UI font */
+  --font-mono: var(--font-tech);    /* technical data = tech font */
+
+  /* ===== Type scale — canonical px ladder (latest usability audit) =====
+     micro 10 · label 12 · body 16 · title 22 · display-sm 36 ·
+     display clamp(38–46) · hero clamp(44–57). The rem tokens below are
+     aliases kept for the ~130 existing rules; new work uses the px ladder. */
+  --fs-micro: 10px;
+  --fs-label: 12px;
+  --fs-body: 16px;
+  --fs-title: var(--fs-h3);            /* 22px */
+  --fs-display-sm: 36px;
+  --fs-display: clamp(38px, 4vw, 46px);
+  --fs-hero: clamp(44px, 5.5vw, 57px);
+
+  --fs-h1: clamp(2.25rem, 4vw, 3.25rem);
+  --fs-h2: clamp(1.75rem, 3vw, 2.5rem);
+  --fs-h3: 1.375rem;
+  --fs-h4: 1.125rem;
+  --fs-body-lg: 1.125rem;
+  --fs-small: 0.875rem;
+
+  /* One-off accent sizes mapped to the scale (audit issue 1: 11 sizes → 10) */
+  --fs-metric: 1.4rem;      /* showcase metric values */
+  --fs-quote: 2.25rem;      /* testimonial quote mark */
+  --fs-logo: 1.125rem;      /* navbar / footer logos */
+  --fs-tiny: 0.65rem;       /* timeline markers, scope metric labels */
+
+  /* Ink color for gradient-text headings (white on dark, near-black on light) */
+  --heading-ink: #FFFFFF;
+
+  /* ===== Spacing ===== */
+  --space-xs: 0.5rem;
+  --space-sm: 0.875rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6.5rem;
+  --space-3xl: 9rem;
+
+  --container-width: 1240px;
+  --container-pad: clamp(1.25rem, 4vw, 3rem);
+
+  /* ===== Radius ===== */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* ===== Shadow ===== */
+  --shadow-soft: 0 1px 0 rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.28);
+  --shadow-glow: 0 0 0 1px var(--color-primary-ring), 0 0 32px rgba(255,122,24,0.14);
+
+  /* ===== Motion ===== */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.18s;
+  --dur-base: 0.32s;
+  --dur-slow: 0.6s;
+
+  /* ===== Dashboard Layout ===== */
+  --sidebar-width: 72px;
+  --sidebar-expanded-width: 260px;
+
+  /* ===== Legacy dashboard aliases — all point at canonical tokens =====
+     (kept as names because ~130 existing rules reference them; values
+     previously lived in tokens.css / Home.css and conflicted) */
+  --bg-void: #0a0a0a;
+  --bg-panel: #131617;
+  --bg-panel-hover: #1a1e22;
+  --bg-panel-raised: #1f2428;
+  --border-subtle: #2a3035;
+  --border-strong: #3A454B;
+  --accent-copper: #FF7A18;
+  --accent-copper-soft: rgba(255, 122, 24, 0.12);
+  --accent-copper-glow: rgba(255, 122, 24, 0.25);
+  --accent-cyan: #4FD1C5;        /* chart secondary series only */
+  --accent-cyan-soft: rgba(79, 209, 197, 0.12);
+  --text-primary: #E8ECEE;
+  --text-secondary: #9AA6AC;
+  --text-muted: #6B7679;
+  --status-success: #39C27F;
+  --status-danger: #EF5350;
+  --status-warning: #F2B84B;
+
+  /* Chrome veils */
+  --topbar-bg: rgba(10, 14, 16, 0.92);
+  --hover-veil: rgba(255, 255, 255, 0.06);
+  --grid-line: rgba(255, 255, 255, 0.035);
+
+  /* Home.css (legacy dashboard palette) aliases → canonical tokens */
+  --bg: var(--color-bg);
+  --surface: var(--color-surface);
+  --surface-2: var(--color-bg-3);
+  --surface-3: var(--color-bg-4);
+  --surface-4: var(--color-bg-5);
+  --border: var(--color-border);
+  --border-bright: var(--color-border-strong);
+  --text: var(--color-text);
+  --muted: var(--color-text-secondary);
+  --orange: var(--color-primary);
+  --orange-light: var(--color-primary-hover);
+  --green: var(--color-success);
+  --green-bright: var(--color-success);
+  --warning: var(--color-warning);
+  /* --font-tech lives above in the typography block (canonical two-tier token) */
+}
+
+/* ======================================================================
+   LIGHT THEME — activated by [data-theme="light"] on <html>, set by
+   ThemeContext (src/context/ThemeContext.jsx). Every component reads
+   these variables, so overriding them here reskins the whole app.
+   Components with hardcoded dark colors carry their own [data-theme]
+   overrides in their own CSS files.
+   ====================================================================== */
+[data-theme="light"] {
+  --color-bg: #F5F6F7;
+  --color-bg-2: #EEF1F2;
+  --color-bg-3: #E7EBED;
+  --color-bg-4: #DEE4E6;
+  --color-bg-5: #D5DCDF;
+  --color-bg-6: #CBD3D6;
+  --color-surface: #FFFFFF;
+  --color-elevated: #F0F2F4;
+  --color-border: #D3DADE;
+  --color-border-strong: #B4BEC4;
+
+  /* Brand orange stays; deepened hover for contrast on white */
+  --color-primary: #E85D00;
+  --color-primary-hover: #C94F00;
+  --color-primary-dim: rgba(232, 93, 0, 0.1);
+  --color-primary-ring: rgba(232, 93, 0, 0.3);
+
+  --color-text: #1A2226;
+  --color-text-secondary: #4E5A60;
+  --color-text-tertiary: #77828A;
+
+  --color-success: #1E9E5A;
+  --color-warning: #B57F10;
+  --color-error: #D32F2F;
+  --color-info: #1D6FB8;
+
+  /* Dashboard aliases follow the light surfaces */
+  --bg-void: #F5F6F7;
+  --bg-panel: #FFFFFF;
+  --bg-panel-hover: #F0F2F4;
+  --bg-panel-raised: #FFFFFF;
+  --border-subtle: #D3DADE;
+  --border-strong: #B4BEC4;
+  --accent-copper: #E85D00;
+  --accent-copper-soft: rgba(232, 93, 0, 0.1);
+  --accent-copper-glow: rgba(232, 93, 0, 0.2);
+  --accent-cyan: #0E7490;
+  --accent-cyan-soft: rgba(14, 116, 144, 0.1);
+  --text-primary: #1A2226;
+  --text-secondary: #4E5A60;
+  --text-muted: #77828A;
+  --status-success: #1E9E5A;
+  --status-danger: #D32F2F;
+  --status-warning: #B57F10;
+
+  --topbar-bg: rgba(255, 255, 255, 0.88);
+  --hover-veil: rgba(26, 34, 38, 0.06);
+  --grid-line: rgba(26, 34, 38, 0.06);
+
+  --shadow-soft: 0 1px 2px rgba(26, 34, 38, 0.06), 0 8px 24px rgba(26, 34, 38, 0.08);
+  --shadow-glow: 0 0 0 1px var(--color-primary-ring), 0 0 32px rgba(232, 93, 0, 0.1);
+
+  --heading-ink: #1A2226;
+}

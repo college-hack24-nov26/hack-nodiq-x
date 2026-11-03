@@ -1,0 +1,1222 @@
+/* ==========================================================================
+   NODIQBOT: Jarvis-like Voice AI Floating Companion
+   Forge Orange (#FF7A18) & Electric Cyan (#00E5FF) Holographic Aesthetics
+   ========================================================================== */
+
+.nodiqbot-container {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 99999;
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  user-select: none;
+}
+
+/* Floating Orb Button */
+.nodiqbot-orb {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #2a343a, #0c1215 80%);
+  border: 2px solid rgba(255, 122, 24, 0.7);
+  box-shadow:
+    0 0 20px rgba(255, 122, 24, 0.35),
+    inset 0 0 14px rgba(0, 229, 255, 0.25),
+    0 8px 24px rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.nodiqbot-orb:hover {
+  transform: scale(1.08) translateY(-2px);
+  border-color: #00e5ff;
+  box-shadow:
+    0 0 30px rgba(0, 229, 255, 0.5),
+    inset 0 0 18px rgba(255, 122, 24, 0.4),
+    0 12px 28px rgba(0, 0, 0, 0.7);
+}
+
+.nodiqbot-orb:active {
+  transform: scale(0.96);
+}
+
+/* Rotating Orbit Rings */
+.nodiqbot-orb-ring {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 122, 24, 0.4);
+  pointer-events: none;
+  animation: nodiqOrbSpin 12s linear infinite;
+}
+
+.nodiqbot-orb-ring-inner {
+  position: absolute;
+  inset: -12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-top-color: #00e5ff;
+  border-bottom-color: #FF7A18;
+  pointer-events: none;
+  animation: nodiqOrbSpinReverse 6s linear infinite;
+}
+
+@keyframes nodiqOrbSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes nodiqOrbSpinReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+/* State Pulses */
+.nodiqbot-orb.listening {
+  border-color: #00e5ff;
+  box-shadow:
+    0 0 28px rgba(0, 229, 255, 0.7),
+    inset 0 0 20px rgba(0, 229, 255, 0.5);
+  animation: nodiqListeningPulse 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes nodiqListeningPulse {
+  0% { transform: scale(1); box-shadow: 0 0 16px rgba(0, 229, 255, 0.4); }
+  100% { transform: scale(1.06); box-shadow: 0 0 34px rgba(0, 229, 255, 0.8), inset 0 0 22px rgba(255, 122, 24, 0.5); }
+}
+
+.nodiqbot-orb.speaking {
+  border-color: #FF7A18;
+  box-shadow:
+    0 0 32px rgba(255, 122, 24, 0.8),
+    inset 0 0 22px rgba(255, 122, 24, 0.6);
+}
+
+.nodiqbot-orb.thinking .nodiqbot-orb-ring-inner {
+  animation: nodiqOrbSpinReverse 1.2s linear infinite;
+  border-top-color: #00e5ff;
+  border-bottom-color: #FF7A18;
+  border-width: 2px;
+}
+
+/* Inner Mic & Wave Icon */
+.nodiqbot-orb-icon {
+  color: #FF7A18;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.nodiqbot-orb:hover .nodiqbot-orb-icon {
+  color: #00e5ff;
+}
+
+.nodiqbot-orb.listening .nodiqbot-orb-icon {
+  color: #00e5ff;
+  animation: nodiqMicPulse 1.2s ease-in-out infinite;
+}
+
+@keyframes nodiqMicPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.18); }
+}
+
+/* Equalizer Bars for Speaking */
+.nodiqbot-eq-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+}
+
+.nodiqbot-eq-bar {
+  width: 3px;
+  background: #FF7A18;
+  border-radius: 2px;
+  animation: nodiqEqBlink 0.8s ease-in-out infinite alternate;
+}
+
+.nodiqbot-eq-bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.nodiqbot-eq-bar:nth-child(2) { height: 16px; animation-delay: 0.25s; }
+.nodiqbot-eq-bar:nth-child(3) { height: 12px; animation-delay: 0.4s; }
+.nodiqbot-eq-bar:nth-child(4) { height: 18px; animation-delay: 0.15s; }
+.nodiqbot-eq-bar:nth-child(5) { height: 10px; animation-delay: 0.35s; }
+
+@keyframes nodiqEqBlink {
+  0% { transform: scaleY(0.3); opacity: 0.4; }
+  100% { transform: scaleY(1.2); opacity: 1; }
+}
+
+/* Executive Operational HUD — Modern AI Copilot Glassmorphism */
+.nodiqbot-hud {
+  position: absolute;
+  bottom: 84px;
+  right: 0;
+  width: 460px;
+  max-width: calc(100vw - 32px);
+  background: linear-gradient(165deg, rgba(13, 18, 25, 0.94) 0%, rgba(8, 11, 16, 0.97) 100%);
+  backdrop-filter: blur(32px) saturate(190%);
+  -webkit-backdrop-filter: blur(32px);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  box-shadow:
+    0 24px 60px -10px rgba(0, 0, 0, 0.85),
+    0 0 35px -5px rgba(255, 122, 24, 0.14),
+    0 0 50px -10px rgba(0, 229, 255, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: nodiqHudSlideUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #E2E8F0;
+  z-index: 999999;
+}
+
+/* Ambient luminous flare on top edge */
+.nodiqbot-hud::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 20px;
+  width: 160px;
+  height: 70px;
+  background: radial-gradient(circle, rgba(255, 122, 24, 0.16), transparent 70%);
+  pointer-events: none;
+  filter: blur(20px);
+  z-index: 0;
+}
+
+@keyframes nodiqHudSlideUp {
+  from { opacity: 0; transform: translateY(14px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* HUD Top Header */
+.nodiqbot-hud-header {
+  position: relative;
+  z-index: 1;
+  padding: 13px 18px;
+  background: rgba(18, 24, 32, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.nodiqbot-hud-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nodiqbot-ai-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #FF7A18 0%, #FF9D43 55%, #00E5FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #0b0f14;
+  box-shadow: 0 0 14px rgba(255, 122, 24, 0.45);
+  flex-shrink: 0;
+  animation: nodiqAvatarGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes nodiqAvatarGlow {
+  0% { box-shadow: 0 0 10px rgba(255, 122, 24, 0.35); transform: scale(1); }
+  100% { box-shadow: 0 0 18px rgba(0, 229, 255, 0.5); transform: scale(1.03); }
+}
+
+.nodiqbot-brand-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.nodiqbot-brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.nodiqbot-brand-name {
+  font-family: var(--font-display, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #FFFFFF;
+}
+
+.nodiqbot-model-pill {
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 1.5px 6px;
+  border-radius: 10px;
+  background: rgba(255, 122, 24, 0.12);
+  border: 1px solid rgba(255, 122, 24, 0.28);
+  color: #FF9D43;
+}
+
+.nodiqbot-status-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nodiqbot-status-dot {
+  width: 6.5px;
+  height: 6.5px;
+  border-radius: 50%;
+  background: #39C27F;
+  box-shadow: 0 0 8px #39C27F;
+  flex-shrink: 0;
+  transition: all 0.25s ease;
+}
+
+.nodiqbot-status-dot.listening {
+  background: #00E5FF;
+  box-shadow: 0 0 10px #00E5FF;
+  animation: nodiqStatusBlink 1.4s infinite;
+}
+
+.nodiqbot-status-dot.speaking {
+  background: #FF7A18;
+  box-shadow: 0 0 10px #FF7A18;
+  animation: nodiqStatusBlink 1s infinite;
+}
+
+.nodiqbot-status-dot.thinking {
+  background: #A855F7;
+  box-shadow: 0 0 10px #A855F7;
+  animation: nodiqStatusBlink 0.8s infinite;
+}
+
+@keyframes nodiqStatusBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.nodiqbot-status-text {
+  font-size: 10.5px;
+  color: #94A3B8;
+  font-weight: 500;
+}
+
+/* Action Icon Buttons */
+.nodiqbot-hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nodiqbot-hud-icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94A3B8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.nodiqbot-hud-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.09);
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.nodiqbot-hud-icon-btn.active {
+  background: rgba(0, 229, 255, 0.1);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #00E5FF;
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.18);
+}
+
+.nodiqbot-hud-icon-btn.muted {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: rgba(239, 68, 68, 0.35);
+  color: #F87171;
+}
+
+.nodiqbot-hud-icon-btn.close:hover {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #FCA5A5;
+}
+
+/* HUD Body */
+.nodiqbot-hud-body {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 440px;
+  overflow-y: auto;
+}
+
+.nodiqbot-hud-body::-webkit-scrollbar {
+  width: 5px;
+}
+.nodiqbot-hud-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+.nodiqbot-hud-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+/* Live User Speech Box */
+.nodiqbot-transcript-box {
+  background: rgba(0, 229, 255, 0.04);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nodiqbot-transcript-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  color: #00E5FF;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nodiqbot-wave-indicator {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00E5FF;
+  box-shadow: 0 0 8px #00E5FF;
+  display: inline-block;
+  animation: nodiqWavePulse 1.2s infinite ease-in-out;
+}
+
+@keyframes nodiqWavePulse {
+  0%, 100% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.3); opacity: 1; }
+}
+
+.nodiqbot-transcript-text {
+  font-size: 13px;
+  color: #F8FAFC;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* Execution Action Pill */
+.nodiqbot-action-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  background: rgba(255, 122, 24, 0.12);
+  border: 1px solid rgba(255, 122, 24, 0.35);
+  color: #FF922E;
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  width: fit-content;
+}
+
+.nodiqbot-pill-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #FF7A18;
+  box-shadow: 0 0 6px #FF7A18;
+}
+
+.nodiqbot-pill-prefix {
+  color: #8C9BA2;
+  font-weight: 600;
+}
+
+/* AI Dynamic Waveform Bar */
+.nodiqbot-waveform-bar {
+  display: flex;
+  align-items: center;
+  gap: 3.5px;
+  height: 22px;
+  padding: 3px 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  width: fit-content;
+}
+
+.nodiqbot-wave-pill {
+  width: 3px;
+  border-radius: 2px;
+  background: #FF7A18;
+  animation: nodiqWaveBounce 1.2s ease-in-out infinite alternate;
+}
+
+.nodiqbot-waveform-bar.listening .nodiqbot-wave-pill {
+  background: #00E5FF;
+}
+
+.nodiqbot-waveform-bar.thinking .nodiqbot-wave-pill {
+  background: #A855F7;
+}
+
+.nodiqbot-wave-pill:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+.nodiqbot-wave-pill:nth-child(2) { height: 14px; animation-delay: 0.3s; }
+.nodiqbot-wave-pill:nth-child(3) { height: 9px; animation-delay: 0.15s; }
+.nodiqbot-wave-pill:nth-child(4) { height: 16px; animation-delay: 0.45s; }
+.nodiqbot-wave-pill:nth-child(5) { height: 11px; animation-delay: 0.25s; }
+.nodiqbot-wave-pill:nth-child(6) { height: 14px; animation-delay: 0.35s; }
+.nodiqbot-wave-pill:nth-child(7) { height: 7px; animation-delay: 0.05s; }
+
+@keyframes nodiqWaveBounce {
+  0% { transform: scaleY(0.35); opacity: 0.4; }
+  100% { transform: scaleY(1.3); opacity: 1; }
+}
+
+/* AI Intelligence Response Bubble */
+.nodiqbot-response-bubble {
+  background: rgba(16, 22, 30, 0.85);
+  border: 1px solid rgba(255, 122, 24, 0.2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.nodiqbot-response-bubble.has-executive-card {
+  padding: 12px 14px;
+  background: rgba(14, 20, 28, 0.95);
+  border-color: rgba(255, 122, 24, 0.3);
+}
+
+.nodiqbot-response-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.nodiqbot-response-author {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nodiqbot-sparkle-mark {
+  color: #FF7A18;
+  font-size: 11px;
+}
+
+.nodiqbot-response-name {
+  font-family: var(--font-mono, monospace);
+  font-size: 9.5px;
+  color: #FF922E;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.nodiqbot-executive-badge {
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2.5px 8px;
+  border-radius: 10px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: #00E5FF;
+}
+
+.nodiqbot-response-text {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #E2E8F0;
+  font-weight: 400;
+}
+
+/* AI Suggestions Group */
+.nodiqbot-suggestions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 2px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.nodiqbot-suggestions-label {
+  font-family: var(--font-mono, monospace);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #64748B;
+}
+
+.nodiqbot-suggestions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nodiqbot-suggestion-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #CBD5E1;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.16s ease;
+  user-select: none;
+}
+
+.nodiqbot-suggestion-chip:hover {
+  background: rgba(255, 122, 24, 0.14);
+  border-color: rgba(255, 122, 24, 0.38);
+  color: #FFFFFF;
+  transform: translateY(-1px);
+}
+
+.nodiqbot-suggestion-chip .suggestion-icon {
+  font-size: 11px;
+}
+
+/* ==========================================================================
+   EXECUTIVE METALLURGICAL BRIEFING CARD (Inside NodiqBot HUD)
+   ========================================================================== */
+
+.nodiqbot-executive-report-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.nodiq-report-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.nodiq-report-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.nodiq-report-specimen-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+  line-height: 1.3;
+}
+
+.nodiq-report-id-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.nodiq-report-chip-id {
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  padding: 2px 6px;
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: #00E5FF;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.nodiq-report-chip-sample {
+  font-size: 10.5px;
+  color: #94A3B8;
+}
+
+.nodiq-report-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  flex-shrink: 0;
+  background: rgba(57, 194, 127, 0.14);
+  border: 1px solid rgba(57, 194, 127, 0.35);
+  color: #39C27F;
+}
+
+.nodiq-status-live-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #39C27F;
+  box-shadow: 0 0 6px #39C27F;
+}
+
+/* Metrics Grid */
+.nodiq-report-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.nodiq-report-metric-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 6px;
+}
+
+.metric-tile-label {
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94A3B8;
+}
+
+.metric-tile-val {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+/* Acceptance Verdict Callout */
+.nodiq-report-verdict-box {
+  border-radius: 6px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left-width: 3px;
+}
+
+.nodiq-report-verdict-box.marginal {
+  background: rgba(255, 160, 0, 0.08);
+  border-color: rgba(255, 160, 0, 0.28);
+  border-left-color: #FFA000;
+}
+
+.nodiq-report-verdict-box.compliant {
+  background: rgba(57, 194, 127, 0.08);
+  border-color: rgba(57, 194, 127, 0.28);
+  border-left-color: #39C27F;
+}
+
+.nodiq-verdict-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.verdict-icon {
+  font-size: 15px;
+}
+.nodiq-report-verdict-box.marginal .verdict-icon {
+  color: #FFA000;
+}
+.nodiq-report-verdict-box.compliant .verdict-icon {
+  color: #39C27F;
+}
+
+.nodiq-verdict-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #E2E8F0;
+}
+
+.nodiq-conformity-pill {
+  margin-left: auto;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(255, 160, 0, 0.18);
+  color: #FFA000;
+  border: 1px solid rgba(255, 160, 0, 0.35);
+}
+
+.nodiq-report-verdict-box.compliant .nodiq-conformity-pill {
+  background: rgba(57, 194, 127, 0.18);
+  color: #39C27F;
+  border-color: rgba(57, 194, 127, 0.35);
+}
+
+.nodiq-verdict-statement {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #CBD5E1;
+  font-weight: 500;
+}
+
+/* Findings / Metallurgical Evaluation */
+.nodiq-report-findings-section {
+  background: rgba(0, 0, 0, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 6px;
+  padding: 9px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nodiq-findings-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #00E5FF;
+}
+
+.nodiq-findings-text {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: #E2E8F0;
+}
+
+/* Target Application Footer Tag */
+.nodiq-report-app-tag {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 10px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 5px;
+  font-size: 11px;
+  color: #94A3B8;
+  line-height: 1.4;
+}
+
+.nodiq-report-app-tag strong {
+  color: #E2E8F0;
+}
+
+/* Quick Action Toolbar */
+.nodiq-report-quick-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.nodiq-report-action-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #E2E8F0;
+  transition: all 0.2s ease;
+}
+
+.nodiq-report-action-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+.nodiq-report-action-btn.primary {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #00E5FF;
+}
+
+.nodiq-report-action-btn.primary:hover {
+  background: rgba(0, 229, 255, 0.25);
+  border-color: #00E5FF;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.3);
+}
+
+/* Modern AI Floating Prompt Input Row */
+.nodiqbot-hud-input-row {
+  padding: 10px 14px 14px 14px;
+  background: rgba(11, 15, 22, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nodiqbot-hud-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 8px 6px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.nodiqbot-hud-input-wrap:focus-within {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 122, 24, 0.45);
+  box-shadow: 0 0 16px rgba(255, 122, 24, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.nodiqbot-input-sparkle {
+  color: #FF7A18;
+  font-size: 11px;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+
+.nodiqbot-hud-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #F8FAFC;
+  font-size: 12.5px;
+  outline: none;
+  font-family: inherit;
+}
+
+.nodiqbot-hud-input::placeholder {
+  color: #64748B;
+  font-size: 12px;
+}
+
+.nodiqbot-hud-send-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: none;
+  color: #64748B;
+  border-radius: 8px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: not-allowed;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.nodiqbot-hud-send-btn.ready {
+  background: linear-gradient(135deg, #FF7A18, #FF9436);
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(255, 122, 24, 0.4);
+}
+
+.nodiqbot-hud-send-btn.ready:hover {
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(255, 122, 24, 0.55);
+}
+
+/* ==========================================================================
+   MICROGRAPH SPECIMEN SELECTION MODAL
+   ========================================================================== */
+
+.nodiq-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 9, 12, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: nodiqFadeIn 0.22s ease-out;
+}
+
+@keyframes nodiqFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.nodiq-modal-card {
+  background: #0d1519;
+  border: 1px solid rgba(255, 122, 24, 0.4);
+  border-radius: 14px;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.88),
+    0 0 36px rgba(255, 122, 24, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  width: 100%;
+  max-width: 840px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  animation: nodiqScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes nodiqScaleUp {
+  from { opacity: 0; transform: scale(0.96) translateY(8px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Modal Header */
+.nodiq-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 122, 24, 0.2);
+  padding-bottom: 14px;
+}
+
+.nodiq-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono, "IBM Plex Mono", monospace);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #FF7A18;
+  text-transform: uppercase;
+}
+
+.nodiq-modal-title-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00E5FF;
+  box-shadow: 0 0 10px #00E5FF;
+}
+
+.nodiq-modal-close {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #94A3B8;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  line-height: 1;
+}
+
+.nodiq-modal-close:hover {
+  color: #ffffff;
+  border-color: #FF7A18;
+  background: rgba(255, 122, 24, 0.15);
+}
+
+.nodiq-modal-subtitle {
+  font-size: 13px;
+  color: #94A3B8;
+  line-height: 1.5;
+  margin-top: -6px;
+}
+
+/* Specimen Grid */
+.nodiq-specimen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+  gap: 14px;
+}
+
+.nodiq-specimen-card {
+  background: rgba(18, 26, 31, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: all 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+.nodiq-specimen-card:hover {
+  border-color: #00E5FF;
+  transform: translateY(-3px);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.6),
+    0 0 18px rgba(0, 229, 255, 0.22);
+}
+
+.nodiq-specimen-thumb-wrap {
+  width: 100%;
+  height: 120px;
+  position: relative;
+  overflow: hidden;
+  background: #080E11;
+}
+
+.nodiq-specimen-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.nodiq-specimen-card:hover .nodiq-specimen-thumb {
+  transform: scale(1.06);
+}
+
+.nodiq-specimen-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(8, 14, 18, 0.9);
+  border: 1px solid rgba(0, 229, 255, 0.4);
+  color: #00E5FF;
+  font-family: var(--font-mono, monospace);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
+  backdrop-filter: blur(4px);
+}
+
+.nodiq-specimen-info {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.nodiq-specimen-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #F8FAFC;
+  font-family: var(--font-mono, monospace);
+  letter-spacing: 0.03em;
+}
+
+.nodiq-specimen-desc {
+  font-size: 11px;
+  color: #88969E;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.nodiq-specimen-select-btn {
+  margin: 0 12px 12px 12px;
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  color: #00E5FF;
+  font-family: var(--font-mono, monospace);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 7px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.nodiq-specimen-card:hover .nodiq-specimen-select-btn {
+  background: #00E5FF;
+  color: #0B1216;
+  border-color: #00E5FF;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.45);
+}
+
+/* Workstation Actions Bar */
+.nodiq-modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+  align-items: center;
+}
+
+.nodiq-modal-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(20, 30, 36, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #CBD5E1;
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 9px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nodiq-modal-action-btn:hover {
+  border-color: #FF7A18;
+  color: #ffffff;
+  background: rgba(255, 122, 24, 0.12);
+}
+
+.nodiq-modal-action-btn.primary {
+  background: linear-gradient(135deg, #FF7A18, #E65A00);
+  border: 1px solid #FF8C33;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 14px rgba(255, 122, 24, 0.35);
+}
+
+.nodiq-modal-action-btn.primary:hover {
+  background: linear-gradient(135deg, #FF8C33, #FF6F00);
+  box-shadow: 0 6px 18px rgba(255, 122, 24, 0.5);
+  transform: translateY(-1px);
+}
+
+.nodiq-btn-icon {
+  font-size: 14px;
+}

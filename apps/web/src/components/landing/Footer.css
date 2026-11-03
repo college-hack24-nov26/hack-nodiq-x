@@ -1,0 +1,67 @@
+.footer {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-lg);
+}
+
+.footer__top {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr;
+  gap: var(--space-xl);
+}
+
+.footer__logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-logo);
+}
+.footer__mark { width: 8px; height: 8px; background: var(--color-primary); transform: rotate(45deg); }
+.footer__logo-accent { color: var(--color-primary); }
+
+.footer__brand p {
+  margin-top: 0.9rem;
+  font-size: var(--fs-small);
+  max-width: 320px;
+}
+
+.footer__columns {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+/* Styled via a dedicated class so headings keep document-outline order
+   (h3 after the footer's implicit h2 context — audit issue 5). */
+.footer__col-title {
+  font-size: var(--fs-label);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.footer__col ul { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+.footer__col a { font-size: var(--fs-small); color: var(--color-text-secondary); transition: color var(--dur-fast) var(--ease-out); }
+.footer__col a:hover { color: var(--color-text); }
+
+.footer__bottom {
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border);
+  font-size: var(--fs-label);
+  color: var(--color-text-tertiary);
+  font-family: var(--font-ui);
+}
+
+@media (max-width: 900px) {
+  .footer__top { grid-template-columns: 1fr; gap: var(--space-lg); }
+  .footer__columns { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .footer__columns { grid-template-columns: 1fr 1fr; }
+}

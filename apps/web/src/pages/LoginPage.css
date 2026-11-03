@@ -1,0 +1,126 @@
+.login-page {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: var(--bg-void);
+  position: relative;
+  overflow: hidden;
+  padding-right: var(--space-lg);
+}
+
+.login-page__background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.login-page__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding: var(--space-lg);
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 550px;
+  gap: 1.5rem;
+}
+
+.login-page__back-btn {
+  align-self: flex-start;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem 0.9rem;
+  transition: color 0.2s ease, border-color 0.2s ease, opacity 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+}
+
+.login-page__back-btn:hover {
+  color: var(--color-primary-hover);
+  border-color: var(--color-primary);
+  opacity: 1;
+}
+
+.login-page__back-btn:active {
+  opacity: 0.6;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-xl) var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  box-shadow: var(--shadow-soft);
+}
+
+/* Light theme: solid white card so text stays readable over the video */
+[data-theme="light"] .login-card {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.login-card h2 {
+  font-size: var(--fs-h2);
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.login-card__divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.login-card__divider span:not(.login-page__divider) { flex: 1; height: 1px; background: var(--color-border); }
+.login-card__divider .login-page__divider { font-size: var(--fs-label); color: var(--color-text-tertiary); font-family: var(--font-ui); letter-spacing: 0.06em; }
+
+.login-card__footer {
+  text-align: center;
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+.login-card__footer a { color: var(--color-primary); font-weight: 600; text-decoration: none; transition: color 0.2s ease; }
+.login-card__footer a:hover { color: var(--color-primary-hover); }
+
+@media (max-width: 1024px) {
+  .login-page {
+    justify-content: center;
+    padding-right: var(--space-md);
+  }
+
+  .login-page__content {
+    align-items: center;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  .login-page {
+    padding: var(--space-md);
+  }
+
+  .login-card {
+    max-width: 100%;
+  }
+}
+

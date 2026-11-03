@@ -1,0 +1,281 @@
+/* ==========================================================================
+   White Cast Iron — Carbide Analysis Styling
+   Theme: Aligned with NODIQ-X Material Intelligence (#FF7A18 Forge Orange)
+   Matches canonical Analysis.jsx workspace blueprint (Image 1)
+   ========================================================================== */
+
+.white-cast-iron-page {
+  padding: 24px 32px 64px;
+  max-width: 1440px;
+  margin: 0 auto;
+  color: var(--color-text, #E8ECEE);
+  font-family: var(--font-body, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+}
+
+/* Header Accent Bar & Eyebrow */
+.white-cast-iron-page .analysis-header-accent {
+  width: 5px;
+  height: 28px;
+  background: var(--color-primary, #FF7A18);
+  box-shadow: 0 0 14px rgba(255, 122, 24, 0.45);
+  border-radius: 2px;
+}
+
+.white-cast-iron-page .analysis-eyebrow {
+  color: var(--color-primary, #FF7A18);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Workspace Card */
+.white-cast-iron-page .analysis-card {
+  background: var(--color-bg-2, #12191C);
+  border: 1px solid var(--color-border, #252E33);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.white-cast-iron-page .analysis-card:hover {
+  border-color: rgba(255, 122, 24, 0.3);
+}
+
+/* Upload Zone with Orange Blueprint Styling */
+.white-cast-iron-page .upload-zone {
+  position: relative;
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #080E10;
+  border: 1px dashed rgba(255, 122, 24, 0.65);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.white-cast-iron-page .upload-zone:hover {
+  border-color: #FF7A18;
+  background: #0B1316;
+  box-shadow:
+    inset 0 0 50px rgba(255, 122, 24, 0.06),
+    0 0 24px rgba(255, 122, 24, 0.15);
+}
+
+.white-cast-iron-page .upload-zone.drag-active {
+  border-color: #FF7A18;
+  border-style: solid;
+  background: #141c20;
+  box-shadow:
+    inset 0 0 60px rgba(255, 122, 24, 0.15),
+    0 0 0 2px rgba(255, 122, 24, 0.4);
+}
+
+.white-cast-iron-page .upload-zone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 122, 24, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 122, 24, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+  pointer-events: none;
+}
+
+.white-cast-iron-page .upload-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 580px;
+  padding: 40px 24px;
+}
+
+.white-cast-iron-page .upload-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 122, 24, 0.06);
+  border: 1px solid rgba(255, 122, 24, 0.45);
+  border-radius: 8px;
+  color: #FF7A18;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.white-cast-iron-page .upload-zone:hover .upload-icon {
+  border-color: #FF7A18;
+  transform: translateY(-2px);
+  box-shadow: 0 0 16px rgba(255, 122, 24, 0.3);
+}
+
+/* Primary Button (Forge Orange) */
+.white-cast-iron-page .nodiq-button-primary {
+  background: #FF7A18;
+  color: #ffffff;
+  border: 1px solid #FF7A18;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 10px 24px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.white-cast-iron-page .nodiq-button-primary:hover:not(:disabled) {
+  background: #FF922E;
+  border-color: #FF922E;
+  box-shadow: 0 0 18px rgba(255, 122, 24, 0.45);
+  transform: translateY(-1px);
+}
+
+.white-cast-iron-page .nodiq-button-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Action Bar below Viewer */
+.wci-action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding: 12px 16px;
+  background: var(--color-bg-3, #151E22);
+  border: 1px solid var(--color-border, #2E383D);
+  border-radius: 6px;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.wci-action-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.wci-calibration-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-2, #12191C);
+  border: 1px solid var(--color-border, #2E383D);
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.wci-calibration-input {
+  width: 90px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-border-strong, #3A454B);
+  border-radius: 4px;
+  background: var(--color-bg, #101416);
+  color: var(--color-text, #E8ECEE);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  font-size: 11px;
+}
+
+.wci-calibration-input:focus {
+  outline: none;
+  border-color: var(--color-primary, #FF7A18);
+  box-shadow: 0 0 0 2px rgba(255, 122, 24, 0.25);
+}
+
+/* Results Section */
+.wci-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-border, #2E383D);
+  padding-bottom: 16px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.wci-advisory-box {
+  background: rgba(255, 122, 24, 0.08);
+  border: 1px solid rgba(255, 122, 24, 0.35);
+  border-left: 3px solid #FF7A18;
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-bottom: 20px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #cbd5e1);
+}
+
+.wci-kpi-grid {
+  display: grid;
+  grid-templateColumns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.wci-kpi-card {
+  background: var(--color-bg-3, #151E22);
+  border: 1px solid var(--color-border, #2E383D);
+  border-radius: 6px;
+  padding: 14px 16px;
+  transition: border-color 0.2s ease;
+}
+
+.wci-kpi-card:hover {
+  border-color: rgba(255, 122, 24, 0.3);
+}
+
+.wci-kpi-label {
+  font-size: 10px;
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+  color: var(--color-text-tertiary, #7E898E);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.wci-kpi-value {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 6px 0 2px;
+  color: var(--color-text, #E8ECEE);
+  font-family: var(--font-mono, 'IBM Plex Mono', monospace);
+}
+
+.wci-kpi-sub {
+  font-size: 11px;
+  color: var(--color-text-secondary, #9AA6AC);
+}
+
+/* Artifacts Tabs */
+.wci-artifact-tab {
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid var(--color-border, #2E383D);
+  color: var(--color-text-secondary, #9AA6AC);
+  transition: all 0.2s ease;
+}
+
+.wci-artifact-tab:hover {
+  border-color: var(--color-primary, #FF7A18);
+  color: var(--color-text, #ffffff);
+}
+
+.wci-artifact-tab.active {
+  background: rgba(255, 122, 24, 0.15);
+  border-color: var(--color-primary, #FF7A18);
+  color: var(--color-primary, #FF7A18);
+  font-weight: 700;
+}

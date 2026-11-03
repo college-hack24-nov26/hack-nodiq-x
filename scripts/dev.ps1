@@ -1,0 +1,5 @@
+Write-Host "Starting NODIQ-X (Vite UI + REST API Server + Camera Agent)..." -ForegroundColor Cyan
+npx concurrently -n vite,server,camera -c "green,cyan,magenta" `
+    "npm run dev --prefix apps/web" `
+    "python -m nodiq.api.server" `
+    "python apps/camera-agent/agent_server.py"

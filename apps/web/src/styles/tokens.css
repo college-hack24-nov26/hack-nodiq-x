@@ -1,0 +1,56 @@
+/* RETIRED LEGACY TOKEN SYSTEM — pure aliases now.
+   The canonical source of truth is styles/variables.css. These aliases keep
+   ~130 existing dashboard rules working under one token architecture.
+
+   Historic (pre-redesign) values removed by the consolidation:
+   - copper #c97b3d  → canonical brand orange (var(--color-primary))
+   - cyan  #4fd1c5   → chart secondary series only
+   - radius 6/10/14  → canonical 4/8/12 scale
+   - fonts Space Grotesk / JetBrains Mono as UI families → two-tier system:
+     Inter (--font-ui) for product UI, IBM Plex Mono (--font-tech) for
+     technical data only (typography correction pass) */
+
+:root {
+  /* Surfaces */
+  --bg-void: var(--color-bg);
+  --bg-panel: var(--color-surface);
+  --bg-panel-raised: var(--color-elevated);
+  --bg-panel-hover: var(--color-elevated);
+
+  /* Borders */
+  --border-subtle: var(--color-border);
+  --border-strong: var(--color-border-strong);
+
+  /* Text */
+  --text-primary: var(--color-text);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-tertiary);
+
+  /* Brand accents */
+  --accent-copper: var(--color-primary);
+  --accent-copper-soft: var(--color-primary-dim);
+  --accent-copper-glow: var(--color-primary-ring);
+  --accent-cyan: #4FD1C5;              /* chart secondary series only */
+  --accent-cyan-soft: rgba(79, 209, 197, 0.12);
+
+  /* Status */
+  --status-success: var(--color-success);
+  --status-danger: var(--color-error);
+  --status-warning: var(--color-warning);
+
+  /* Type — semantic aliases only; the canonical definitions live in
+     variables.css: --font-ui (Inter) + --font-tech (IBM Plex Mono).
+     --font-mono is kept as a token NAME for the ~200 technical-label rules
+     and resolves to the tech tier (IDs, measurements, readouts). */
+  --font-body: var(--font-ui);
+  --font-mono: var(--font-tech);
+
+  /* Layout */
+  --sidebar-width: 72px;
+  --sidebar-expanded-width: 260px;
+
+  /* Radius — canonical 4/8/12 scale (was 6/10/14) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}

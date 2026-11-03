@@ -1,0 +1,192 @@
+/* Settings — aligned tables on the shared Dashboard panels */
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.settings-panel {
+  min-width: 0;
+}
+
+/* Standalone stacked panels (Validation Lab, Analysis Defaults) — the grid
+   above carries its own 16px gap, bare siblings would otherwise touch. */
+.dashboard-content > .dashboard-panel {
+  margin-top: 16px;
+}
+
+.settings-table {
+  width: 100%;
+  max-width: 100%;
+  /* fixed layout keeps long mono values inside the card — auto layout let
+     unbreakable strings widen rows past the panel edge */
+  table-layout: fixed;
+  border-collapse: collapse;
+  /* Dashboard.css ships a global `table { white-space: nowrap }` — it leaks
+     onto this page (Settings imports Dashboard.css) and made every value
+     unbreakable, so rows blew past the card. Long values must wrap here. */
+  white-space: normal;
+}
+
+.settings-table td {
+  padding: 11px 16px;
+  border-bottom: 1px solid rgba(37, 46, 51, 0.6);
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.settings-table tr:last-child td {
+  border-bottom: none;
+}
+
+.settings-label {
+  width: 38%;
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.settings-value {
+  color: var(--color-text);
+  font-size: 13px;
+  line-height: 20px;
+  word-break: break-word;
+  font-family: var(--font-mono);
+}
+
+.settings-value.mono {
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.settings-value.ok {
+  color: var(--color-success);
+}
+
+.settings-value.bad {
+  color: var(--color-error);
+}
+
+.settings-note {
+  margin: 0;
+  padding: 10px 16px 14px;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  line-height: 19px;
+}
+
+.settings-note code {
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--color-bg);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-text);
+}
+
+.settings-hint {
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+}
+
+/* Honest "this is system info, not preferences" tag on read-only panels */
+.settings-readonly-tag {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 14px 16px 4px;
+}
+
+.settings-action-btn {
+  height: 38px;
+  padding: 0 16px;
+  background: var(--color-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.settings-action-btn:hover:not(:disabled) {
+  border-color: #ff7a18;
+  color: #ff7a18;
+}
+
+.settings-action-btn:disabled {
+  opacity: 0.5;
+  cursor: wait;
+}
+
+.settings-run-error {
+  margin: 0;
+  padding: 10px 16px 14px;
+  color: var(--color-error);
+  font-size: 13px;
+}
+
+.settings-run-result {
+  margin: 12px 16px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.settings-run-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.settings-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.settings-dot.ok {
+  background: var(--color-success);
+}
+
+.settings-dot.bad {
+  background: var(--color-error);
+}
+
+.settings-run-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 12px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--color-text-secondary);
+}
+
+.settings-run-row + .settings-run-row {
+  border-top: 1px solid rgba(37, 46, 51, 0.5);
+}

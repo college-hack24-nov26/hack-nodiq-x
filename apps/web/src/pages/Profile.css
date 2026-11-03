@@ -1,0 +1,1055 @@
+.profile-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 80% 0%,
+      rgba(255, 122, 24, 0.08),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 10% 55%,
+      rgba(52, 211, 153, 0.025),
+      transparent 25%
+    ),
+    var(--bg-void, var(--color-bg));
+  color: var(--text-primary, var(--color-text));
+}
+
+/* =========================
+   Ambient Background
+========================= */
+
+.profile-background-glow {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.18;
+  z-index: 0;
+}
+
+.profile-glow-one {
+  width: 260px;
+  height: 260px;
+
+  top: 100px;
+  right: 5%;
+
+  background: rgba(255, 122, 24, 0.12);
+
+  animation: profileFloat 10s ease-in-out infinite;
+}
+
+.profile-glow-two {
+  width: 200px;
+  height: 200px;
+
+  bottom: 10%;
+  left: 5%;
+
+  background: rgba(80, 150, 130, 0.06);
+
+  animation: profileFloat 13s ease-in-out infinite reverse;
+}
+
+@keyframes profileFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -20px, 0);
+  }
+}
+
+/* =========================
+   Header
+========================= */
+
+.profile-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+
+  height: 68px;
+  padding: 0 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--border-subtle, #2a3035);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.profile-brand {
+  color: var(--color-primary);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.profile-back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  min-height: 38px;
+  padding: 0 15px;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
+  background: transparent;
+  color: var(--color-text-secondary);
+
+  font-family: inherit;
+  font-size: var(--fs-label);
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.profile-back-button:hover {
+  color: var(--color-text);
+  background: var(--hover-veil);
+  border-color: var(--border-subtle);
+  transform: translateX(-2px);
+}
+
+/* =========================
+   Main Container
+========================= */
+
+.profile-container {
+  position: relative;
+  z-index: 1;
+
+  width: min(1120px, calc(100% - 48px));
+
+  margin: 0 auto;
+
+  padding: 52px 0 80px;
+}
+
+/* =========================
+   Page Heading
+========================= */
+
+.profile-page-heading {
+  margin-bottom: 28px;
+}
+
+.profile-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+
+  color: var(--color-primary);
+
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.profile-page-heading h1 {
+  margin: 0;
+
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.profile-page-heading p {
+  max-width: 650px;
+  margin: 12px 0 0;
+
+  color: var(--color-text-secondary);
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+/* =========================
+   Identity
+========================= */
+
+.profile-identity {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 26px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 122, 24, 0.045),
+      color-mix(in srgb, var(--bg-panel) 70%, transparent) 40%
+    );
+
+  border: 1px solid var(--color-bg-4);
+
+  border-radius: var(--radius-md);
+
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.16);
+
+  overflow: hidden;
+}
+
+.profile-identity::after {
+  content: "";
+
+  position: absolute;
+
+  top: -100px;
+  right: -100px;
+
+  width: 220px;
+  height: 220px;
+
+  border-radius: 50%;
+
+  background: rgba(255, 122, 24, 0.04);
+
+  filter: blur(30px);
+
+  pointer-events: none;
+}
+
+/* =========================
+   Avatar
+========================= */
+
+.profile-avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.profile-avatar {
+  width: 72px;
+  height: 72px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 122, 24, 0.24),
+      rgba(255, 122, 24, 0.08)
+    );
+
+  border: 1px solid rgba(255, 122, 24, 0.45);
+
+  color: var(--color-primary-hover);
+
+  font-size: 22px;
+  font-weight: 700;
+
+  box-shadow:
+    0 0 0 6px rgba(255, 122, 24, 0.035);
+}
+
+.avatar-status {
+  position: absolute;
+
+  right: 2px;
+  bottom: 2px;
+
+  width: 13px;
+  height: 13px;
+
+  border-radius: 50%;
+
+  background: var(--color-success);
+
+  border: 3px solid var(--color-surface);
+
+  box-shadow:
+    0 0 0 0 rgba(74, 222, 128, 0.4);
+
+  animation: avatarPulse 2.4s infinite;
+}
+
+@keyframes avatarPulse {
+  0% {
+    box-shadow:
+      0 0 0 0 rgba(74, 222, 128, 0.35);
+  }
+
+  70% {
+    box-shadow:
+      0 0 0 7px rgba(74, 222, 128, 0);
+  }
+
+  100% {
+    box-shadow:
+      0 0 0 0 rgba(74, 222, 128, 0);
+  }
+}
+
+.profile-identity-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-identity-info h2 {
+  margin: 0;
+
+  font-size: var(--fs-h4);
+  font-weight: 650;
+}
+
+.profile-identity-info > p {
+  margin: 5px 0 10px;
+
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+}
+
+.profile-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+}
+
+.profile-status,
+.security-active {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+
+  border-radius: 50%;
+  background: var(--color-success);
+
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
+}
+
+/* =========================
+   Buttons
+========================= */
+
+/* Three shared button styles (audit issue 4): primary solid, outline,
+   danger-outline — all 38px/radius-sm, no per-button one-offs */
+.profile-outline-button,
+.profile-primary-button,
+.profile-danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  min-height: 38px;
+
+  padding: 0 15px;
+
+  border-radius: var(--radius-sm);
+
+  font-family: inherit;
+
+  font-size: var(--fs-label);
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.profile-outline-button {
+  background: transparent;
+
+  border: 1px solid var(--border-strong);
+
+  color: var(--color-text);
+}
+
+.profile-outline-button:hover {
+  background: var(--hover-veil);
+
+  border-color: var(--color-border-strong);
+
+  transform: translateY(-1px);
+}
+
+.profile-primary-button {
+  background: var(--color-primary);
+
+  border: 1px solid var(--color-primary);
+
+  color: var(--color-bg);
+
+  box-shadow:
+    0 5px 18px rgba(255, 122, 24, 0.12);
+}
+
+.profile-primary-button:hover {
+  background: var(--color-primary-hover);
+
+  box-shadow:
+    0 7px 22px rgba(255, 122, 24, 0.18);
+
+  transform: translateY(-1px);
+}
+
+.profile-danger-button {
+  background: transparent;
+
+  border: 1px solid var(--color-error);
+
+  color: var(--color-error);
+}
+
+.profile-danger-button:hover {
+  background: rgba(248, 113, 113, 0.08);
+
+  border-color: rgba(248, 113, 113, 0.65);
+}
+
+.profile-outline-button:active,
+.profile-primary-button:active,
+.profile-danger-button:active {
+  transform: scale(0.98);
+}
+
+/* =========================
+   Metrics
+========================= */
+
+.profile-metrics {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+
+  margin: 14px 0 18px;
+}
+
+.profile-metric {
+  position: relative;
+
+  padding: 18px;
+
+  background: var(--bg-panel);
+
+  border: 1px solid var(--border-subtle);
+
+  border-radius: var(--radius-md);
+
+  overflow: hidden;
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    background 0.25s ease;
+}
+
+.profile-metric::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 35px;
+  height: 2px;
+
+  background: var(--color-primary);
+
+  opacity: 0.6;
+}
+
+.profile-metric:hover {
+  transform: translateY(-3px);
+
+  border-color: rgba(255, 122, 24, 0.3);
+
+  background: var(--bg-panel-hover);
+}
+
+/* Metric labels (audit issues 5/9): sentence case, readable secondary ink */
+.profile-metric span {
+  display: block;
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--fs-label);
+
+  letter-spacing: 0.02em;
+}
+
+.profile-metric strong {
+  display: block;
+
+  margin-top: 8px;
+
+  color: var(--color-text);
+
+  font-size: var(--fs-title);
+
+  font-weight: 650;
+}
+
+.profile-metric small {
+  display: block;
+
+  margin-top: 5px;
+
+  color: var(--color-text-tertiary);
+
+  font-size: var(--fs-micro);
+}
+
+.metric-text {
+  font-size: 20px !important;
+}
+
+.profile-metric,
+.profile-section,
+.profile-identity {
+  border-radius: var(--radius-md);
+}
+
+/* =========================
+   Sections
+========================= */
+
+.profile-section {
+  margin-top: 18px;
+  padding: 28px;
+
+  background: var(--bg-panel);
+  border: 1px solid var(--color-bg-4);
+  border-radius: var(--radius-md);
+}
+
+.profile-section-heading {
+  margin-bottom: 24px;
+}
+
+/* All H2 section headings share one scale (audit issues 7/16) */
+.profile-section-heading h2,
+.profile-danger-zone h2 {
+  margin: 0;
+
+  font-size: var(--fs-h4);
+  font-weight: 650;
+}
+
+.profile-section-heading p,
+.profile-danger-zone p {
+  margin: 6px 0 0;
+
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+  line-height: 1.55;
+}
+
+/* =========================
+   Forms
+========================= */
+
+.profile-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-field label {
+  color: var(--color-text-secondary);
+
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.profile-field input,
+.profile-field select {
+  width: 100%;
+  height: 42px;
+  padding: 0 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+
+  outline: none;
+
+  background: var(--color-bg);
+  color: var(--color-text);
+
+  font-family: inherit;
+  font-size: var(--fs-label);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Short-choice dropdowns don't need a full column (audit issue 13): cap the
+   control so its width hints at the expected input length */
+.profile-field select {
+  width: min(100%, 240px);
+}
+
+.profile-field input::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+.profile-field input:focus,
+.profile-field select:focus {
+  border-color: rgba(255, 122, 24, 0.7);
+  box-shadow: 0 0 0 3px rgba(255, 122, 24, 0.08);
+}
+
+/* =========================
+   Toggles
+========================= */
+
+.profile-toggle-list {
+  margin-top: 26px;
+
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Row hover ties label to its distant switch (audit issue 14) */
+.profile-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding: 18px 12px;
+
+  margin: 0 -12px;
+
+  border-bottom: 1px solid var(--border-subtle);
+
+  border-radius: var(--radius-sm);
+
+  transition: background 0.2s ease;
+}
+
+.profile-toggle:hover {
+  background: var(--hover-veil);
+}
+
+.profile-toggle strong {
+  display: block;
+
+  color: var(--color-text);
+  font-size: var(--fs-label);
+}
+
+.profile-toggle p {
+  margin: 4px 0 0;
+
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+}
+
+.toggle-switch {
+  position: relative;
+
+  width: 42px;
+  height: 23px;
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+
+  background: var(--color-elevated);
+
+  cursor: pointer;
+
+  transition: background 0.2s ease;
+}
+
+.toggle-switch span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+
+  width: 15px;
+  height: 15px;
+
+  border-radius: 50%;
+
+  background: var(--color-text-secondary);
+
+  transition: transform 0.2s ease;
+}
+
+.toggle-switch.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.toggle-switch.active span {
+  background: var(--color-bg);
+  transform: translateX(18px);
+}
+
+/* =========================
+   Save
+========================= */
+
+.profile-save-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+
+  margin: 18px 0;
+}
+
+.profile-save-message {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+
+  color: var(--color-success);
+  font-size: var(--fs-label);
+}
+
+/* =========================
+   Security
+========================= */
+
+/* Security rows (audit issues 8/17): label and action sit in a capped-width
+   column so they associate at a glance */
+.profile-security-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 620px;
+
+  padding: 18px 0;
+
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Status row carries no action — no separator between it and the session row */
+.profile-security-row--action {
+  border-top: none;
+}
+
+.security-label,
+.security-value {
+  display: block;
+}
+
+.security-label {
+  margin-bottom: 5px;
+
+  color: var(--color-text-secondary);
+  font-size: var(--fs-label);
+}
+
+.security-value {
+  color: var(--color-text);
+  font-size: var(--fs-label);
+}
+
+/* =========================
+   Danger Zone
+========================= */
+
+.profile-danger-zone {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-top: 18px;
+
+  /* Same 28px padding as .profile-section, so the icon+text block anchors at
+     the same left edge as the other sections' content (audit issues 7/10) */
+  padding: 28px;
+
+  border: 1px solid rgba(248, 113, 113, 0.22);
+
+  border-radius: var(--radius-md);
+
+  background: rgba(80, 20, 20, 0.12);
+}
+
+/* Icon + text form one block anchored at the section content edge. The icon
+   stacks ABOVE the heading (audit issue 10's sanctioned rewrite): an inline
+   icon would push the text 52px right of every other section, and a
+   negative-hang version left the card entirely — invisible chip on the light
+   page background. Stacked, the text column stays flush and the icon chip is
+   always on the card surface. */
+.profile-danger-zone > div {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 12px;
+}
+
+.profile-danger-zone h2 {
+  margin: 0;
+
+  font-size: var(--fs-h4);
+
+  font-weight: 650;
+
+  color: var(--color-error);
+}
+
+.profile-danger-zone p {
+  margin: 5px 0 0;
+
+  color: var(--color-text-secondary);
+
+  font-size: var(--fs-label);
+}
+
+.danger-icon {
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: var(--radius-sm);
+
+  /* Theme-aware tint: visible as a soft chip on both dark and light cards */
+  background: color-mix(in srgb, var(--color-error) 8%, transparent);
+
+  color: var(--color-error);
+}
+
+/* Stacked layout (audit issue 10): give the paragraph its top margin against
+   the icon block above, and align text+paragraph as one flush column */
+.profile-danger-zone h2 {
+  line-height: 1.3;
+}
+
+/* =========================
+   Responsive
+========================= */
+
+@media (max-width: 800px) {
+  .profile-container {
+    width: min(100% - 32px, 680px);
+    padding-top: 36px;
+  }
+
+  .profile-header {
+    padding: 0 18px;
+  }
+
+  .profile-metrics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .profile-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-identity {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .profile-container {
+    width: calc(100% - 24px);
+  }
+
+  .profile-header {
+    height: 60px;
+  }
+
+  .profile-brand {
+    font-size: 16px;
+  }
+
+  .profile-back-button {
+    padding-left: 0;
+  }
+
+  .profile-back-button {
+    font-size: 0;
+  }
+
+  .profile-back-button .material-symbols-outlined {
+    font-size: 22px;
+  }
+
+  .profile-metrics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .profile-section,
+  .profile-identity {
+    padding: 20px;
+  }
+
+  .profile-danger-zone {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .profile-save-row {
+    justify-content: space-between;
+  }
+
+  .profile-security-row {
+    align-items: flex-start;
+    gap: 15px;
+    flex-direction: column;
+  }
+
+  .profile-danger-zone > div {
+    align-items: flex-start;
+  }
+
+  .profile-danger-button {
+    width: 100%;
+  }
+}
+
+/* =========================
+   Reduced Motion
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-background-glow,
+  .avatar-status {
+    animation: none;
+  }
+
+  .profile-metric,
+  .profile-outline-button,
+  .profile-primary-button {
+    transition: none;
+  }
+}
+/* Header surface now comes from --topbar-bg (theme-aware); the old light
+   override was redundant and removed */
+
+/* ===== Change-password modal form ===== */
+.profile-pw-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-pw-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-pw-form label span {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary, var(--color-text-secondary));
+  font-family: var(--font-ui);
+  font-weight: 500;
+}
+
+.profile-pw-form input {
+  padding: 10px 12px;
+  border: 1px solid var(--border-subtle, #2a3035);
+  border-radius: 6px;
+  background: var(--bg-panel-raised, var(--color-elevated));
+  color: var(--text-primary, var(--color-text));
+  font: inherit;
+  font-size: 13.5px;
+}
+
+.profile-pw-form input:focus {
+  outline: none;
+  border-color: var(--accent-copper, #ff7a18);
+  box-shadow: 0 0 0 2px rgba(255, 122, 24, 0.1);
+}
+
+[data-theme="light"] .profile-pw-form input {
+  background: #ffffff;
+  border-color: var(--color-border, #d3dade);
+  color: var(--text-primary, #1a2226);
+}
+
+.profile-pw-error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--status-danger, var(--color-error));
+}
+
+.profile-pw-ok {
+  margin: 0;
+  font-size: 13px;
+  color: var(--status-success, #4ade80);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.profile-pw-ok .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.profile-pw-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 4px;
+}

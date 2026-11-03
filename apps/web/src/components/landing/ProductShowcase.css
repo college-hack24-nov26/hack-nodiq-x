@@ -1,0 +1,1009 @@
+/* ==========================================================================
+   Product Showcase — Live Metallurgical Micrograph & Formula Engine
+   ========================================================================== */
+
+.showcase__tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: var(--space-xl);
+}
+
+.showcase__tab {
+  padding: 0.6rem 1.15rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  transition: all var(--dur-fast, 180ms) var(--ease-out, ease-out);
+}
+
+.showcase__tab--active {
+  color: #14100b;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 16px rgba(255, 122, 24, 0.35);
+}
+
+.showcase__tab:not(.showcase__tab--active):hover {
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.showcase__panel {
+  margin-top: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  min-height: 380px;
+}
+
+/* --------------------------------------------------------------------------
+   Micrograph Toolbar & Control Bar
+   -------------------------------------------------------------------------- */
+.showcase__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.showcase__status-cluster {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+.showcase__stream-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-tech);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid transparent;
+}
+
+.showcase__stream-pill--live {
+  color: var(--color-success, #39C27F);
+  background: rgba(57, 194, 127, 0.12);
+  border-color: rgba(57, 194, 127, 0.35);
+}
+
+.showcase__stream-pill--scanning {
+  color: var(--color-info, #3BA5FF);
+  background: rgba(59, 165, 255, 0.12);
+  border-color: rgba(59, 165, 255, 0.4);
+}
+
+.showcase__stream-pill--captured {
+  color: var(--color-warning, #F2B84B);
+  background: rgba(242, 184, 75, 0.14);
+  border-color: rgba(242, 184, 75, 0.45);
+}
+
+.showcase__pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+  animation: pulse-ring 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.showcase__telemetry {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.04em;
+}
+
+.showcase__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.showcase__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.45rem 0.85rem;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  transition: all 160ms ease;
+  cursor: pointer;
+}
+
+.showcase__btn--primary {
+  background: var(--color-primary);
+  color: #14100b;
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 2px 10px rgba(255, 122, 24, 0.28);
+}
+
+.showcase__btn--primary:hover {
+  background: var(--color-primary-hover);
+  box-shadow: 0 4px 16px rgba(255, 122, 24, 0.4);
+  transform: translateY(-1px);
+}
+
+.showcase__btn--ghost {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+}
+
+.showcase__btn--ghost:hover {
+  background: var(--color-bg-4, #1a2428);
+  border-color: var(--color-border-strong);
+}
+
+.showcase__btn--active {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background: rgba(255, 122, 24, 0.08);
+}
+
+.showcase__btn-icon {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Micrograph SVG Canvas & Scanning Effect
+   -------------------------------------------------------------------------- */
+.showcase__image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border-strong);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  background: #14191c;
+}
+
+.showcase__micrograph-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+/* Laser sweep animation across the SVG */
+.showcase__image-container--scanning::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, rgba(59, 165, 255, 0.2), #3BA5FF 50%, rgba(255, 122, 24, 0.8));
+  box-shadow: 0 0 20px 4px rgba(59, 165, 255, 0.7), -15px 0 35px 5px rgba(59, 165, 255, 0.2);
+  animation: laser-sweep 0.75s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes laser-sweep {
+  0% { left: 0%; opacity: 0.8; }
+  90% { left: 98%; opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+.showcase__nodule-group {
+  transition: transform 120ms ease;
+}
+
+.showcase__caption {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 0.85rem;
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+
+.showcase__status-dot--live {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-success);
+  display: inline-block;
+  box-shadow: 0 0 6px var(--color-success);
+}
+
+.showcase__status-dot--captured {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-warning);
+  display: inline-block;
+  box-shadow: 0 0 6px var(--color-warning);
+}
+
+.showcase__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.6rem;
+  margin-top: 0.85rem;
+  font-size: var(--fs-label);
+  color: var(--color-text-tertiary);
+}
+
+.showcase__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.showcase__legend-item svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.showcase__legend-item--tip {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   Metallurgical Nodularity Formula Engine Section
+   -------------------------------------------------------------------------- */
+.showcase__formula-section {
+  margin-top: 2rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.formula__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.formula__badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-primary);
+  background: rgba(255, 122, 24, 0.12);
+  border: 1px solid rgba(255, 122, 24, 0.3);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  margin-bottom: 0.4rem;
+}
+
+.formula__heading {
+  font-size: var(--fs-h3, 1.375rem);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.formula__subtext {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  margin-top: 0.2rem;
+}
+
+.formula__standards-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  background: var(--color-elevated);
+  padding: 4px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.formula__std-tab {
+  font-family: var(--font-tech);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  color: var(--color-text-secondary);
+  background: transparent;
+  transition: all 140ms ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.formula__std-tab:hover {
+  color: var(--color-text);
+  background: rgba(255, 122, 24, 0.06);
+}
+
+.formula__std-tab--active {
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+/* Mathematical Formula Card */
+.formula__card {
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.formula__top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--color-border);
+  font-size: 11px;
+}
+
+.formula__card-label {
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.formula__compliance-tag {
+  color: var(--color-success);
+  background: rgba(57, 194, 127, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+.formula__equation-container {
+  padding: 1.35rem 0;
+  overflow-x: auto;
+}
+
+.formula__equation-block {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.25rem 1.75rem;
+  font-family: var(--font-tech);
+}
+
+.formula__equation-math,
+.formula__substitution-math {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.math__var {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.math__unit {
+  font-size: 0.85rem;
+  color: var(--color-text-tertiary);
+  margin-left: -3px;
+}
+
+.math__eq {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  margin: 0 0.15rem;
+}
+
+.math__op {
+  font-size: 1.1rem;
+  color: var(--color-text-tertiary);
+}
+
+.math__fraction {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 0.4rem;
+}
+
+.math__num {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text);
+  padding-bottom: 3px;
+  border-bottom: 1.5px solid var(--color-primary);
+}
+
+.math__num--highlight {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.math__denom {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  padding-top: 3px;
+}
+
+.math__denom--highlight {
+  color: var(--color-info, #3BA5FF);
+  font-weight: 700;
+}
+
+.formula__arrow {
+  font-size: 1.4rem;
+  color: var(--color-text-tertiary);
+}
+
+.math__result {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: rgba(255, 122, 24, 0.1);
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 122, 24, 0.35);
+}
+
+/* Verdict strip */
+.formula__verdict-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.formula__verdict-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.formula__verdict-label {
+  font-size: 10.5px;
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+.formula__verdict-value {
+  font-size: 13px;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.formula__verdict-value--pass {
+  color: var(--color-success);
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   Step-by-Step Derivation & Particle Dossier
+   -------------------------------------------------------------------------- */
+.formula__details-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+}
+
+.formula__step-card,
+.formula__inspector-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+}
+
+.formula__step-header,
+.inspector__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.formula__step-badge {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-tertiary);
+  font-weight: 600;
+}
+
+.formula__toggle-btn {
+  font-size: 11px;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.formula__steps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.formula__step-item {
+  display: flex;
+  gap: 0.85rem;
+}
+
+.formula__step-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: rgba(255, 122, 24, 0.1);
+  border: 1px solid rgba(255, 122, 24, 0.25);
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.formula__step-body {
+  flex: 1;
+}
+
+.formula__step-title {
+  font-size: var(--fs-small);
+  color: var(--color-text);
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.formula__step-desc {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  line-height: 1.45;
+}
+
+.formula__step-note {
+  font-size: var(--fs-label);
+  color: var(--color-text-tertiary);
+  margin-top: 0.35rem;
+  line-height: 1.4;
+}
+
+.formula__inline-math {
+  margin-top: 0.4rem;
+  padding: 0.5rem 0.85rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--color-primary);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.formula__inline-math--accent {
+  border-color: rgba(255, 122, 24, 0.4);
+  background: rgba(255, 122, 24, 0.08);
+  color: var(--color-primary);
+}
+
+.formula__step-kv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.kv-box {
+  background: var(--color-elevated);
+  padding: 0.5rem 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+}
+
+.kv-box span { color: var(--color-text-secondary); font-weight: 500; }
+.kv-box strong { color: var(--color-text); font-weight: 700; }
+.kv-box--full { grid-column: span 2; border-color: rgba(59, 165, 255, 0.4); background: rgba(59, 165, 255, 0.06); }
+
+/* Inspector Dossier */
+.inspector__id-pill {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-info, #3BA5FF);
+  background: rgba(59, 165, 255, 0.12);
+  border: 1px solid rgba(59, 165, 255, 0.35);
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+}
+
+.inspector__hint {
+  font-size: var(--fs-label);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.75rem;
+}
+
+.inspector__chips-strip {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 0.85rem;
+}
+
+.inspector__chip {
+  padding: 0.32rem 0.55rem;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--color-border);
+  background: var(--color-elevated);
+  color: var(--color-text);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 120ms ease;
+}
+
+.inspector__chip:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.inspector__chip--active {
+  border-color: var(--color-info, #3BA5FF);
+  color: var(--color-info, #3BA5FF);
+  background: rgba(59, 165, 255, 0.12);
+  font-weight: 700;
+}
+
+.inspector__chip--flagged {
+  border-color: rgba(239, 83, 80, 0.5);
+  color: var(--color-error);
+}
+
+.inspector__dossier {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem;
+}
+
+.inspector__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--fs-small);
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.inspector__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.inspector__row--highlight {
+  padding-top: 0.35rem;
+}
+
+.inspector__label {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+}
+
+.inspector__val {
+  font-weight: 600;
+  color: var(--color-text);
+  font-size: 12.5px;
+}
+
+.inspector__subval {
+  font-size: 11px;
+  color: var(--color-text-tertiary);
+  font-weight: normal;
+}
+
+.inspector__val--good { color: var(--color-success); }
+.inspector__val--warning { color: var(--color-error); }
+
+.badge-pass {
+  display: inline-block;
+  font-size: 10.5px;
+  color: var(--color-success);
+  background: rgba(57, 194, 127, 0.12);
+  border: 1px solid rgba(57, 194, 127, 0.3);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+}
+
+.badge-flag {
+  display: inline-block;
+  font-size: 10.5px;
+  color: var(--color-error);
+  background: rgba(239, 83, 80, 0.12);
+  border: 1px solid rgba(239, 83, 80, 0.3);
+  padding: 0.15rem 0.45rem;
+  border-radius: 3px;
+}
+
+.inspector__review-box {
+  margin-top: 0.85rem;
+  padding: 0.65rem;
+  border: 1px solid rgba(239, 83, 80, 0.3);
+  background: rgba(239, 83, 80, 0.05);
+  border-radius: 4px;
+}
+
+.inspector__review-text {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  margin-bottom: 0.5rem;
+  line-height: 1.35;
+}
+
+.inspector__review-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.inspector__btn-accept,
+.inspector__btn-reject {
+  flex: 1;
+  padding: 0.4rem 0.5rem;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 3px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 120ms ease;
+}
+
+.inspector__btn-accept:hover {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.inspector__btn-reject:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.inspector__btn--selected {
+  background: var(--color-elevated);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Understand Dashboard Tab
+   -------------------------------------------------------------------------- */
+.showcase__content--dash {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+.showcase__metric {
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: border-color 160ms ease;
+}
+
+.showcase__metric--highlight {
+  border-color: rgba(255, 122, 24, 0.4);
+  background: linear-gradient(180deg, rgba(255, 122, 24, 0.06), var(--color-elevated));
+}
+
+.showcase__metric-label {
+  font-size: var(--fs-label);
+  color: var(--color-text-tertiary);
+  letter-spacing: 0.06em;
+}
+
+.showcase__metric-value {
+  font-size: var(--fs-metric);
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.showcase__metric-value--warning {
+  color: var(--color-warning);
+}
+
+.showcase__metric-desc {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+  margin-top: 0.2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Verify Tab (Human Review Interface)
+   -------------------------------------------------------------------------- */
+.showcase__content--verify {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.verify__header-note {
+  padding: 0.75rem 1rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 0.4rem;
+}
+
+.verify__header-note span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.06em;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.verify__header-note p {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  line-height: 1.4;
+}
+
+.verify__row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-small);
+}
+
+.verify__particle-id {
+  font-weight: 700;
+  color: var(--color-text);
+  min-width: 100px;
+}
+
+.verify__conf--low {
+  color: var(--color-warning);
+}
+
+.verify__diameter {
+  color: var(--color-text-tertiary);
+}
+
+.verify__actions {
+  margin-left: auto;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.verify__accept,
+.verify__reject {
+  font-size: var(--fs-label);
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: all 140ms ease;
+}
+
+.verify__accept:hover {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.verify__reject:hover {
+  color: var(--color-error);
+  border-color: var(--color-error);
+}
+
+.verify__btn--chosen {
+  border-color: var(--color-primary);
+  background: rgba(255, 122, 24, 0.15);
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.verify__footer {
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 122, 24, 0.05);
+  border: 1px solid rgba(255, 122, 24, 0.2);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+
+.verify__recalculated-stat {
+  color: var(--color-primary);
+  font-size: 1.15rem;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Layout
+   -------------------------------------------------------------------------- */
+@media (max-width: 960px) {
+  .formula__details-grid {
+    grid-template-columns: 1fr;
+  }
+  .showcase__content--dash {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .formula__verdict-strip {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .showcase__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .showcase__actions {
+    justify-content: stretch;
+    flex-wrap: wrap;
+  }
+  .showcase__btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .formula__equation-block {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .showcase__content--dash {
+    grid-template-columns: 1fr;
+  }
+  .verify__row {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .verify__actions {
+    width: 100%;
+    margin-left: 0;
+  }
+}

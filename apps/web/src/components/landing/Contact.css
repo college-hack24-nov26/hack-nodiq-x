@@ -1,0 +1,181 @@
+/* Contact — address / phone / email / GitHub cards + feedback form */
+
+/* No custom max-width: the global .container grid governs alignment so this
+   section lines up with every other section on the page (audit issue 13). */
+
+.contact__intro {
+  margin: var(--space-sm) 0 0;
+  max-width: 640px;
+  color: var(--muted, var(--color-text-secondary));
+}
+
+.contact__label {
+  display: block;
+  font-family: var(--font-ui);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+}
+
+.contact__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  margin-top: 32px;
+  align-items: start;
+}
+
+.contact__cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.contact__card {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 16px;
+}
+
+.contact__card h3 {
+  margin: 8px 0 4px;
+  font-size: var(--fs-small);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.contact__card p {
+  margin: 0;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--muted, var(--color-text-secondary));
+}
+
+.contact__icon {
+  font-size: var(--fs-body-lg);
+  display: inline-flex;
+  align-items: center;
+}
+
+.contact__icon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.contact__link {
+  color: var(--accent, #ff7a18);
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.contact__link:hover {
+  text-decoration: underline;
+}
+
+.contact__form-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* Match the card grid's 16px gutters so the form's first row shares a
+     horizontal baseline with the Address/Phone cards (audit issue 18). */
+  padding: 16px;
+}
+
+.contact__form h3 {
+  margin: 0;
+  font-size: var(--fs-h4);
+}
+
+.contact__form-hint {
+  margin: -6px 0 0;
+  font-size: var(--fs-small);
+  color: var(--muted, var(--color-text-secondary));
+}
+
+.contact__form label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact__form label span {
+  font-size: var(--fs-label);
+  letter-spacing: 0.08em;
+  color: var(--muted, var(--color-text-secondary));
+}
+
+.contact__form input,
+.contact__form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--color-border-strong, rgba(255, 255, 255, 0.2));
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  font: inherit;
+  font-size: var(--fs-small);
+  resize: vertical;
+  transition: border-color var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+}
+
+.contact__form input:hover,
+.contact__form textarea:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.contact__form input:focus,
+.contact__form textarea:focus {
+  outline: none;
+  border-color: var(--accent, #ff7a18);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 2px rgba(255, 122, 24, 0.1);
+}
+
+/* Legacy .contact__submit rules kept minimal — submit uses the shared .btn
+   component now (audit issue 22); only the layout + disabled state remain. */
+.contact__submit {
+  align-self: flex-start;
+}
+
+.contact__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.contact__note {
+  margin: 0;
+  font-size: var(--fs-small);
+}
+
+.contact__note--ok {
+  color: var(--color-success);
+}
+
+.contact__note--err {
+  color: var(--color-error);
+}
+
+@media (max-width: 900px) {
+  .contact__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .contact__cards {
+    grid-template-columns: 1fr;
+  }
+}

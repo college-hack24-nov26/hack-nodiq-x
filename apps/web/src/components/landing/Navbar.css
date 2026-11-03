@@ -1,0 +1,158 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(16, 20, 22, 0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: background var(--dur-base) var(--ease-out), border-color var(--dur-base) var(--ease-out);
+}
+
+.navbar--elevated {
+  background: rgba(16, 20, 22, 0.92);
+  border-bottom: 1px solid var(--color-border);
+}
+
+[data-theme="light"] .navbar {
+  background: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme="light"] .navbar--elevated {
+  background: rgba(255, 255, 255, 0.92);
+  border-bottom-color: var(--color-border);
+}
+
+.navbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+
+.navbar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-logo);
+  letter-spacing: -0.01em;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+}
+
+.navbar__logo:hover {
+  transform: scale(1.02);
+}
+
+.navbar__text {
+  display: flex;
+  align-items: center;
+}
+
+.navbar__flame-logo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 122, 24, 0.4));
+  transition: filter 0.3s ease;
+  background: transparent;
+}
+
+.navbar__logo:hover .navbar__flame-logo {
+  filter: drop-shadow(0 0 12px rgba(255, 122, 24, 0.6));
+}
+
+.navbar__mark {
+  display: none;
+}
+
+.navbar__logo-container {
+  display: none;
+}
+
+.navbar__logo-accent { color: var(--color-primary); }
+
+.navbar__links {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar__link {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  position: relative;
+  padding-bottom: 4px;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.navbar__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-primary);
+  transition: width var(--dur-base) var(--ease-out);
+}
+
+.navbar__link:hover { color: var(--color-text); }
+.navbar__link:hover::after { width: 100%; }
+
+/* Active section indicator (audit issue 15) — set by scroll-spy in Navbar.jsx */
+.navbar__link--active { color: var(--color-text); }
+.navbar__link--active::after { width: 100%; }
+
+/* Logo text is hardcoded for the dark theme; give it a light-mode color */
+[data-theme="light"] .navbar__text { color: var(--color-text); }
+
+.navbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar__login {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.navbar__login:hover { color: var(--color-text); }
+
+.navbar__hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px;
+}
+.navbar__hamburger span {
+  width: 20px;
+  height: 2px;
+  background: var(--color-text);
+}
+
+.navbar__mobile {
+  display: none;
+}
+
+[data-theme="light"] .navbar__mobile {
+  background: var(--color-bg);
+}
+
+@media (max-width: 860px) {
+  .navbar__links, .navbar__actions { display: none; }
+  .navbar__hamburger { display: flex; }
+  .navbar__mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    padding: 1.25rem var(--container-pad) 1.75rem;
+    border-top: 1px solid var(--color-border);
+    background: var(--color-bg);
+    overflow: hidden;
+  }
+  .navbar__mobile a { font-size: var(--fs-body); color: var(--color-text-secondary); }
+  .navbar__mobile-login { color: var(--color-text) !important; }
+  .navbar__mobile-cta { width: fit-content; margin-top: 4px; }
+}

@@ -1,0 +1,41 @@
+# NODIQ-X dockerignore — keep secrets, credentials and local state out of
+# the image build context. The Dockerfile COPYs only specific paths; these
+# exclusions guarantee nothing sensitive can slip into a layer via context.
+.env
+.env.*
+!.env.example
+.git
+.gitignore
+node_modules
+**/node_modules
+apps/web/node_modules
+server_data
+**/server_data
+*.log
+logs
+**/logs
+.freebuff
+.pytest_cache
+__pycache__
+**/__pycache__
+*.pyc
+tests
+docs
+*.md
+!README.md
+models
+models/*
+data/raw
+data/raw/*
+data/processed
+data/processed/*
+outputs
+outputs/*
+archive
+archive/*
+backups
+backups/*
+*.sqlite
+*.db
+apps/web/dist
+!data/samples/summary_1000_fixed.csv

@@ -1,0 +1,2768 @@
+/* .my-analyses-page {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background:
+    radial-gradient(
+      circle at 82% 0%,
+      rgba(255, 122, 24, 0.055),
+      transparent 30%
+    ),
+    var(--color-bg, var(--color-bg));
+  color: var(--color-text, var(--color-text));
+}
+
+.my-analyses-container {
+  width: min(1600px, 100%);
+  margin: 0 auto;
+  padding: 40px 32px 64px;
+  box-sizing: border-box;
+}
+
+
+.my-analyses-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.my-analyses-eyebrow {
+  display: block;
+  margin-bottom: 9px;
+
+  color: var(--color-primary, #ff7a18);
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+}
+
+.my-analyses-header h1 {
+  margin: 0 0 8px;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.my-analyses-header p {
+  margin: 0;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.my-analyses-new-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  height: 42px;
+  padding: 0 17px;
+
+  border: 1px solid var(--color-primary, #ff7a18);
+  border-radius: var(--radius-sm, 4px);
+
+  background: var(--color-primary, #ff7a18);
+  color: var(--color-bg);
+
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
+}
+
+.my-analyses-new-button:hover {
+  background: var(--color-primary-hover, #ff922e);
+}
+
+.my-analyses-new-button:active {
+  transform: scale(0.98);
+}
+
+.my-analyses-new-button .material-symbols-outlined {
+  font-size: 18px;
+}
+
+
+.my-analyses-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.summary-card {
+  position: relative;
+  overflow: hidden;
+
+  min-height: 106px;
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  background: var(--color-surface, #1b2226);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 8px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.summary-card::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  opacity: 0.55;
+
+  transition: opacity 0.2s ease;
+}
+
+.summary-card:hover {
+  background: var(--color-bg-5, #1e2a2e);
+}
+
+.summary-card:hover::before {
+  opacity: 1;
+}
+
+.summary-card--primary::before {
+  background: var(--color-primary, #ff7a18);
+}
+
+.summary-card--success::before {
+  background: var(--color-success, var(--color-success));
+}
+
+.summary-card--processing::before {
+  background: var(--color-primary-hover);
+}
+
+.summary-card--error::before {
+  background: var(--color-error, var(--color-error));
+}
+
+.summary-card span {
+  display: block;
+  margin-bottom: 10px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.summary-card strong {
+  display: block;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 27px;
+  font-weight: 650;
+}
+
+
+.my-analyses-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px;
+  margin-bottom: 10px;
+
+  background: var(--color-surface, #1b2226);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 8px;
+}
+
+.my-analyses-search {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+
+.my-analyses-search .material-symbols-outlined {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+  font-size: 19px;
+  pointer-events: none;
+}
+
+.my-analyses-search input,
+.my-analyses-filters select,
+.sort-button {
+  height: 40px;
+  box-sizing: border-box;
+
+  background: var(--color-bg, var(--color-bg));
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 4px;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-body);
+  font-size: 13px;
+
+  outline: none;
+}
+
+.my-analyses-search input {
+  width: 100%;
+  padding: 0 14px 0 40px;
+}
+
+.my-analyses-search input::placeholder {
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+}
+
+.my-analyses-search input:focus,
+.my-analyses-filters select:focus {
+  border-color: var(--color-primary, #ff7a18);
+  box-shadow: 0 0 0 2px var(--color-primary-dim, rgba(255, 122, 24, 0.12));
+}
+
+.my-analyses-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.my-analyses-filters select {
+  min-width: 135px;
+  padding: 0 12px;
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+}
+
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 0 13px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.sort-button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.sort-button .material-symbols-outlined {
+  font-size: 17px;
+}
+
+
+
+.my-analyses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analysis-history-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  min-height: 132px;
+  padding: 8px;
+
+  box-sizing: border-box;
+
+  overflow: visible;
+
+  background: var(--color-surface, #1b2226);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 8px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.analysis-history-card:hover {
+  background: var(--hover-veil);
+  border-color: var(--color-border-strong, #3a454b);
+}
+
+.analysis-history-card--failed::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: var(--color-error, var(--color-error));
+}
+
+.processing-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  height: 2px;
+
+  background: var(--color-primary, #ff7a18);
+}
+
+
+.my-analysis-preview {
+  position: relative;
+
+  width: 200px;
+  height: 116px;
+
+  flex: 0 0 200px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 5px;
+
+  background: var(--color-bg);
+}
+
+.my-analysis-preview--processing,
+.my-analysis-preview--failed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 16px 16px;
+}
+
+.preview-processing-icon {
+  position: relative;
+  z-index: 2;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-size: 36px;
+
+  opacity: 0.45;
+
+  animation: analysisPulse 1.5s ease-in-out infinite;
+}
+
+.preview-grid--failed {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.preview-error-icon {
+  position: relative;
+  z-index: 2;
+
+  padding: 8px;
+
+  border-radius: 50%;
+
+  background: var(--color-elevated);
+
+  color: var(--color-error, var(--color-error));
+
+  font-size: 29px;
+}
+
+.microstructure-preview {
+  position: absolute;
+  inset: 0;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 122, 24, 0.09),
+      transparent 60%
+    ),
+    var(--color-bg-2);
+}
+
+.microstructure-particle {
+  position: absolute;
+
+  left: var(--x);
+  top: var(--y);
+
+  width: var(--size);
+  height: var(--size);
+
+  border: 1px solid rgba(255, 190, 120, 0.6);
+  border-radius: 50%;
+
+  background: rgba(255, 122, 24, 0.16);
+
+  box-shadow: 0 0 8px rgba(255, 122, 24, 0.15);
+}
+
+.preview-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  height: 1px;
+
+  background: rgba(255, 122, 24, 0.5);
+
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.3);
+
+  opacity: 0.6;
+}
+
+.preview-corner {
+  position: absolute;
+
+  width: 13px;
+  height: 13px;
+
+  border-color: rgba(255, 122, 24, 0.8);
+}
+
+.preview-corner--tl {
+  top: 8px;
+  left: 8px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.preview-corner--tr {
+  top: 8px;
+  right: 8px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+
+.preview-corner--bl {
+  bottom: 8px;
+  left: 8px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+
+.preview-corner--br {
+  bottom: 8px;
+  right: 8px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+
+.analysis-history-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.analysis-history-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 8px;
+}
+
+.my-analysis-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 3px 8px;
+
+  border: 1px solid;
+  border-radius: 4px;
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.my-analysis-status__dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+}
+
+.my-analysis-status--completed {
+  border-color: rgba(57, 194, 127, 0.22);
+  background: rgba(57, 194, 127, 0.08);
+  color: var(--color-success);
+}
+
+.my-analysis-status--completed .my-analysis-status__dot {
+  background: var(--color-success);
+}
+
+.my-analysis-status--processing {
+  border-color: rgba(255, 122, 24, 0.25);
+  background: rgba(255, 122, 24, 0.08);
+  color: var(--color-primary, #ff7a18);
+}
+
+.my-analysis-status--processing .my-analysis-status__dot {
+  width: 7px;
+  height: 7px;
+
+  border: 1px solid var(--color-primary, #ff7a18);
+  background: transparent;
+
+  animation: statusPulse 1.2s infinite;
+}
+
+.my-analysis-status--failed {
+  border-color: rgba(239, 83, 80, 0.25);
+  background: rgba(239, 83, 80, 0.08);
+  color: var(--color-error, var(--color-error));
+}
+
+.my-analysis-status--failed .my-analysis-status__dot {
+  background: var(--color-error, var(--color-error));
+}
+
+.analysis-history-time {
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.analysis-history-content h2 {
+  margin: 0 0 4px;
+
+  overflow: hidden;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.analysis-history-type {
+  margin: 0 0 12px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.analysis-data {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.analysis-data i {
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+
+  background: var(--color-elevated, var(--border));
+}
+
+.analysis-data-danger {
+  color: var(--color-error, var(--color-error));
+}
+
+
+.processing-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 480px;
+}
+
+.processing-track {
+  flex: 1;
+
+  height: 6px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 999px;
+
+  background: var(--color-bg);
+}
+
+.processing-track span {
+  display: block;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: var(--color-primary, #ff7a18);
+
+  transition: width 0.4s ease;
+}
+
+.processing-info > span {
+  width: 34px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-align: right;
+}
+
+
+
+.analysis-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+
+  max-width: 620px;
+
+  color: var(--color-error, var(--color-error));
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.analysis-error .material-symbols-outlined {
+  flex: 0 0 auto;
+  font-size: 15px;
+}
+
+
+
+.analysis-history-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  flex: 0 0 auto;
+}
+
+.analysis-action-button {
+  height: 38px;
+  padding: 0 15px;
+
+  border: 1px solid var(--color-text-secondary, var(--color-text-secondary));
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.analysis-action-button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.analysis-action-button--error {
+  border-color: var(--color-error, var(--color-error));
+  color: var(--color-error, var(--color-error));
+}
+
+.analysis-action-button--error:hover {
+  background: rgba(239, 83, 80, 0.08);
+}
+
+.analysis-menu-wrapper {
+  position: relative;
+}
+
+.analysis-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  cursor: pointer;
+}
+
+.analysis-menu-button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.analysis-menu-button .material-symbols-outlined {
+  font-size: 20px;
+}
+
+.analysis-context-menu {
+  position: absolute;
+  z-index: 30;
+  right: 0;
+  top: calc(100% + 5px);
+
+  width: 160px;
+  padding: 5px;
+
+  background: var(--color-bg-3);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 6px;
+
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+}
+
+.analysis-context-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  padding: 9px 10px;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-body);
+  font-size: 12px;
+
+  text-align: left;
+  cursor: pointer;
+}
+
+.analysis-context-menu button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.analysis-context-menu .material-symbols-outlined {
+  font-size: 17px;
+}
+
+.analysis-context-menu .context-menu-danger:hover {
+  color: var(--color-error, var(--color-error));
+}
+
+
+.my-analyses-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 260px;
+
+  border: 1px dashed var(--color-elevated, var(--border));
+  border-radius: 8px;
+
+  background: var(--color-surface);
+
+  text-align: center;
+}
+
+.my-analyses-empty .material-symbols-outlined {
+  margin-bottom: 10px;
+
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+  font-size: 34px;
+}
+
+.my-analyses-empty h3 {
+  margin: 0 0 5px;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 17px;
+}
+
+.my-analyses-empty p {
+  margin: 0;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-size: 13px;
+}
+
+
+
+.my-analyses-load-more {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 20px;
+}
+
+.my-analyses-load-more button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 9px 14px;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease;
+}
+
+.my-analyses-load-more button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.my-analyses-load-more button:disabled {
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.my-analyses-load-more button:disabled:hover {
+  background: transparent;
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+}
+
+.my-analyses-load-more .material-symbols-outlined {
+  font-size: 18px;
+}
+
+
+.analysis-detail-overlay {
+  position: fixed;
+  z-index: 200;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.analysis-detail-modal {
+  width: min(620px, 100%);
+  padding: 24px;
+
+  background: var(--color-bg-3);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 10px;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+
+  animation: modalEnter 0.22s ease-out;
+}
+
+.analysis-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  margin-bottom: 26px;
+}
+
+.analysis-detail-header h2 {
+  margin: 0;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 650;
+}
+
+.analysis-detail-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 34px;
+  height: 34px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  cursor: pointer;
+}
+
+.analysis-detail-close:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.analysis-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.analysis-detail-grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  min-height: 72px;
+  padding: 13px;
+
+  background: var(--color-bg);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 6px;
+}
+
+.analysis-detail-grid > div > span:first-child {
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.analysis-detail-grid strong {
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.analysis-detail-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  height: 42px;
+
+  border: 1px solid var(--color-primary, #ff7a18);
+  border-radius: 5px;
+
+  background: var(--color-primary, #ff7a18);
+  color: var(--color-bg);
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.analysis-detail-primary:hover {
+  background: var(--color-primary-hover, #ff922e);
+}
+
+@keyframes analysisPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+
+
+@media (max-width: 1100px) {
+  .my-analyses-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .my-analyses-filters {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .my-analyses-filters select,
+  .sort-button {
+    flex: 1;
+    min-width: 130px;
+  }
+}
+
+@media (max-width: 900px) {
+  .my-analyses-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .analysis-history-card {
+    align-items: flex-start;
+  }
+
+  .analysis-history-actions {
+    align-self: center;
+  }
+}
+
+@media (max-width: 700px) {
+  .my-analyses-container {
+    padding: 28px 18px 50px;
+  }
+
+  .my-analyses-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .my-analyses-new-button {
+    width: 100%;
+  }
+
+  .my-analyses-summary {
+    gap: 10px;
+  }
+
+  .summary-card {
+    min-height: 95px;
+    padding: 16px;
+  }
+
+  .analysis-history-card {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .my-analysis-preview {
+    width: 100%;
+    height: 150px;
+    flex-basis: 150px;
+  }
+
+  .analysis-history-content {
+    width: 100%;
+  }
+
+  .analysis-history-actions {
+    width: 100%;
+  }
+
+  .analysis-action-button {
+    flex: 1;
+  }
+
+  .analysis-context-menu {
+    right: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .my-analyses-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .my-analyses-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: visible;
+  }
+
+  .my-analyses-filters select,
+  .sort-button {
+    width: 100%;
+  }
+
+  .my-analyses-search {
+    min-width: 0;
+  }
+
+  .analysis-detail-grid {
+    grid-template-columns: 1fr;
+  }
+} */
+
+
+/* =========================================================
+   NODIQ-X — MY ANALYSES
+   Realigned layout pass — same palette, cleaner structure
+   ========================================================= */
+
+.my-analyses-page {
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background:
+    radial-gradient(
+      circle at 82% 0%,
+      rgba(255, 122, 24, 0.055),
+      transparent 30%
+    ),
+    var(--color-bg, var(--color-bg));
+  color: var(--color-text, var(--color-text));
+}
+
+.my-analyses-container {
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 40px 32px 64px;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.my-analyses-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.my-analyses-eyebrow {
+  display: block;
+  margin-bottom: 8px;
+
+  color: var(--color-primary, #ff7a18);
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+}
+
+.my-analyses-header h1 {
+  margin: 0 0 6px;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 2.6vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.my-analyses-header p {
+  margin: 0;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.my-analyses-new-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  flex: 0 0 auto;
+  height: 42px;
+  padding: 0 18px;
+
+  border: 1px solid var(--color-primary, #ff7a18);
+  border-radius: var(--radius-sm, 4px);
+
+  background: var(--color-primary, #ff7a18);
+  color: var(--color-bg);
+
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.my-analyses-new-button:hover {
+  background: var(--color-primary-hover, #ff922e);
+  box-shadow: 0 6px 16px rgba(255, 122, 24, 0.28);
+  transform: translateY(-1px);
+}
+
+.my-analyses-new-button:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: none;
+}
+
+.my-analyses-new-button .material-symbols-outlined {
+  font-size: 18px;
+  transition: transform 0.2s ease;
+}
+
+.my-analyses-new-button:hover .material-symbols-outlined {
+  transform: rotate(90deg);
+}
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.my-analyses-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+
+  margin-bottom: 20px;
+
+  animation: cardsFadeIn 0.4s ease-out both;
+}
+
+.summary-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+
+  min-height: 92px;
+  padding: 18px 20px;
+
+  box-sizing: border-box;
+
+  background: var(--color-surface, #1b2226);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 8px;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.summary-card::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  opacity: 0.55;
+
+  transition: opacity 0.2s ease;
+}
+
+.summary-card:hover {
+  background: var(--color-bg-5, #1e2a2e);
+  border-color: var(--color-border-strong, #3a454b);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.summary-card:hover::before {
+  opacity: 1;
+}
+
+.summary-card strong {
+  transition: transform 0.2s ease;
+}
+
+.summary-card:hover strong {
+  transform: translateX(1px);
+}
+
+.summary-card--primary::before {
+  background: var(--color-primary, #ff7a18);
+}
+
+.summary-card--success::before {
+  background: var(--color-success, var(--color-success));
+}
+
+.summary-card--processing::before {
+  background: var(--color-primary-hover);
+}
+
+.summary-card--error::before {
+  background: var(--color-error, var(--color-error));
+}
+
+.summary-card span {
+  display: block;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.summary-card strong {
+  display: block;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 650;
+  line-height: 1;
+}
+
+/* =========================================================
+   TOOLBAR
+   ========================================================= */
+
+.my-analyses-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 8px;
+  margin-bottom: 12px;
+
+  background: var(--color-surface, #1b2226);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 8px;
+}
+
+.my-analyses-search {
+  position: relative;
+  flex: 1 1 260px;
+  min-width: 200px;
+}
+
+.my-analyses-search .material-symbols-outlined {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+  font-size: 19px;
+  pointer-events: none;
+}
+
+.my-analyses-search input,
+.my-analyses-filters select,
+.sort-button {
+  height: 40px;
+  box-sizing: border-box;
+
+  background: var(--color-bg, var(--color-bg));
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 4px;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-body);
+  font-size: 13px;
+
+  outline: none;
+
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.my-analyses-search input:hover,
+.my-analyses-filters select:hover {
+  border-color: var(--color-border-strong, #3a454b);
+}
+
+.my-analyses-search input {
+  width: 100%;
+  padding: 0 14px 0 40px;
+}
+
+.my-analyses-search input::placeholder {
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+}
+
+.my-analyses-search input:focus,
+.my-analyses-filters select:focus {
+  border-color: var(--color-primary, #ff7a18);
+  box-shadow: 0 0 0 2px var(--color-primary-dim, rgba(255, 122, 24, 0.12));
+}
+
+.my-analyses-filters {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.my-analyses-filters select {
+  width: 150px;
+  padding: 0 30px 0 12px;
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%239aa6ac' stroke-width='1.4' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+}
+
+/* visually separate the two filter groups */
+.my-analyses-filters::before {
+  content: "";
+  width: 1px;
+  align-self: stretch;
+  margin: 0 2px 0 0;
+  background: var(--color-elevated, var(--border));
+}
+
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  flex: 0 0 auto;
+  padding: 0 14px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.sort-button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.sort-button .material-symbols-outlined {
+  font-size: 17px;
+}
+
+/* =========================================================
+   ANALYSIS LIST
+   ========================================================= */
+
+.my-analyses-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.analysis-history-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  align-items: stretch;
+  gap: 20px;
+
+  min-height: 132px;
+  padding: 12px;
+
+  box-sizing: border-box;
+
+  overflow: visible;
+
+  background: var(--color-surface, #1b2226);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 8px;
+
+  opacity: 0;
+  animation: cardsFadeIn 0.35s ease-out forwards;
+  animation-delay: calc(var(--card-index, 0) * 40ms);
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.analysis-history-card:hover {
+  background: var(--hover-veil);
+  border-color: var(--color-border-strong, #3a454b);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
+}
+
+.analysis-history-card--failed::before {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 3px;
+
+  background: var(--color-error, var(--color-error));
+  border-radius: 8px 0 0 8px;
+}
+
+.processing-progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  height: 2px;
+
+  background: var(--color-primary, #ff7a18);
+}
+
+/* =========================================================
+   PREVIEW
+   ========================================================= */
+
+.my-analysis-preview {
+  position: relative;
+
+  width: 200px;
+  height: 100%;
+  min-height: 108px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 5px;
+
+  background: var(--color-bg);
+
+  transition: border-color 0.2s ease;
+}
+
+.analysis-history-card:hover .my-analysis-preview {
+  border-color: var(--color-border-strong, #3a454b);
+}
+
+.analysis-history-card:hover .microstructure-preview {
+  transform: scale(1.04);
+}
+
+.analysis-history-card:hover .preview-scan-line {
+  opacity: 1;
+}
+
+.my-analysis-preview--processing,
+.my-analysis-preview--failed {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preview-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px
+    );
+
+  background-size: 16px 16px;
+}
+
+.preview-processing-icon {
+  position: relative;
+  z-index: 2;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-size: 34px;
+
+  opacity: 0.45;
+
+  animation: analysisPulse 1.5s ease-in-out infinite;
+}
+
+.preview-grid--failed {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.preview-error-icon {
+  position: relative;
+  z-index: 2;
+
+  padding: 8px;
+
+  border-radius: 50%;
+
+  background: var(--color-elevated);
+
+  color: var(--color-error, var(--color-error));
+
+  font-size: 27px;
+}
+
+.microstructure-preview {
+  position: absolute;
+  inset: 6px;
+
+  overflow: hidden;
+  border-radius: 3px;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(255, 122, 24, 0.09),
+      transparent 60%
+    ),
+    var(--color-bg-2);
+
+  transition: transform 0.35s ease;
+}
+
+.microstructure-particle {
+  position: absolute;
+
+  left: var(--x);
+  top: var(--y);
+
+  width: var(--size);
+  height: var(--size);
+
+  border: 1px solid rgba(255, 190, 120, 0.6);
+  border-radius: 50%;
+
+  background: rgba(255, 122, 24, 0.16);
+
+  box-shadow: 0 0 8px rgba(255, 122, 24, 0.15);
+}
+
+.preview-scan-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+
+  height: 1px;
+
+  background: rgba(255, 122, 24, 0.5);
+
+  box-shadow: 0 0 12px rgba(255, 122, 24, 0.3);
+
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+.preview-corner {
+  position: absolute;
+
+  width: 12px;
+  height: 12px;
+
+  border-color: rgba(255, 122, 24, 0.8);
+}
+
+.preview-corner--tl {
+  top: 7px;
+  left: 7px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.preview-corner--tr {
+  top: 7px;
+  right: 7px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+}
+
+.preview-corner--bl {
+  bottom: 7px;
+  left: 7px;
+  border-bottom: 1px solid;
+  border-left: 1px solid;
+}
+
+.preview-corner--br {
+  bottom: 7px;
+  right: 7px;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+}
+
+/* =========================================================
+   CARD CONTENT
+   ========================================================= */
+
+.analysis-history-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+
+  min-width: 0;
+  padding: 4px 0;
+}
+
+.analysis-history-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.my-analysis-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 3px 8px;
+
+  border: 1px solid;
+  border-radius: 4px;
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.my-analysis-status__dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+}
+
+.my-analysis-status--completed {
+  border-color: rgba(57, 194, 127, 0.22);
+  background: rgba(57, 194, 127, 0.08);
+  color: var(--color-success);
+}
+
+.my-analysis-status--completed .my-analysis-status__dot {
+  background: var(--color-success);
+}
+
+.my-analysis-status--processing {
+  border-color: rgba(255, 122, 24, 0.25);
+  background: rgba(255, 122, 24, 0.08);
+  color: var(--color-primary, #ff7a18);
+}
+
+.my-analysis-status--processing .my-analysis-status__dot {
+  width: 7px;
+  height: 7px;
+
+  border: 1px solid var(--color-primary, #ff7a18);
+  background: transparent;
+
+  animation: statusPulse 1.2s infinite;
+}
+
+.my-analysis-status--failed {
+  border-color: rgba(239, 83, 80, 0.25);
+  background: rgba(239, 83, 80, 0.08);
+  color: var(--color-error, var(--color-error));
+}
+
+.my-analysis-status--failed .my-analysis-status__dot {
+  background: var(--color-error, var(--color-error));
+}
+
+.analysis-history-time {
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.analysis-history-content h2 {
+  margin: 0;
+
+  overflow: hidden;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.3;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.analysis-history-type {
+  margin: 0;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-body);
+  font-size: 13px;
+}
+
+.analysis-data {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+
+  margin-top: 2px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+.analysis-data i {
+  width: 4px;
+  height: 4px;
+  flex: 0 0 auto;
+
+  border-radius: 50%;
+
+  background: var(--color-elevated, var(--border));
+}
+
+.analysis-data-danger {
+  color: var(--color-error, var(--color-error));
+}
+
+/* =========================================================
+   PROCESSING
+   ========================================================= */
+
+.processing-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin-top: 2px;
+  max-width: 480px;
+}
+
+.processing-track {
+  flex: 1;
+
+  height: 6px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 999px;
+
+  background: var(--color-bg);
+}
+
+.processing-track span {
+  display: block;
+  height: 100%;
+
+  border-radius: inherit;
+
+  background: var(--color-primary, #ff7a18);
+
+  transition: width 0.4s ease;
+}
+
+.processing-info > span {
+  flex: 0 0 auto;
+  width: 34px;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-align: right;
+}
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.analysis-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+
+  margin-top: 2px;
+  max-width: 620px;
+
+  color: var(--color-error, var(--color-error));
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.analysis-error .material-symbols-outlined {
+  flex: 0 0 auto;
+  font-size: 15px;
+}
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.analysis-history-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: center;
+  gap: 8px;
+
+  flex: 0 0 auto;
+}
+
+.analysis-action-button {
+  height: 38px;
+  min-width: 128px;
+  padding: 0 16px;
+
+  border: 1px solid var(--color-text-secondary, var(--color-text-secondary));
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.analysis-action-button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+  border-color: var(--color-border-strong, #3a454b);
+  transform: translateY(-1px);
+}
+
+.analysis-action-button:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.analysis-action-button--error {
+  border-color: var(--color-error, var(--color-error));
+  color: var(--color-error, var(--color-error));
+}
+
+.analysis-action-button--error:hover {
+  background: rgba(239, 83, 80, 0.08);
+  border-color: var(--color-error, var(--color-error));
+}
+
+.analysis-action-button--primary {
+  height: 42px;
+  min-width: 128px;
+  border-color: var(--color-primary, #ff7a18);
+  background: var(--color-primary, #ff7a18);
+  color: var(--color-bg);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.analysis-action-button--primary:hover {
+  background: var(--color-primary-hover, #ff922e);
+  border-color: var(--color-primary-hover, #ff922e);
+  color: var(--color-bg);
+  box-shadow: 0 6px 16px rgba(255, 122, 24, 0.28);
+  transform: translateY(-1px);
+}
+
+.analysis-action-button--primary:active {
+  transform: scale(0.98) translateY(0);
+  box-shadow: none;
+}
+
+.analysis-menu-wrapper {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.analysis-menu-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  cursor: pointer;
+
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.analysis-menu-button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+  border-color: var(--color-border-strong, #3a454b);
+}
+
+.analysis-menu-button .material-symbols-outlined {
+  font-size: 20px;
+  transition: transform 0.15s ease;
+}
+
+.analysis-menu-button:hover .material-symbols-outlined {
+  transform: scale(1.1);
+}
+
+.analysis-context-menu {
+  position: absolute;
+  z-index: 30;
+  right: 0;
+  top: calc(100% + 5px);
+
+  width: 170px;
+  padding: 5px;
+
+  background: var(--color-bg-3);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 6px;
+
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.35);
+
+  animation: menuEnter 0.15s ease-out;
+  transform-origin: top right;
+}
+
+.analysis-context-menu button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+  padding: 9px 10px;
+
+  border: 0;
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-body);
+  font-size: 12px;
+
+  text-align: left;
+  cursor: pointer;
+
+  transition: background 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+
+.analysis-context-menu button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+  padding-left: 13px;
+}
+
+.analysis-context-menu .material-symbols-outlined {
+  font-size: 17px;
+}
+
+.analysis-context-menu .context-menu-danger:hover {
+  color: var(--color-error, var(--color-error));
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.my-analyses-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+
+  min-height: 240px;
+
+  border: 1px dashed var(--color-elevated, var(--border));
+  border-radius: 8px;
+
+  background: var(--color-surface);
+
+  text-align: center;
+}
+
+.my-analyses-empty .material-symbols-outlined {
+  margin-bottom: 6px;
+
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+  font-size: 32px;
+}
+
+.my-analyses-empty h3 {
+  margin: 0;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 16px;
+}
+
+.my-analyses-empty p {
+  margin: 0;
+
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-size: 13px;
+}
+
+/* =========================================================
+   LOAD MORE
+   ========================================================= */
+
+.my-analyses-load-more {
+  display: flex;
+  justify-content: center;
+
+  padding-top: 18px;
+}
+
+.my-analyses-load-more button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  height: 38px;
+  padding: 0 16px;
+
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 4px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.my-analyses-load-more button:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+}
+
+.my-analyses-load-more button:disabled {
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.my-analyses-load-more button:disabled:hover {
+  background: transparent;
+  color: var(--color-text-tertiary, var(--color-text-tertiary));
+}
+
+.my-analyses-load-more .material-symbols-outlined {
+  font-size: 18px;
+  transition: transform 0.4s ease;
+}
+
+.my-analyses-load-more button:hover:not(:disabled) .material-symbols-outlined {
+  transform: rotate(180deg);
+}
+
+/* =========================================================
+   DETAIL MODAL
+   ========================================================= */
+
+.analysis-detail-overlay {
+  position: fixed;
+  z-index: 200;
+
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0, 0, 0, 0.68);
+  backdrop-filter: blur(8px);
+}
+
+.analysis-detail-modal {
+  width: min(600px, 100%);
+  padding: 24px;
+
+  background: var(--color-bg-3);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 10px;
+
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.45);
+
+  animation: modalEnter 0.22s ease-out;
+}
+
+.analysis-detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-bottom: 24px;
+}
+
+.analysis-detail-header h2 {
+  margin: 0;
+
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 650;
+}
+
+.analysis-detail-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+
+  width: 34px;
+  height: 34px;
+
+  border: 0;
+  border-radius: 5px;
+
+  background: transparent;
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  cursor: pointer;
+
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.analysis-detail-close:hover {
+  background: var(--color-elevated, var(--border));
+  color: var(--color-text, var(--color-text));
+  transform: rotate(90deg);
+}
+
+.analysis-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.analysis-detail-grid > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+
+  min-height: 68px;
+  padding: 13px;
+
+  background: var(--color-bg);
+  border: 1px solid var(--color-elevated, var(--border));
+  border-radius: 6px;
+}
+
+.analysis-detail-grid > div > span:first-child {
+  color: var(--color-text-secondary, var(--color-text-secondary));
+
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.analysis-detail-grid strong {
+  color: var(--color-text, var(--color-text));
+
+  font-family: var(--font-display);
+  font-size: 14px;
+}
+
+.analysis-detail-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  height: 42px;
+
+  border: 1px solid var(--color-primary, #ff7a18);
+  border-radius: 5px;
+
+  background: var(--color-primary, #ff7a18);
+  color: var(--color-bg);
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.analysis-detail-primary:hover {
+  background: var(--color-primary-hover, #ff922e);
+  box-shadow: 0 6px 18px rgba(255, 122, 24, 0.3);
+}
+
+.analysis-detail-primary:active {
+  transform: scale(0.99);
+}
+
+.analysis-detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-top: 22px;
+}
+
+.analysis-detail-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  height: 42px;
+
+  border: 1px solid var(--color-border, rgba(15, 23, 42, 0.15));
+  border-radius: 5px;
+
+  background: transparent;
+  color: var(--color-text-secondary, #334155);
+
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+}
+
+.analysis-detail-secondary:hover {
+  border-color: var(--color-primary, #ff7a18);
+  color: var(--color-primary, #ff7a18);
+  background: rgba(255, 122, 18, 0.06);
+}
+
+.analysis-detail-secondary:focus-visible {
+  outline: 2px solid var(--color-primary, #ff7a18);
+  outline-offset: 2px;
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes analysisPulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.96);
+  }
+
+  50% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes modalEnter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes cardsFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes menuEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* =========================================================
+   FOCUS STATES (keyboard navigation)
+   ========================================================= */
+
+.my-analyses-new-button:focus-visible,
+.sort-button:focus-visible,
+.analysis-action-button:focus-visible,
+.analysis-menu-button:focus-visible,
+.my-analyses-load-more button:focus-visible,
+.analysis-detail-close:focus-visible,
+.analysis-detail-primary:focus-visible,
+.analysis-context-menu button:focus-visible,
+.my-analyses-search input:focus-visible,
+.my-analyses-filters select:focus-visible {
+  outline: 2px solid var(--color-primary, #ff7a18);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .analysis-history-card,
+  .my-analyses-summary,
+  .analysis-context-menu,
+  .analysis-detail-modal,
+  .my-analysis-status--processing .my-analysis-status__dot,
+  .preview-processing-icon {
+    animation: none !important;
+  }
+
+  .analysis-history-card,
+  .summary-card,
+  .my-analyses-new-button,
+  .analysis-action-button,
+  .analysis-menu-button,
+  .microstructure-preview,
+  .analysis-detail-close {
+    transition: none !important;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+  .my-analyses-toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  /* toolbar is a COLUMN now: flex-basis 260px would become a 260px
+     HEIGHT on the search wrapper — hug the 40px input instead */
+  .my-analyses-search {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .my-analyses-filters {
+    width: 100%;
+  }
+
+  .my-analyses-filters::before {
+    display: none;
+  }
+
+  .my-analyses-filters select,
+  .sort-button {
+    flex: 1;
+    width: auto;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 900px) {
+  .my-analyses-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .analysis-history-card {
+    grid-template-columns: 160px 1fr auto;
+  }
+
+  .my-analysis-preview {
+    width: 160px;
+  }
+}
+
+@media (max-width: 700px) {
+  .my-analyses-container {
+    padding: 28px 18px 50px;
+  }
+
+  .my-analyses-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .my-analyses-new-button {
+    width: 100%;
+  }
+
+  .my-analyses-summary {
+    gap: 10px;
+  }
+
+  .summary-card {
+    min-height: 88px;
+    padding: 16px;
+  }
+
+  .analysis-history-card {
+    grid-template-columns: 1fr;
+    padding: 10px;
+  }
+
+  .my-analysis-preview {
+    width: 100%;
+    height: 150px;
+  }
+
+  .analysis-history-actions {
+    justify-content: stretch;
+    align-self: stretch;
+  }
+
+  .analysis-action-button {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .analysis-context-menu {
+    right: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .my-analyses-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .my-analyses-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .my-analyses-filters select,
+  .sort-button {
+    width: 100%;
+  }
+
+  .my-analyses-search {
+    min-width: 0;
+  }
+
+  .analysis-detail-grid {
+    grid-template-columns: 1fr;
+  }
+}
+/* ── Real analysis image preview (authed fetch, per-card) ─────────────── */
+.analysis-real-preview {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 3px;
+  background: var(--surface-muted, #101418);
+
+  animation: analysis-preview-fade-in 0.35s ease both;
+}
+
+@keyframes analysis-preview-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.analysis-history-card:hover .analysis-real-preview {
+  transform: scale(1.04);
+  transition: transform 0.25s ease;
+}

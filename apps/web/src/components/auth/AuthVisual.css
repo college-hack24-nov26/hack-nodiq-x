@@ -1,0 +1,93 @@
+.auth-visual {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--color-surface);
+  border: none;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.auth-visual__video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.auth-visual__overlay {
+  position: absolute;
+  inset: 0;
+  /* Same gentle dark scrim in BOTH themes: keeps the 4K video natural
+     and visible (never a white wash) while giving the headline enough
+     contrast at the text zone. */
+  background: linear-gradient(180deg, rgba(12, 14, 18, 0.22) 0%, rgba(12, 14, 18, 0.55) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.auth-visual__field {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0.65;
+  pointer-events: none;
+  display: none;
+}
+
+.auth-visual__content {
+  position: relative;
+  z-index: 3;
+  padding: var(--space-3xl) var(--space-2xl);
+  max-width: 480px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  /* Text sits on the video itself in both themes - always light ink with
+     a soft shadow so it reads over bright footage frames. */
+  color: #ffffff;
+}
+
+.auth-visual__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  margin-bottom: var(--space-lg);
+}
+.auth-visual__mark { width: 9px; height: 9px; background: var(--color-primary); transform: rotate(45deg); }
+.auth-visual__accent { color: var(--color-primary); }
+
+.auth-visual__content h1 {
+  font-size: var(--fs-h1);
+  margin-bottom: var(--space-sm);
+  color: #ffffff;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+.auth-visual__content p {
+  font-size: var(--fs-body);
+  max-width: 380px;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 1024px) {
+  /* Below 1024px the login card centers and would overlap the headline */
+  .auth-visual__content { display: none; }
+}

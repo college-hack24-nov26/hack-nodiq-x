@@ -1,0 +1,231 @@
+/*
+  Sessions — login-scoped work sessions. Same visual language as Lots.css
+  (dark panels, Plex Mono ids, 20px rhythm). Scoped to .sess-* classes.
+*/
+
+.sess-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.sess-header {
+  min-height: 90px;
+  padding: 24px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--color-bg);
+}
+
+.sess-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+.sess-header p {
+  margin: 6px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.sess-content {
+  padding: 28px 40px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sess-panel {
+  background: var(--color-bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.sess-body {
+  padding: 20px 24px;
+}
+
+.sess-empty {
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.sess-error {
+  color: var(--color-error);
+  font-size: 14px;
+}
+
+/* Scoped: a bare global .mono here re-forced mono onto every .mono element
+   app-wide after globals.css (e.g. sidebar group labels with mixed classes).
+   The tech tier is already applied globally via styles/globals.css. */
+.sess-id.mono {
+  font-size: 13px;
+}
+
+/* ---------------- cards grid ---------------- */
+
+.sess-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.sess-card {
+  text-align: left;
+  background: var(--color-bg-2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px 20px;
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.sess-card:hover {
+  border-color: var(--color-success);
+  transform: translateY(-2px);
+}
+
+.sess-card.active {
+  border-color: var(--color-success);
+}
+
+.sess-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.sess-id {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--color-text);
+}
+
+.sess-badge {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.sess-badge.live {
+  background: var(--color-primary-dim, rgba(59, 166, 118, 0.16));
+  color: var(--color-success);
+}
+
+.sess-badge.ended {
+  background: var(--hover-veil);
+  color: var(--color-text-tertiary);
+}
+
+.sess-label {
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.sess-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-size: 12.5px;
+  color: var(--color-text-secondary);
+}
+
+.sess-card-actions {
+  display: flex;
+  gap: 14px;
+  font-size: 12.5px;
+}
+
+.sess-open,
+.sess-del,
+.sess-close {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+}
+
+.sess-open {
+  color: var(--color-success);
+}
+
+.sess-del {
+  color: var(--color-error);
+}
+
+.sess-close {
+  color: var(--color-text-tertiary);
+}
+
+.sess-open:hover,
+.sess-del:hover,
+.sess-close:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- detail panel ---------------- */
+
+.sess-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.sess-detail-head h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.sess-detail-head p {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.sess-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+.sess-table th,
+.sess-table td {
+  text-align: left;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sess-table th {
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sess-table tr:last-child td {
+  border-bottom: none;
+}
+
+@media (max-width: 640px) {
+  .sess-header,
+  .sess-content {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}

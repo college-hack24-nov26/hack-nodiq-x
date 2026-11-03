@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2480" height="1925" viewBox="0 0 2480 1925" font-family="Arial, Helvetica, sans-serif">
+<rect width="2480" height="1925" fill="#FFFFFF"/>
+<text x="1240" y="64" font-size="38" font-weight="bold" fill="#1F3A5F" text-anchor="middle">NODIQ-X System Architecture</text>
+<text x="1240" y="100" font-size="19" fill="#5B6670" text-anchor="middle">AI-Powered Microstructure Intelligence — Ductile/Nodular Cast Iron Microstructure and Nodularity Analysis · Version 1.6.0</text>
+<rect x="40" y="130" width="2400" height="285" rx="14" fill="#DCEAF7" stroke="#7FA6C9" stroke-width="2"/>
+<text x="62" y="164" font-size="20" font-weight="bold" fill="#7FA6C9">LAYER 1 — PRESENTATION</text>
+<rect x="40" y="445" width="2400" height="345" rx="14" fill="#D8EFF0" stroke="#6FB3B5" stroke-width="2"/>
+<text x="62" y="479" font-size="20" font-weight="bold" fill="#6FB3B5">LAYER 2 — MICROSCOPE / IMAGE ACQUISITION</text>
+<rect x="40" y="820" width="2400" height="265" rx="14" fill="#DFF0DC" stroke="#85B37E" stroke-width="2"/>
+<text x="62" y="854" font-size="20" font-weight="bold" fill="#85B37E">LAYER 3 — APPLICATION / API</text>
+<rect x="40" y="1115" width="2400" height="325" rx="14" fill="#E6DDF3" stroke="#9A85C0" stroke-width="2"/>
+<text x="62" y="1149" font-size="20" font-weight="bold" fill="#9A85C0">LAYER 4 — ANALYSIS ENGINE  (SINGLE PIPELINE — BOTH INPUTS CONVERGE)</text>
+<rect x="40" y="1470" width="2400" height="220" rx="14" fill="#F7F0CF" stroke="#B3A052" stroke-width="2"/>
+<text x="62" y="1504" font-size="20" font-weight="bold" fill="#B3A052">LAYER 5 — DATA / PERSISTENCE</text>
+<rect x="40" y="1720" width="2400" height="165" rx="14" fill="#EDEDED" stroke="#9C9C9C" stroke-width="2"/>
+<text x="62" y="1754" font-size="20" font-weight="bold" fill="#9C9C9C">LAYER 6 — EXTERNAL / SUPPORTING SERVICES (ALL OPTIONAL)</text>
+<rect x="70" y="230" width="210" height="80" rx="10" fill="#FFFFFF" stroke="#4A5568" stroke-width="1.6"/>
+<text x="175" y="276" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">User / Operator</text>
+<rect x="350" y="170" width="2050" height="210" rx="10" fill="#FFFFFF" stroke="#4A5568" stroke-width="1.6"/>
+<text x="1375" y="206" font-size="19" font-weight="bold" fill="#1F2933" text-anchor="middle">NODIQ-X Web Interface — React 19.2.8 + Vite 8.2.0 SPA (browser)</text>
+<rect x="70" y="560" width="300" height="110" rx="10" fill="#FFFFFF" stroke="#6FB3B5" stroke-width="1.6"/>
+<text x="220" y="599" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">NORMAL UPLOAD</text>
+<text x="220" y="621" font-size="15" fill="#41505B" text-anchor="middle">Image File (PNG/JPEG ≤ 25 MB)</text>
+<text x="220" y="643" font-size="15" fill="#41505B" text-anchor="middle">or Dataset (1,000 images)</text>
+<rect x="490" y="560" width="440" height="110" rx="10" fill="#FFFFFF" stroke="#6FB3B5" stroke-width="1.6"/>
+<text x="710" y="610" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Metallurgical Microscope</text>
+<text x="710" y="632" font-size="15" fill="#41505B" text-anchor="middle">(physical optics · stage · illumination)</text>
+<rect x="960" y="560" width="440" height="110" rx="10" fill="#FFFFFF" stroke="#6FB3B5" stroke-width="1.6"/>
+<text x="1180" y="610" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">MATRIX VISION Camera</text>
+<text x="1180" y="632" font-size="15" fill="#41505B" text-anchor="middle">mvBlueFOX-ML/IGC205C · S/N 29605128</text>
+<rect x="1430" y="560" width="440" height="110" rx="10" fill="#FFFFFF" stroke="#6FB3B5" stroke-width="1.6"/>
+<text x="1650" y="610" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">mvIMPACT Acquire SDK</text>
+<text x="1650" y="632" font-size="15" fill="#41505B" text-anchor="middle">(Python binding)</text>
+<rect x="1900" y="560" width="440" height="110" rx="10" fill="#FFFFFF" stroke="#6FB3B5" stroke-width="1.6"/>
+<text x="2120" y="599" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Local Camera Agent</text>
+<text x="2120" y="621" font-size="15" fill="#41505B" text-anchor="middle">127.0.0.1:8765</text>
+<text x="2120" y="643" font-size="15" fill="#41505B" text-anchor="middle">/status · /preview · /capture  (15 s idle-close)</text>
+<rect x="70" y="855" width="2330" height="200" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="1235" y="891" font-size="19" font-weight="bold" fill="#1F2933" text-anchor="middle">NODIQ-X Flask API — server.py :8001</text>
+<text x="1235" y="913" font-size="15" fill="#41505B" text-anchor="middle">58 REST API endpoint paths · 68 route registrations (41 GET / 23 POST / 4 DELETE) + 3 non-API paths</text>
+<rect x="70" y="1150" width="2330" height="260" rx="10" fill="#F3EEFA" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="1235" y="1186" font-size="19" font-weight="bold" fill="#1F2933" text-anchor="middle">Existing NODIQ-X Nodularity Analysis Engine — nodularity_pipeline.py (OpenCV 5.0.0.93 + NumPy 2.4.6) · crash-isolated child process</text>
+<rect x="70" y="1520" width="1100" height="90" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="620" y="1560" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">SQLite (WAL) — server_data/nodiq.db</text>
+<text x="620" y="1582" font-size="15" fill="#41505B" text-anchor="middle">(development backend)</text>
+<rect x="1210" y="1520" width="1190" height="90" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="1805" y="1560" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Supabase PostgreSQL + Supabase Storage</text>
+<text x="1805" y="1582" font-size="15" fill="#41505B" text-anchor="middle">(production backend · NODIQ_BACKEND)</text>
+<rect x="70" y="1760" width="700" height="80" rx="10" fill="#FFFFFF" stroke="#9C9C9C" stroke-width="1.6" stroke-dasharray="7,5"/>
+<text x="420" y="1795" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Firebase Authentication</text>
+<text x="420" y="1817" font-size="15" fill="#41505B" text-anchor="middle">(Google sign-in popup)</text>
+<rect x="800" y="1760" width="900" height="80" rx="10" fill="#FFFFFF" stroke="#9C9C9C" stroke-width="1.6" stroke-dasharray="7,5"/>
+<text x="1250" y="1795" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">AI Providers (Copilot)</text>
+<text x="1250" y="1817" font-size="15" fill="#41505B" text-anchor="middle">Groq → Gemini → OpenAI-compatible → Local → Fallback</text>
+<rect x="1730" y="1760" width="670" height="80" rx="10" fill="#FFFFFF" stroke="#9C9C9C" stroke-width="1.6" stroke-dasharray="7,5"/>
+<text x="2065" y="1795" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">SMTP Mailer</text>
+<text x="2065" y="1817" font-size="15" fill="#41505B" text-anchor="middle">OTP · password reset · SPC alerts</text>
+<rect x="370" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="508" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Image Upload</text>
+<rect x="661" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="799" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Dataset Browser (1,000 images)</text>
+<rect x="951" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1089" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Microscope Panel</text>
+<rect x="1242" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1380" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Live Preview (~1 Hz)</text>
+<rect x="1532" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1671" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Capture (2592×1944)</text>
+<rect x="1823" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1961" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Analysis &amp; Results</text>
+<rect x="2113" y="238" width="277" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="2252" y="273" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">My Analyses</text>
+<rect x="370" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="490" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Sessions</text>
+<rect x="624" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="744" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Analytics (SPC)</text>
+<rect x="878" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="999" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Compare</text>
+<rect x="1133" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1253" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Anomalies</text>
+<rect x="1387" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1507" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Lots</text>
+<rect x="1641" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="1761" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Review Center</text>
+<rect x="1896" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="2016" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Copilot</text>
+<rect x="2150" y="306" width="240" height="58" rx="10" fill="#FFFFFF" stroke="#7FA6C9" stroke-width="1.6"/>
+<text x="2270" y="341" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Reports (PDF)</text>
+<rect x="370" y="938" width="393" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="566" y="973" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Authentication (bcrypt · HMAC cookie)</text>
+<rect x="777" y="938" width="393" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="973" y="973" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Image Upload (hash dedupe)</text>
+<rect x="1184" y="938" width="393" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="1380" y="973" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Analysis API (/api/analyze → 202 + poll)</text>
+<rect x="1590" y="938" width="393" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="1787" y="973" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Reports (PDF)</text>
+<rect x="1997" y="938" width="393" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="2194" y="973" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">History &amp; Sessions</text>
+<rect x="370" y="1002" width="325" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="532" y="1037" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Calibration &amp; Quality</text>
+<rect x="709" y="1002" width="325" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="872" y="1037" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">SPC · Batch · Compare · Lots</text>
+<rect x="1048" y="1002" width="325" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="1210" y="1037" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Anomalies &amp; Decision Support</text>
+<rect x="1387" y="1002" width="325" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="1550" y="1037" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Review Center</text>
+<rect x="1726" y="1002" width="325" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="1888" y="1037" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Copilot API</text>
+<rect x="2065" y="1002" width="325" height="58" rx="10" fill="#FFFFFF" stroke="#85B37E" stroke-width="1.6"/>
+<text x="2228" y="1037" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">Dataset &amp; Evidence Serving</text>
+<rect x="90" y="1210" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="367" y="1248" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">1. Image Loading &amp; Normalization</text>
+<rect x="668" y="1210" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="946" y="1248" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">2. Annotation Blanking</text>
+<rect x="1247" y="1210" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="1524" y="1248" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">3. Image Validation</text>
+<rect x="1826" y="1210" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="2103" y="1248" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">4. Adaptive Segmentation</text>
+<rect x="1826" y="1310" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="2103" y="1348" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">5. Contour Filtering &amp; Pair Splitting</text>
+<rect x="1247" y="1310" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="1524" y="1348" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">6. Particle Morphology</text>
+<rect x="668" y="1310" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="946" y="1348" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">7. ISO 945-4 + JIS G 5502 · Forms I–VI</text>
+<rect x="90" y="1310" width="554" height="64" rx="10" fill="#FFFFFF" stroke="#9A85C0" stroke-width="1.6"/>
+<text x="367" y="1348" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">8. Results (masks · overlay · histogram · self-check)</text>
+<rect x="90" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="212" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">users</text>
+<rect x="346" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="468" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">sessions</text>
+<rect x="602" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="723" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">analyses</text>
+<rect x="857" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="979" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">reports</text>
+<rect x="1113" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="1235" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">feedback</text>
+<rect x="1369" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="1491" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">calibrations</text>
+<rect x="1625" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="1747" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">revoked_tokens</text>
+<rect x="1880" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="2002" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">uploads (hash-deduped)</text>
+<rect x="2136" y="1636" width="244" height="44" rx="10" fill="#FFFFFF" stroke="#B3A052" stroke-width="1.6"/>
+<text x="2258" y="1664" font-size="18" font-weight="bold" fill="#1F2933" text-anchor="middle">dataset (1,000 images)</text>
+<line x1="280" y1="270" x2="348" y2="270" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="348,270 336,264 336,276" fill="#4A5568"/>
+<line x1="220" y1="560" x2="220" y2="384" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="220,384 214,396 226,396" fill="#4A5568"/>
+<text x="236" y="508" font-size="16" fill="#5B6670" text-anchor="start">image file / dataset</text>
+<line x1="2120" y1="560" x2="2120" y2="384" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="2120,384 2114,396 2126,396" fill="#4A5568"/>
+<text x="2104" y="535" font-size="16" fill="#5B6670" text-anchor="end">capture + preview (HTTP)</text>
+<line x1="930" y1="615" x2="958" y2="615" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="958,615 946,609 946,621" fill="#4A5568"/>
+<line x1="1400" y1="615" x2="1428" y2="615" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1428,615 1416,609 1416,621" fill="#4A5568"/>
+<line x1="1870" y1="615" x2="1898" y2="615" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1898,615 1886,609 1886,621" fill="#4A5568"/>
+<line x1="430" y1="382" x2="430" y2="853" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="430,853 436,841 424,841" fill="#4A5568"/>
+<text x="560" y="508" font-size="16" fill="#5B6670" text-anchor="start">both inputs converge:</text>
+<line x1="1235" y1="1057" x2="1235" y2="1146" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1235,1146 1241,1134 1229,1134" fill="#4A5568"/>
+<text x="1252" y="1100" font-size="16" fill="#5B6670" text-anchor="start">engine run</text>
+<line x1="1235" y1="1412" x2="1235" y2="1466" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1235,1466 1241,1454 1229,1454" fill="#4A5568"/>
+<text x="1252" y="1444" font-size="16" fill="#5B6670" text-anchor="start">persist analysis + original image</text>
+<line x1="2102" y1="1274" x2="2102" y2="1306" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="2102,1306 2108,1294 2096,1294" fill="#4A5568"/>
+<line x1="2422" y1="1468" x2="2422" y2="280" stroke="#8A8F98" stroke-width="2.4" stroke-dasharray="8,6"/>
+<polygon points="2422,280 2416,292 2428,292" fill="#8A8F98"/>
+<text x="2140" y="428" font-size="16" fill="#5B6670" text-anchor="start">results &amp; history (read)</text>
+<line x1="644" y1="1242" x2="666" y2="1242" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="666,1242 656,1236 656,1248" fill="#4A5568"/>
+<line x1="1223" y1="1242" x2="1245" y2="1242" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1245,1242 1234,1236 1234,1248" fill="#4A5568"/>
+<line x1="1802" y1="1242" x2="1824" y2="1242" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1824,1242 1813,1236 1813,1248" fill="#4A5568"/>
+<line x1="1826" y1="1342" x2="1804" y2="1342" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1804,1342 1814,1348 1814,1336" fill="#4A5568"/>
+<line x1="1247" y1="1342" x2="1225" y2="1342" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="1225,1342 1236,1348 1236,1336" fill="#4A5568"/>
+<line x1="668" y1="1342" x2="646" y2="1342" stroke="#4A5568" stroke-width="2.4"/>
+<polygon points="646,1342 657,1348 657,1336" fill="#4A5568"/>
+<text x="60" y="772" font-size="16" fill="#4F6467">ADDITIONAL IMAGE INPUT SOURCE — the microscope adds an input source; there is NO second analysis pipeline.</text>
+<text x="60" y="1868" font-size="15" fill="#5B6670">The system degrades gracefully to full offline operation without the Layer-6 services.</text>
+</svg>

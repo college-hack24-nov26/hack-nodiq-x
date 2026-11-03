@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODIQ-X — Phase 4 Real Microscope Validation</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: #0d1117; color: #e6edf3; font: 15px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 28px 80px; }
+  h1 { font-size: 26px; margin: 0 0 4px; color: #fff; }
+  h2 { font-size: 19px; margin: 40px 0 10px; color: #7ee787; border-bottom: 1px solid #21262d; padding-bottom: 6px; }
+  .sub { color: #8b949e; margin-bottom: 8px; }
+  .banner { background: #12261e; border: 1px solid #2ea043; border-radius: 10px; padding: 14px 18px; margin: 18px 0 26px; font-weight: 700; letter-spacing: .4px; font-size: 17px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: 14px; }
+  th, td { border: 1px solid #21262d; padding: 7px 10px; text-align: left; vertical-align: top; }
+  th { background: #161b22; color: #c9d1d9; }
+  tr:nth-child(even) td { background: #10151c; }
+  .pass { color: #7ee787; font-weight: 700; white-space: nowrap; }
+  code { background: #161b22; border: 1px solid #21262d; border-radius: 4px; padding: 1px 5px; font-size: 13px; color: #79c0ff; }
+  .note { background: #1c1a12; border: 1px solid #d29922; border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
+  .ok { background: #12261e; border: 1px solid #2ea043; border-radius: 8px; padding: 12px 16px; margin: 12px 0; }
+  ul { margin: 8px 0; }
+  li { margin: 4px 0; }
+  .muted { color: #8b949e; font-size: 13px; }
+  .kpis { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+  .kpi { background: #161b22; border: 1px solid #21262d; border-radius: 10px; padding: 10px 16px; min-width: 130px; }
+  .kpi b { display: block; font-size: 20px; color: #7ee787; }
+  .kpi span { color: #8b949e; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>NODIQ-X — PHASE 4: REAL MICROSCOPE VALIDATION</h1>
+  <div class="sub">2026-10-01 · branch <code>supabase-migration</code> · mvBlueFOX-ML/IGC205C · S/N 29605128 · agent 127.0.0.1:8765</div>
+  <div class="sub">Microscope: physical metallurgical bench unit (model not recorded — physical controls only, per scope) · Specimen: real metallographic specimen (type not recorded)</div>
+
+  <div class="banner">PASS — Real microscope integration validated</div>
+
+  <div class="kpis">
+    <div class="kpi"><b>3 / 3</b><span>real captures → full analysis</span></div>
+    <div class="kpi"><b>10 = 10</b><span>byte-parity microscope vs upload</span></div>
+    <div class="kpi"><b>293 / 293</b><span>pytest (incl. 56 pinning)</span></div>
+    <div class="kpi"><b>0</b><span>lint errors · build OK</span></div>
+  </div>
+
+  <p class="ok"><b>The question Phase 4 answers: YES.</b> A real metallurgical microscope + MATRIX VISION camera was used from NODIQ-X to capture real microstructure images, and those exact images flowed unchanged through <code>captureImage() → Blob → File → runOnFile() → startAnalysis() → POST /api/analyze</code> to full results — no second pipeline, no engine changes, no pixel manipulation.</p>
+
+  <h2>1 · Physical setup — PASS</h2>
+  <p>Camera mounted, illumination working, real specimen placed and focused by the user. While ImpactControlCenter held the camera during setup, the agent correctly reported <code>connected:true, resolution:null</code> and 409 on capture/preview; after it was closed, the agent acquired the device with no restart (11:07:37) and the live preview showed the real microscope field.</p>
+
+  <h2>2 · Live preview — PASS</h2>
+  <p>● Connected · 2592 × 1944 · LIVE (1 s refresh). Fresh frames each poll (distinct hashes 2 s apart). User-confirmed physical response: stage movement → image shifted; focus → sharpness changed; illumination → brightness changed. No crash, no runaway loop.</p>
+
+  <h2>3 · Capture — PASS</h2>
+  <p>Three real captures via the UI button, each staged instantly ("Captured successfully — starting analysis…", READY TO ANALYZE): <code>microscope_20261001-111110/112143/114036.png</code>, full-sensor 2592×1944 PNGs.</p>
+
+  <h2>4 · Real specimen quality — PASS</h2>
+  <table>
+    <tr><th>Condition</th><th>Frontend hint</th><th>Backend gate</th><th>Outcome</th></tr>
+    <tr><td>Focused (#1)</td><td>none (correct)</td><td>accepted</td><td class="pass">full result</td></tr>
+    <tr><td>Slightly defocused (#2)</td><td>none (correct)</td><td>accepted</td><td class="pass">full result</td></tr>
+    <tr><td>Reduced illumination (#3)</td><td>none (correct — dark-but-structured, not lens-cap black)</td><td>accepted</td><td class="pass">full result</td></tr>
+    <tr><td>Too-bright</td><td colspan="3">not physically possible with this lamp (documented); saturation handling covered by the 293-test suite</td></tr>
+    <tr><td>Lens-cap black (baseline E2E)</td><td>"Image appears too dark…"</td><td>rejected gracefully</td><td class="pass">no crash / no fake result</td></tr>
+  </table>
+  <p>No bypass of the existing validity gate at any point.</p>
+
+  <h2>5 · Real analysis — PASS (software integration)</h2>
+  <table>
+    <tr><th>Capture</th><th>Analysis</th><th>count</th><th>ISO %</th><th>JIS %</th><th>accuracy</th><th>confidence</th></tr>
+    <tr><td>#1 focused</td><td>ANL-71BA41</td><td>10</td><td>14.91</td><td>53.0</td><td>100</td><td>100</td></tr>
+    <tr><td>#2 defocused</td><td>ANL-45A983</td><td>11</td><td>14.06</td><td>52.73</td><td>100</td><td>100</td></tr>
+    <tr><td>#3 dim field</td><td>ANL-5C2FCB</td><td>17</td><td>31.39</td><td>54.71</td><td>100</td><td>100</td></tr>
+  </table>
+  <p>Full result UI for each: masks, roundness histogram, ISO 945 graphite forms (dominant Form III — compacted/vermicular signature), estimated properties (~370 MPa, EN-GJS-400-15, "estimate, not a measurement").</p>
+  <div class="note"><b>Metallurgical correctness is NOT declared</b> — no independent ground truth for this specimen. The accuracy/confidence values are the engine's own self-check consistency (reference segmentation), not a metallographic verdict. Software-integration correctness: PASS. Metallurgical correctness: requires ground truth (out of scope).</div>
+
+  <h2>6 · Upload vs microscope parity — PASS</h2>
+  <p>Capture #1's exact bytes (content-addressed <code>5c03b80ecd4cba27.png</code>, md5 <code>0139cfe6…</code>) re-analyzed through the normal upload funnel in the same server process:</p>
+  <table>
+    <tr><th>Metric</th><th>Microscope path (ANL-71BA41)</th><th>Upload path (ANL-AB7402)</th></tr>
+    <tr><td>count</td><td>10</td><td class="pass">10</td></tr>
+    <tr><td>ISO %</td><td>14.91</td><td class="pass">14.91</td></tr>
+    <tr><td>JIS %</td><td>53.0</td><td class="pass">53.0</td></tr>
+    <tr><td>accuracy %</td><td>100</td><td class="pass">100</td></tr>
+    <tr><td>confidence %</td><td>100</td><td class="pass">100</td></tr>
+  </table>
+
+  <h2>7 · Physical image checks — PASS</h2>
+  <p>No black frame or lens-cap artifact (mean 35.5 vs ≈10.7 for lens cap) · zero clipping at both ends · smooth channel tint (B 46.6 / G 37.5 / R 27.2 — illumination, not corruption) · stride integrity proven (row/col adjacent diffs identical 0.42/0.42; no shear, no banding) · orientation matched the positioned field · no pixel manipulation anywhere in the pipeline. Observation: field is dim (max 77/255) — physical illumination knob only.</p>
+
+  <h2>8 · Disconnect / reconnect — PASS (one documented finding)</h2>
+  <p>Live unplug/replug test: while unplugged, <code>/status</code> kept <code>connected:true</code> (stale DeviceManager enumeration) with <code>resolution:null</code> and <code>/preview</code> → 409 — typed, recoverable, no crash. After replug: full recovery within seconds, no restart. Contrast: Phase 3's involuntary USB-bus drop correctly showed <code>connected:false</code> + 503.</p>
+  <div class="note"><b>Documented finding (not fixed — scope):</b> a clean unplug surfaces the busy-style message instead of "disconnected" until the driver refreshes enumeration. Future work: re-enumerate on open-failure to distinguish vanished-device from busy. Busy-ownership itself: verified today via holder E2E (409 + friendly message + RETRY + self-recovery) and live via the ImpactControlCenter hold at session start.</div>
+
+  <h2>9 · Full user workflow — PASS</h2>
+  <p>Start Flask → Vite → camera agent → open NODIQ-X → release camera from ImpactControlCenter → open panel → place/focus specimen → adjust illumination → confirm live preview → CAPTURE → analysis → results. Friction (none blocking): ICC holds camera at start (expected); "starting analysis…" wording appears before the START ANALYSIS click; the §8 message nuance.</p>
+
+  <h2>10 · Known limitations</h2>
+  <ul>
+    <li><b>Software:</b> clean-unplug enumeration staleness; "starting analysis…" wording; stale busy text until next action (cosmetic).</li>
+    <li><b>Microscope/optical:</b> brightness only via physical illumination (no software exposure/gain — per scope); too-bright not reachable with this lamp.</li>
+    <li><b>Metallurgical:</b> no ground truth → no accuracy claim beyond engine self-check.</li>
+  </ul>
+
+  <h2>11 · Final status</h2>
+  <div class="banner">PASS — Real microscope integration validated</div>
+  <p>Regression gate: <b>293/293 pytest</b> (8:20; includes the 56 pinning tests, which also passed standalone earlier today) · <b>oxlint 0 errors</b> · <b>npm build OK</b> · camera integration live-verified this session.</p>
+  <p class="muted">Full detail: <code>nodiq-camera-agent/phase4_report.md</code> · live capture log: <code>.freebuff/phase4_capture_log.md</code> · prior phases: phase1/2/23 reports.</p>
+</div>
+</body>
+</html>

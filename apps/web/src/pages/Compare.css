@@ -1,0 +1,275 @@
+/*
+  Compare page — same visual language as Analytics.css (dark panels,
+  two-tier typography (Inter UI / IBM Plex Mono technical), 20px rhythm). Scoped to .cmp-* classes.
+*/
+
+.cmp-page {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.cmp-header {
+  min-height: 90px;
+  padding: 24px 40px;
+  border-bottom: 1px solid var(--border);
+  background: var(--color-bg);
+}
+
+.cmp-header h1 {
+  margin: 0;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 600;
+}
+
+.cmp-header p {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+}
+
+.cmp-content {
+  padding: 28px 40px 48px;
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cmp-panel {
+  background: var(--color-surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  min-width: 0;
+}
+
+.cmp-panel-header {
+  min-height: 56px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.cmp-panel-header h2 {
+  margin: 0;
+  color: var(--color-text);
+  font-size: 16px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cmp-sub {
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cmp-body {
+  padding: 20px;
+}
+
+/* ---------------- pickers ---------------- */
+
+.cmp-pickers {
+  display: flex;
+  align-items: flex-end;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cmp-select {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cmp-select-label {
+  color: var(--color-text-secondary);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.cmp-select select {
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 10px 12px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.cmp-select select:focus {
+  outline: none;
+  border-color: #ff7a18;
+}
+
+.cmp-vs {
+  color: #ff7a18;
+  font-family: var(--font-ui);
+  font-size: 13px;
+  padding-bottom: 10px;
+}
+
+/* ---------------- side-by-side images ---------------- */
+
+.cmp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.cmp-image-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cmp-image {
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  display: block;
+}
+
+.cmp-image-stats {
+  display: flex;
+  gap: 18px;
+  color: var(--color-text-secondary);
+  font-size: 13px;
+}
+
+.cmp-image-stats strong {
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+/* ---------------- tables ---------------- */
+
+.cmp-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.cmp-table thead {
+  background: var(--border);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+}
+
+.cmp-table th,
+.cmp-table td {
+  padding: 10px 14px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.cmp-table th {
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.cmp-table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.cmp-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.cmp-table tbody tr:hover {
+  background: var(--color-border-strong);
+}
+
+.cmp-metric-name {
+  color: #ff7a18;
+  font-weight: 500;
+}
+
+/* ---------------- delta chips ---------------- */
+
+.cmp-delta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.cmp-delta em {
+  font-style: normal;
+  font-size: 10px;
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.cmp-delta.up {
+  color: var(--color-success);
+}
+
+.cmp-delta.down {
+  color: var(--color-error);
+}
+
+.cmp-delta.neutral {
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+/* ---------------- misc ---------------- */
+
+.cmp-summary {
+  color: var(--color-text);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+.cmp-empty,
+.cmp-error {
+  color: var(--color-text-secondary);
+}
+
+.cmp-error {
+  color: var(--color-error);
+}
+
+/* ---------------- responsive ---------------- */
+
+@media (max-width: 900px) {
+  .cmp-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cmp-content {
+    padding: 20px 24px 40px;
+  }
+}
+
+@media (max-width: 720px) {
+  .cmp-header {
+    padding: 16px;
+  }
+
+  .cmp-content {
+    padding: 16px;
+    gap: 16px;
+  }
+}

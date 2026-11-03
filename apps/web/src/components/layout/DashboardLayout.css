@@ -1,0 +1,478 @@
+/*.dashboard-layout {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-void);
+}
+
+.dashboard-layout-shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  background: var(--bg-void);
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 72px;
+  padding: 0 28px;
+  box-sizing: border-box;
+  background: rgba(9, 21, 25, 0.92);
+  border-bottom: 1px solid var(--border-subtle, #2a3035);
+  backdrop-filter: blur(16px);
+}
+
+.topbar-brand {
+  color: var(--accent-copper, #ff7a18);
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-secondary, var(--color-text-secondary));
+  cursor: pointer;
+}
+
+.secondary-button,
+.primary-button {
+  height: 38px;
+  padding: 0 20px;
+  border-radius: 18px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1),
+              background 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+.secondary-button {
+  background: #18181b;
+  color: #ffffff;
+  border: 1.2px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.45);
+}
+
+.primary-button {
+  background: #18181b;
+  border: 1.2px solid rgba(249, 115, 22, 0.6);
+  color: #ffffff;
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, 0.45), 0 0 12px -2px rgba(249, 115, 22, 0.3);
+}
+
+.avatar {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--bg-panel-raised, var(--color-elevated));
+  color: var(--text-secondary, var(--color-text-secondary));
+}
+
+.dashboard-layout-content {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: stretch;
+  background: var(--bg-void);
+}
+
+.dashboard-layout-content > * {
+  width: 100%;
+  min-width: 0;
+}
+
+.dashboard-layout-content-home {
+  padding: 0;
+}
+
+.dashboard-layout-content-home > * {
+  width: 100%;
+  min-width: 0;
+}*/
+
+
+.dashboard-layout {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-void);
+}
+
+/* Keyboard users can jump straight past the sidebar */
+.skip-nav-link {
+  position: fixed;
+  top: -48px;
+  left: 16px;
+  z-index: 2000;
+  padding: 10px 16px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #FFFFFF;
+  font-size: var(--fs-small);
+  font-weight: 600;
+  transition: top var(--dur-fast) var(--ease-out);
+}
+
+.skip-nav-link:focus-visible {
+  top: 12px;
+}
+
+.dashboard-layout-shell {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  margin-left: var(--sidebar-width);
+  width: calc(100% - var(--sidebar-width));
+  min-height: 100vh;
+  background: var(--bg-void);
+}
+
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 80;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  min-height: 72px;
+
+  padding: 0 28px;
+  box-sizing: border-box;
+
+  background: var(--topbar-bg);
+  border-bottom: 1px solid var(--border-subtle);
+
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* Hamburger only exists on tablet/mobile — CSS hides it on desktop.
+   (.topbar prefix outranks .icon-button's later display:flex.) */
+.topbar .topbar-menu-button {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .topbar .topbar-menu-button {
+    display: flex;
+  }
+}
+
+/* Compact variant: rendered on every non-home route so MOBILE keeps the
+   hamburger drawer everywhere (it is the only navigation at <=900px).
+   Desktop hides it entirely — non-home pages keep their original look. */
+/* Double class = (0,2,0) — outranks legacy sheets' single-class
+   `.topbar { display:flex }` regardless of stylesheet order. */
+.topbar.topbar--compact {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .topbar.topbar--compact {
+    display: flex;
+    min-height: 56px;
+  }
+
+  .topbar--compact .topbar-actions .icon-button:not(.topbar-menu-button) {
+    display: none;
+  }
+}
+
+.topbar-brand {
+  color: var(--accent-copper);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 38×38 ghost controls — same vertical rhythm as the 38px text buttons
+   beside them (audit issue 3) */
+.icon-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+  padding: 0;
+
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+
+  background: transparent;
+  color: var(--text-secondary, var(--color-text-secondary));
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.icon-button:hover {
+  background: var(--hover-veil);
+  color: var(--text-primary);
+}
+
+/* TopBar Action Buttons — harmonized with Dashboard, Copilot & MyAnalyses */
+.topbar-actions .topbar-export-btn,
+.topbar-actions .secondary-button {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 6px !important;
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent !important;
+  color: var(--color-text-secondary, #9AA6AC) !important;
+  border: 1px solid var(--color-border, #2E383D) !important;
+  box-shadow: none !important;
+  transition: all 0.2s ease;
+}
+
+.topbar-actions .topbar-export-btn:hover,
+.topbar-actions .secondary-button:hover {
+  background: var(--hover-veil, rgba(255, 255, 255, 0.06)) !important;
+  color: var(--color-text, #E8ECEE) !important;
+  border-color: var(--color-border-strong, #3A454B) !important;
+  transform: translateY(-1px);
+}
+
+.topbar-actions .topbar-export-btn:active,
+.topbar-actions .secondary-button:active {
+  transform: translateY(0);
+}
+
+.topbar-actions .topbar-new-btn,
+.topbar-actions .primary-button {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 6px !important;
+  font-family: var(--font-ui, system-ui, sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: var(--color-primary, #FF7A18) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--color-primary, #FF7A18) !important;
+  box-shadow: 0 2px 10px rgba(255, 122, 24, 0.28) !important;
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.topbar-actions .topbar-new-btn .material-symbols-outlined,
+.topbar-actions .primary-button .material-symbols-outlined {
+  font-size: 18px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.topbar-actions .topbar-new-btn:hover,
+.topbar-actions .primary-button:hover {
+  background: var(--color-primary-hover, #FF922E) !important;
+  border-color: var(--color-primary-hover, #FF922E) !important;
+  box-shadow: 0 4px 16px rgba(255, 122, 24, 0.42) !important;
+  transform: translateY(-1px);
+}
+
+.topbar-actions .topbar-new-btn:hover .material-symbols-outlined,
+.topbar-actions .primary-button:hover .material-symbols-outlined {
+  transform: rotate(90deg);
+}
+
+.topbar-actions .topbar-new-btn:active,
+.topbar-actions .primary-button:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 6px rgba(255, 122, 24, 0.2) !important;
+}
+
+/* Light mode overrides */
+[data-theme="light"] .topbar-actions .topbar-export-btn,
+[data-theme="light"] .topbar-actions .secondary-button {
+  background: #ffffff !important;
+  color: #4B5563 !important;
+  border: 1px solid #D1D5DB !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .topbar-actions .topbar-export-btn:hover,
+[data-theme="light"] .topbar-actions .secondary-button:hover {
+  background: #F3F4F6 !important;
+  color: #111827 !important;
+  border-color: #9CA3AF !important;
+}
+
+[data-theme="light"] .topbar-actions .topbar-new-btn,
+[data-theme="light"] .topbar-actions .primary-button {
+  background: var(--color-primary, #FF7A18) !important;
+  color: #ffffff !important;
+  border-color: var(--color-primary, #FF7A18) !important;
+  box-shadow: 0 2px 10px rgba(255, 122, 24, 0.28) !important;
+}
+
+.avatar {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-secondary, #9AA6AC);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.avatar:hover {
+  background: var(--hover-veil, rgba(255, 255, 255, 0.05));
+  color: var(--color-text, #E8ECEE);
+}
+
+.avatar .material-symbols-outlined {
+  font-size: 24px;
+}
+
+
+
+.dashboard-layout-content {
+  flex: 1;
+
+  min-width: 0;
+  width: 100%;
+
+  box-sizing: border-box;
+
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: stretch;
+
+  background: var(--bg-void);
+}
+
+.dashboard-layout-content > * {
+  width: 100%;
+  min-width: 0;
+}
+
+/* Pinned sidebar (audit issue 12): reserve real layout space instead of
+   overlaying content — hover-expansion stays an overlay, the pin does not.
+   Desktop only: the ≤900px drawer resets the margin below. */
+@media (min-width: 901px) {
+  @supports selector(:has(*)) {
+    .dashboard-layout:has(.nodiq-sidebar.sidebar-pinned) .dashboard-layout-shell {
+      margin-left: var(--sidebar-expanded-width);
+      width: calc(100% - var(--sidebar-expanded-width));
+    }
+  }
+}
+
+
+
+@media (max-width: 900px) {
+  /* Sidebar becomes an off-canvas drawer — the shell goes full-width */
+  .dashboard-layout-shell {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .topbar {
+    min-height: 64px;
+    padding: 0 18px;
+  }
+
+  .topbar-brand {
+    font-size: 17px;
+  }
+
+  .secondary-button {
+    display: none;
+  }
+}
+/* ===== Light theme chrome (ThemeContext: [data-theme="light"] on html) =====
+   Surfaces follow the canonical tokens; explicit overrides are only needed
+   for chrome that composites translucent veils. */
+[data-theme="light"] .topbar {
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom-color: var(--border-subtle);
+}
+
+[data-theme="light"] .nodiq-sidebar {
+  background: var(--bg-panel);
+  border-right-color: var(--border-subtle);
+  box-shadow: none;
+}
+
+[data-theme="light"] .nodiq-sidebar.sidebar-open {
+  box-shadow: 8px 0 32px rgba(26, 34, 38, 0.18);
+}

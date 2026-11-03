@@ -1,0 +1,573 @@
+/* ==========================================================================
+   ACCEPTANCE VERDICT METER — Canonical Unified Design System
+   Adapts seamlessly to both the Technical Report and the Orange & Cream Portal
+   ========================================================================== */
+
+.verdict-report-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 18px 0 0 0;
+}
+
+.verdict-report-section .section-title {
+  margin: 0 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-strong, #3A454B);
+  color: var(--color-text, #E8ECEE);
+  font-size: 20px;
+  line-height: 28px;
+  font-weight: 700;
+}
+
+.verdict-report-section .summary-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-strong, #3A454B);
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.verdict-report-section .summary-heading-label {
+  font-size: 13px;
+  color: var(--color-text-secondary, #9AA6AC);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-ui, sans-serif);
+}
+
+.verdict-report-section .summary-heading-label strong {
+  color: var(--color-text, #E8ECEE);
+}
+
+.verdict-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.verdict-status-badge .material-symbols-outlined {
+  font-size: 16px;
+}
+
+.verdict-status-badge.compliant {
+  background: color-mix(in srgb, var(--color-success, #39C27F) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-success, #39C27F) 35%, transparent);
+  color: var(--color-success, #39C27F);
+}
+
+.verdict-status-badge.marginal {
+  background: color-mix(in srgb, var(--color-primary, #FF7A18) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-primary, #FF7A18) 40%, transparent);
+  color: var(--color-primary, #FF7A18);
+}
+
+.verdict-status-badge.non-compliant {
+  background: color-mix(in srgb, var(--color-error, #EF5350) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-error, #EF5350) 40%, transparent);
+  color: var(--color-error, #EF5350);
+}
+
+/* --------------------------------------------------------------------------
+   METRICS GRID & PROPERTY CARDS
+   -------------------------------------------------------------------------- */
+.verdict-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  gap: 16px;
+  margin-bottom: 20px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .verdict-metrics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .verdict-metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.verdict-prop-card {
+  padding: 16px 14px !important;
+  background: var(--color-elevated, #252E33);
+  border: 1px solid var(--color-border, #2E383D);
+  border-radius: 4px;
+  text-align: left !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+  min-width: 0 !important;
+}
+
+.metric-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.metric-label {
+  display: block;
+  font-family: var(--font-ui, sans-serif);
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--color-text-secondary, #9AA6AC);
+  letter-spacing: 0.04em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metric-margin-pill {
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--font-mono, monospace);
+  padding: 1px 5px;
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.metric-margin-pill.positive {
+  color: var(--color-success, #39C27F);
+  background: color-mix(in srgb, var(--color-success, #39C27F) 12%, transparent);
+}
+
+.metric-margin-pill.negative {
+  color: var(--color-primary, #FF7A18);
+  background: color-mix(in srgb, var(--color-primary, #FF7A18) 12%, transparent);
+}
+
+.metric-val {
+  font-size: 28px !important;
+  line-height: 34px !important;
+  font-weight: 700 !important;
+  color: var(--color-text, #E8ECEE);
+  font-family: var(--font-mono, monospace) !important;
+  display: block !important;
+  margin-bottom: 8px !important;
+}
+
+.metric-val small {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  color: var(--color-text-secondary, #9AA6AC);
+  margin-left: 4px !important;
+  text-transform: uppercase !important;
+}
+
+.metric-gauge-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+  position: relative;
+  margin-bottom: 8px;
+  overflow: visible;
+}
+
+.metric-req-tick {
+  position: absolute;
+  top: -3px;
+  bottom: -3px;
+  width: 2px;
+  background: var(--color-text, #E8ECEE);
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 1px;
+}
+
+.metric-gauge-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.metric-gauge-fill.satisfied {
+  background: var(--color-success, #39C27F);
+}
+
+.metric-gauge-fill.deficit {
+  background: var(--color-primary, #FF7A18);
+}
+
+.metric-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--color-text-secondary, #9AA6AC);
+  font-family: var(--font-mono, monospace);
+  margin-top: auto;
+}
+
+.txt-satisfied {
+  color: var(--color-success, #39C27F);
+  font-weight: 600;
+}
+
+.txt-deficit {
+  color: var(--color-primary, #FF7A18);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   VERDICT SUMMARY CALLOUT BOX
+   -------------------------------------------------------------------------- */
+.verdict-summary-box {
+  padding: 18px 20px !important;
+  border: 1px solid var(--color-border, #2E383D) !important;
+  background: var(--color-elevated, #252E33) !important;
+  margin-bottom: 16px !important;
+  border-radius: 0 !important;
+}
+
+.verdict-summary-box.compliant {
+  border-left: 4px solid var(--color-success, #39C27F) !important;
+}
+
+.verdict-summary-box.marginal {
+  border-left: 4px solid var(--color-primary, #FF7A18) !important;
+}
+
+.verdict-summary-box.non-compliant {
+  border-left: 4px solid var(--color-error, #EF5350) !important;
+}
+
+.verdict-summary-box .ai-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  color: var(--color-text-secondary, #9AA6AC);
+  font-family: var(--font-ui, sans-serif);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.verdict-summary-box .ai-label .material-symbols-outlined {
+  font-size: 16px;
+  color: var(--color-primary, #FF7A18);
+}
+
+.verdict-summary-box .ai-summary-body p {
+  margin: 0 0 8px;
+  color: var(--color-text, #E8ECEE);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.verdict-summary-box .ai-summary-body p:last-child {
+  margin-bottom: 0;
+}
+
+.verdict-summary-box .ai-summary-body strong {
+  color: var(--color-text, #E8ECEE);
+  font-weight: 600;
+}
+
+.verdict-context-line {
+  margin-top: 8px !important;
+  font-size: 12px !important;
+  color: var(--color-text-secondary, #9AA6AC) !important;
+  line-height: 1.5 !important;
+}
+
+/* --------------------------------------------------------------------------
+   METALLURGICAL ASSUMPTIONS TAGS
+   -------------------------------------------------------------------------- */
+.verdict-assumptions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.assumptions-prefix {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--color-text-secondary, #9AA6AC);
+  font-weight: 600;
+  font-family: var(--font-ui, sans-serif);
+  letter-spacing: 0.04em;
+}
+
+.verdict-param-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--color-elevated, #252E33);
+  border: 1px solid var(--color-border, #2E383D);
+  border-radius: 3px;
+  font-size: 11.5px;
+  color: var(--color-text, #E8ECEE);
+}
+
+.verdict-param-tag .material-symbols-outlined {
+  font-size: 15px;
+  color: var(--color-primary, #FF7A18);
+}
+
+/* ==========================================================================
+   TECHNICAL REPORT SPECIFIC STYLES (Matching Image 2 in Dark Report)
+   ========================================================================== */
+.technical-report .verdict-report-section .section-title {
+  color: var(--color-text, #E8ECEE);
+  border-bottom: 2px solid var(--color-border, #2E383D);
+}
+
+.technical-report .verdict-prop-card {
+  background: rgba(15, 27, 31, 0.75) !important;
+  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+.technical-report .metric-label {
+  color: var(--color-text-secondary, #9AA6AC) !important;
+}
+
+.technical-report .metric-val {
+  color: #FFFFFF !important;
+}
+
+.technical-report .metric-val small {
+  color: var(--color-text-secondary, #9AA6AC) !important;
+}
+
+.technical-report .metric-gauge-track {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.technical-report .metric-req-tick {
+  background: #FFFFFF !important;
+}
+
+.technical-report .metric-card-footer {
+  color: var(--color-text-secondary, #9AA6AC) !important;
+}
+
+.technical-report .verdict-summary-box {
+  background: rgba(15, 27, 31, 0.75) !important;
+  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  border-left: 4px solid var(--color-primary, #FF7A18) !important;
+  border-radius: 4px !important;
+  box-shadow: none !important;
+}
+
+.technical-report .verdict-summary-box.compliant {
+  border-left-color: var(--color-success, #39C27F) !important;
+}
+
+.technical-report .verdict-summary-box.marginal {
+  border-left-color: var(--color-primary, #FF7A18) !important;
+}
+
+.technical-report .verdict-summary-box.non-compliant {
+  border-left-color: var(--color-error, #EF5350) !important;
+}
+
+.technical-report .verdict-summary-box .ai-label {
+  color: var(--color-primary, #FF7A18) !important;
+}
+
+.technical-report .verdict-summary-box .ai-label .material-symbols-outlined {
+  color: var(--color-primary, #FF7A18) !important;
+}
+
+.technical-report .verdict-summary-box .ai-summary-body p {
+  color: var(--color-text, #E8ECEE) !important;
+}
+
+.technical-report .verdict-summary-box .ai-summary-body strong {
+  color: #FFFFFF !important;
+}
+
+.technical-report .verdict-context-line {
+  color: var(--color-text-secondary, #9AA6AC) !important;
+}
+
+.technical-report .assumptions-prefix {
+  color: var(--color-text-secondary, #9AA6AC) !important;
+}
+
+.technical-report .verdict-param-tag {
+  background: rgba(15, 27, 31, 0.75) !important;
+  border: 1px solid rgba(148, 163, 184, 0.18) !important;
+  color: var(--color-text, #E8ECEE) !important;
+  box-shadow: none !important;
+}
+
+.technical-report .verdict-param-tag .material-symbols-outlined {
+  color: var(--color-primary, #FF7A18) !important;
+}
+
+/* ==========================================================================
+   ORANGE & CREAM PORTAL THEME OVERRIDES (Strictly NO BLACK in Verify Portal!)
+   Applied ONLY inside .verify-result-card
+   ========================================================================== */
+.verify-result-card .verdict-report-section .section-title {
+  color: #1C1917 !important;
+  border-bottom: 2px solid rgba(234, 88, 12, 0.25) !important;
+}
+
+.verify-result-card .verdict-report-section .summary-heading {
+  border-bottom: 1px solid rgba(120, 113, 108, 0.18) !important;
+}
+
+.verify-result-card .summary-heading-label {
+  color: #57534E !important;
+}
+
+.verify-result-card .summary-heading-label strong {
+  color: #1C1917 !important;
+}
+
+.verify-result-card .verdict-status-badge.compliant {
+  background: #ECFDF5 !important;
+  border-color: #059669 !important;
+  color: #047857 !important;
+}
+
+.verify-result-card .verdict-status-badge.marginal {
+  background: #FFF7ED !important;
+  border-color: #EA580C !important;
+  color: #C2410C !important;
+}
+
+.verify-result-card .verdict-status-badge.non-compliant {
+  background: #FEF2F2 !important;
+  border-color: #DC2626 !important;
+  color: #B91C1C !important;
+}
+
+/* Property Cards on Cream Background */
+.verify-result-card .verdict-prop-card {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(234, 88, 12, 0.22) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 14px rgba(120, 53, 15, 0.06), 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+
+.verify-result-card .metric-label {
+  color: #78716C !important;
+}
+
+.verify-result-card .metric-val {
+  color: #1C1917 !important;
+}
+
+.verify-result-card .metric-val small {
+  color: #78716C !important;
+}
+
+.verify-result-card .metric-gauge-track {
+  background: #E7E5E4 !important;
+}
+
+.verify-result-card .metric-req-tick {
+  background: #1C1917 !important;
+}
+
+.verify-result-card .metric-card-footer {
+  color: #78716C !important;
+}
+
+/* Summary Box on Cream Background */
+.verify-result-card .verdict-summary-box {
+  background: #FAF7F2 !important;
+  border: 1px solid rgba(234, 88, 12, 0.25) !important;
+  border-left: 5px solid #EA580C !important;
+  border-radius: 0 8px 8px 0 !important;
+  box-shadow: 0 4px 16px rgba(120, 53, 15, 0.05) !important;
+}
+
+.verify-result-card .verdict-summary-box.compliant {
+  border-left-color: #059669 !important;
+}
+
+.verify-result-card .verdict-summary-box.marginal {
+  border-left-color: #EA580C !important;
+}
+
+.verify-result-card .verdict-summary-box.non-compliant {
+  border-left-color: #DC2626 !important;
+}
+
+.verify-result-card .verdict-summary-box .ai-label {
+  color: #EA580C !important;
+}
+
+.verify-result-card .verdict-summary-box .ai-label .material-symbols-outlined {
+  color: #EA580C !important;
+}
+
+.verify-result-card .verdict-summary-box .ai-summary-body p {
+  color: #292524 !important;
+}
+
+.verify-result-card .verdict-summary-box .ai-summary-body strong {
+  color: #1C1917 !important;
+}
+
+.verify-result-card .verdict-context-line {
+  color: #57534E !important;
+}
+
+/* Parameter Tags on Cream Background */
+.verify-result-card .assumptions-prefix {
+  color: #78716C !important;
+}
+
+.verify-result-card .verdict-param-tag {
+  background: #FAF7F2 !important;
+  border: 1px solid rgba(234, 88, 12, 0.25) !important;
+  color: #292524 !important;
+  box-shadow: 0 1px 3px rgba(120, 53, 15, 0.03);
+}
+
+.verify-result-card .verdict-param-tag .material-symbols-outlined {
+  color: #EA580C !important;
+}
+
+/* ==========================================================================
+   PRINT OVERRIDES
+   ========================================================================== */
+@media print {
+  .verdict-prop-card {
+    background: #f3f5f7 !important;
+    border-color: #d7dde2 !important;
+  }
+  .verdict-summary-box {
+    background: #f3f5f7 !important;
+    border-color: #d7dde2 !important;
+  }
+  .metric-val {
+    color: #10181c !important;
+  }
+  .verdict-param-tag {
+    background: #f3f5f7 !important;
+    border-color: #d7dde2 !important;
+    color: #10181c !important;
+  }
+}

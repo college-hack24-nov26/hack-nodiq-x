@@ -1,0 +1,222 @@
+.nodiq-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* =========================================
+   BACKGROUND
+========================================= */
+
+.nodiq-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(0, 229, 255, 0.035),
+      transparent 45%
+    ),
+    #050b14;
+}
+
+/* =========================================
+   GRADIENT ORBS
+========================================= */
+
+.gradient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.22;
+  will-change: transform;
+}
+
+/* Cyan */
+
+.orb-cyan {
+  width: 480px;
+  height: 480px;
+
+  top: -180px;
+  left: -120px;
+
+  background: #00e5ff;
+
+  animation: floatCyan 16s ease-in-out infinite alternate;
+}
+
+/* Violet */
+
+.orb-violet {
+  width: 550px;
+  height: 550px;
+
+  right: -180px;
+  top: 15%;
+
+  background: #7c3aed;
+
+  animation: floatViolet 20s ease-in-out infinite alternate;
+}
+
+/* Blue */
+
+.orb-blue {
+  width: 400px;
+  height: 400px;
+
+  bottom: -180px;
+  left: 35%;
+
+  background: #2563eb;
+
+  opacity: 0.12;
+
+  animation: floatBlue 18s ease-in-out infinite alternate;
+}
+
+/* =========================================
+   ANIMATIONS
+========================================= */
+
+@keyframes floatCyan {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(120px, 80px, 0) scale(1.08);
+  }
+
+  100% {
+    transform: translate3d(60px, 180px, 0) scale(0.95);
+  }
+}
+
+@keyframes floatViolet {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate3d(-100px, 70px, 0) scale(1.1);
+  }
+
+  100% {
+    transform: translate3d(-40px, -100px, 0) scale(0.95);
+  }
+}
+
+@keyframes floatBlue {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(-80px, -60px, 0);
+  }
+
+  100% {
+    transform: translate3d(100px, -30px, 0);
+  }
+}
+
+/* =========================================
+   TECHNICAL GRID
+========================================= */
+
+.background-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    linear-gradient(
+      rgba(0, 229, 255, 0.025) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(0, 229, 255, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 50px 50px;
+
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8),
+    transparent 90%
+  );
+}
+
+/* =========================================
+   SUBTLE NOISE
+========================================= */
+
+.background-noise {
+  position: absolute;
+  inset: 0;
+
+  opacity: 0.025;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* =========================================
+   CONTENT
+========================================= */
+
+.nodiq-page-content {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .gradient-orb {
+    filter: blur(80px);
+    opacity: 0.16;
+  }
+
+  .orb-cyan {
+    width: 300px;
+    height: 300px;
+  }
+
+  .orb-violet {
+    width: 350px;
+    height: 350px;
+  }
+
+  .orb-blue {
+    width: 280px;
+    height: 280px;
+  }
+
+  .background-grid {
+    background-size: 35px 35px;
+  }
+}
+
+/* =========================================
+   REDUCED MOTION
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .gradient-orb {
+    animation: none;
+  }
+}

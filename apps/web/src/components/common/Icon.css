@@ -1,0 +1,54 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Size variants */
+.icon--sm {
+  width: 20px;
+  height: 20px;
+}
+
+.icon--md {
+  width: 28px;
+  height: 28px;
+}
+
+.icon--lg {
+  width: 40px;
+  height: 40px;
+}
+
+.icon--xl {
+  width: 56px;
+  height: 56px;
+}
+
+/* Icon with background/container for visual hierarchy */
+.icon--boxed {
+  padding: 0.5rem;
+  background: var(--color-primary-dim);
+  border: 1px solid rgba(255, 122, 24, 0.3);
+  border-radius: 6px;
+}
+
+/* Icon color variants */
+.icon--success {
+  color: var(--color-success);
+}
+
+.icon--warning {
+  color: var(--color-warning);
+}
+
+.icon--error {
+  color: var(--color-error);
+}

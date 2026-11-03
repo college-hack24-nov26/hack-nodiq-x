@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools", "setuptools_scm[toml]>7.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "carde" #Virtual Field Diagnostic Tool 
+description = "Carbide Detection Tool"
+readme = "README_package.md"
+requires-python = ">=3.9"
+authors = [
+    {name = "Till Korten", email = "t.korten@hzdr.de"},
+]
+keywords = ["image segmentation", "python", "scanning electron microscopy", "carbide detection"]
+license = {text = "BSD-3-Clause"}
+classifiers = [
+    "Programming Language :: Python :: 3",
+]
+dependencies = [
+    "nc_py_api", #for data access
+    "numpy",
+    "pandas",
+    "SimpleITK",
+    "scikit-image",
+    "scikit-learn",
+    "jupyterlab",
+    "stackview",
+    "seaborn",
+    "natsort",
+    "click",
+    "torch",
+    "torchvision",
+    "pytorch-lightning",
+    "tensorboard",
+    "ipywidgets",
+    "svgutils",
+]
+dynamic = ["version"]
+
+[project.scripts]
+carde-process = "carde.image_processing:process_folder_cli"
+
+[tool.setuptools]
+# packages = ["carde"]
+include-package-data = true
+
+[tool.setuptools_scm]
+write_to = "src/carde/_version.py"
+
+[tool.setuptools.dynamic]
+version = {attr = "carde._version.__version__"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["carde*"]
+namespaces = true
+
+[project.optional-dependencies]
+dev = ["pytest", "optuna", "plotly[kaleido]"]
+
+[tool.pytest.ini_options]
+markers = [
+    "slow: tests as slow (deselect with '-m \"not slow\"')",
+    #"gpu: tests that require a gpu (deselect with '-m \"not gpu\"')",
+]
+filterwarnings = ["ignore:.*Please use.*:DeprecationWarning",]
+pythonpath = [".",]
+testpaths = [ "tests" ]

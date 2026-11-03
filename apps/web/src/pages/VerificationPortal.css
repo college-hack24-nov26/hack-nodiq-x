@@ -1,0 +1,681 @@
+/* ==========================================================================
+   VERIFICATION PORTAL — Professional Orange & Cream Enterprise Security Theme
+   Zero-Trust Cryptographic Authority (ISO 17025 / 21 CFR Part 11)
+   ========================================================================== */
+
+:root {
+  --portal-cream-bg: #FAF7F2;
+  --portal-cream-card: #FFFFFF;
+  --portal-cream-card-subtle: #FDFBF7;
+  --portal-cream-accent: #F4EFE6;
+  --portal-orange-primary: #FF7A18;
+  --portal-orange-hover: #EA580C;
+  --portal-orange-deep: #C2410C;
+  --portal-orange-light: #FFEDD5;
+  --portal-orange-glow: rgba(255, 122, 24, 0.25);
+  --portal-ink-primary: #1C1917;
+  --portal-ink-secondary: #44403C;
+  --portal-ink-muted: #78716C;
+  --portal-border-warm: rgba(234, 88, 12, 0.16);
+  --portal-border-subtle: rgba(120, 113, 108, 0.14);
+}
+
+/* Page Background: Warm Luxury Cream & Parchment Gradient */
+.verify-portal-page {
+  min-height: 100vh;
+  background: radial-gradient(circle at 50% 0%, #FFFDF9 0%, #FAF5ED 50%, #F3EDE2 100%);
+  color: var(--portal-ink-primary);
+  padding: 44px 24px 64px;
+  font-family: var(--font-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Subtle background industrial pattern */
+.verify-portal-page::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 380px;
+  background: radial-gradient(circle at 50% 0%, rgba(255, 122, 24, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.verify-portal-container {
+  max-width: 920px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   1. NAVIGATION BAR
+   -------------------------------------------------------------------------- */
+.verify-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--portal-border-subtle);
+}
+
+.verify-brand-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+  color: var(--portal-ink-primary);
+}
+
+.verify-brand-logo {
+  width: 42px;
+  height: 42px;
+  background: linear-gradient(135deg, #FF7A18 0%, #EA580C 100%);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 22px;
+  color: #FFFFFF;
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.verify-brand-text h1 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--portal-ink-primary);
+}
+
+.verify-brand-text span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--portal-orange-deep);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  display: block;
+  margin-top: 1px;
+}
+
+.verify-login-btn {
+  color: var(--portal-ink-secondary);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  border: 1px solid var(--portal-border-subtle);
+  box-shadow: 0 2px 6px rgba(120, 53, 15, 0.04);
+  transition: all 0.2s ease;
+}
+
+.verify-login-btn:hover {
+  color: var(--portal-orange-deep);
+  border-color: var(--portal-orange-primary);
+  background: #FFFDF9;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   2. HERO SECTION
+   -------------------------------------------------------------------------- */
+.verify-hero {
+  text-align: center;
+  margin-bottom: 38px;
+}
+
+.verify-hero h2 {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px 0;
+  color: var(--portal-ink-primary);
+}
+
+.verify-hero p {
+  font-size: 15px;
+  color: var(--portal-ink-secondary);
+  max-width: 660px;
+  margin: 0 auto;
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   3. DRAG & DROP ZONE (Cream & Forge Orange)
+   -------------------------------------------------------------------------- */
+.verify-dropzone-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 2px dashed rgba(234, 88, 12, 0.4);
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(120, 53, 15, 0.04);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+}
+
+.verify-dropzone-card:hover,
+.verify-dropzone-card.dragging {
+  border-color: var(--portal-orange-primary);
+  background: #FFFDF9;
+  box-shadow: 0 12px 32px rgba(234, 88, 12, 0.15);
+  transform: translateY(-2px);
+}
+
+.dropzone-icon {
+  font-size: 52px;
+  color: var(--portal-orange-primary);
+  margin-bottom: 12px;
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.verify-dropzone-card:hover .dropzone-icon {
+  transform: scale(1.08);
+}
+
+.dropzone-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--portal-ink-primary);
+  margin-bottom: 6px;
+}
+
+.dropzone-hint {
+  font-size: 13px;
+  color: var(--portal-ink-muted);
+}
+
+/* --------------------------------------------------------------------------
+   4. HASH SEARCH BAR
+   -------------------------------------------------------------------------- */
+.verify-hash-search {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 34px;
+}
+
+.verify-hash-input {
+  flex: 1;
+  background: #FFFFFF;
+  border: 1px solid var(--portal-border-subtle);
+  border-radius: 10px;
+  padding: 14px 18px;
+  color: var(--portal-ink-primary);
+  font-family: var(--font-tech, monospace);
+  font-size: 13.5px;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(120, 53, 15, 0.04);
+  transition: all 0.2s ease;
+}
+
+.verify-hash-input:focus {
+  border-color: var(--portal-orange-primary);
+  box-shadow: 0 0 0 4px rgba(255, 122, 24, 0.15);
+  background: #FFFDF9;
+}
+
+.verify-hash-submit {
+  background: linear-gradient(135deg, #FF7A18 0%, #EA580C 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 0 24px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 14px rgba(234, 88, 12, 0.3);
+  transition: all 0.2s ease;
+}
+
+.verify-hash-submit:hover:not(:disabled) {
+  background: linear-gradient(135deg, #FF922E 0%, #C2410C 100%);
+  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
+  transform: translateY(-1px);
+}
+
+.verify-hash-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* --------------------------------------------------------------------------
+   5. VERIFICATION AUDIT RESULTS CARD (Luxury Cream & Forge Orange)
+   -------------------------------------------------------------------------- */
+.verify-result-card {
+  background: #FFFFFF;
+  border: 1px solid var(--portal-border-warm);
+  border-radius: 16px;
+  padding: 32px 34px;
+  box-shadow: 0 16px 48px -10px rgba(120, 53, 15, 0.08), 0 4px 16px rgba(0, 0, 0, 0.02);
+  margin-bottom: 30px;
+}
+
+.verify-result-card.success {
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.verify-result-card.danger {
+  border-color: rgba(239, 68, 68, 0.4);
+}
+
+/* Status Header */
+.result-status-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 28px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--portal-border-subtle);
+}
+
+.result-status-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.result-status-icon.success {
+  background: #ECFDF5;
+  color: #059669;
+  border: 2px solid #059669;
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.result-status-icon.danger {
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 2px solid #DC2626;
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.2);
+}
+
+.result-status-text h3 {
+  margin: 0 0 4px 0;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.result-status-text p {
+  margin: 0;
+  font-size: 14px;
+  color: var(--portal-ink-secondary);
+  line-height: 1.5;
+}
+
+/* Core Metadata Grid */
+.result-data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.result-data-item {
+  background: #FAF7F2;
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--portal-border-subtle);
+  transition: all 0.2s ease;
+}
+
+.result-data-item:hover {
+  background: #F5EFEB;
+  border-color: rgba(234, 88, 12, 0.25);
+}
+
+.result-data-item .label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--portal-ink-muted);
+  letter-spacing: 0.05em;
+  margin-bottom: 5px;
+  font-family: var(--font-tech, monospace);
+}
+
+.result-data-item .val {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--portal-ink-primary);
+}
+
+/* SHA-256 Hash Box: Warm Cream & Forge Copper Accent */
+.result-hash-box {
+  background: #FAF7F2;
+  border: 1px solid rgba(234, 88, 12, 0.28);
+  border-radius: 10px;
+  padding: 16px 20px;
+  margin-bottom: 26px;
+  box-shadow: 0 2px 8px rgba(120, 53, 15, 0.04);
+}
+
+.result-hash-box .label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #78716C;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 6px;
+  font-family: var(--font-tech, monospace);
+}
+
+.result-hash-box code {
+  font-family: var(--font-tech, monospace);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #C2410C;
+  word-break: break-all;
+  letter-spacing: 0.02em;
+}
+
+/* Quick Sample Helper */
+.verify-quick-samples {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 14px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.quick-samples-label {
+  font-size: 12px;
+  color: #78716C;
+  font-weight: 500;
+}
+
+.quick-sample-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 16px;
+  background: #FFF7ED;
+  border: 1px solid rgba(234, 88, 12, 0.25);
+  color: #C2410C;
+  font-size: 12px;
+  font-family: var(--font-tech, monospace);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.quick-sample-chip:hover {
+  background: #FFEDD5;
+  border-color: #EA580C;
+  color: #9A3412;
+  transform: translateY(-1px);
+}
+
+/* Action Footer & Buttons */
+.verify-action-footer {
+  margin-top: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.verify-action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.crypto-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  color: #44403C;
+  font-size: 13.5px;
+  font-weight: 600;
+  border: 1.5px solid #D6D3D1;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.crypto-btn-secondary:hover {
+  background: #F5F5F4;
+  border-color: #A8A29E;
+  color: #1C1917;
+  transform: translateY(-1px);
+}
+
+/* Download Certified PDF Button */
+.crypto-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 26px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FF7A18 0%, #EA580C 100%);
+  color: #FFFFFF !important;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35);
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.crypto-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #FF922E 0%, #C2410C 100%);
+  box-shadow: 0 6px 22px rgba(234, 88, 12, 0.45);
+  transform: translateY(-2px);
+}
+
+.crypto-btn-primary:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.verify-download-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #B91C1C;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+@keyframes verify-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.verify-spin {
+  animation: verify-spin 1s linear infinite;
+}
+
+/* --------------------------------------------------------------------------
+   6. EMBEDDED ACCEPTANCE VERDICT METER IN ORANGE & CREAM CONTEXT
+   -------------------------------------------------------------------------- */
+.verify-result-card .verdict-meter-container {
+  background: #FAF7F2;
+  border-color: rgba(234, 88, 12, 0.2);
+  box-shadow: 0 4px 16px rgba(120, 53, 15, 0.06);
+  color: #1C1917;
+}
+
+.verify-result-card .verdict-heading {
+  color: #1C1917;
+}
+
+.verify-result-card .grade-badge {
+  background: #FFFFFF;
+  border-color: rgba(234, 88, 12, 0.25);
+  color: #1C1917;
+}
+
+.verify-result-card .grade-badge strong {
+  color: #EA580C;
+}
+
+.verify-result-card .standard-basis-text {
+  color: #78716C;
+}
+
+.verify-result-card .kicker-label {
+  color: #78716C;
+}
+
+.verify-result-card .spec-origin-pill {
+  color: #EA580C;
+  background: #FFEDD5;
+  border-color: rgba(234, 88, 12, 0.3);
+}
+
+.verify-result-card .verdict-statement-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(120, 113, 108, 0.12);
+  border-left: 5px solid #10b981;
+  box-shadow: 0 4px 12px rgba(120, 53, 15, 0.04);
+}
+
+.verify-result-card .verdict-statement-card.marginal {
+  border-left-color: #F59E0B;
+  background: linear-gradient(90deg, #FFFBEB 0%, #FFFFFF 100%);
+}
+
+.verify-result-card .verdict-statement-card.non-compliant {
+  border-left-color: #EF4444;
+  background: linear-gradient(90deg, #FEF2F2 0%, #FFFFFF 100%);
+}
+
+.verify-result-card .statement-text {
+  color: #292524;
+}
+
+.verify-result-card .statement-text strong {
+  color: #1C1917;
+}
+
+.verify-result-card .property-gauge-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(120, 113, 108, 0.14);
+  box-shadow: 0 4px 12px rgba(120, 53, 15, 0.04);
+}
+
+.verify-result-card .prop-full-name {
+  color: #44403C;
+}
+
+.verify-result-card .val-digits {
+  color: #1C1917;
+}
+
+.verify-result-card .val-unit {
+  color: #78716C;
+}
+
+.verify-result-card .gauge-range-band {
+  color: #A8A29E;
+}
+
+.verify-result-card .calibrated-gauge-track {
+  background: #E7E5E4;
+}
+
+.verify-result-card .footer-spec-benchmark {
+  color: #78716C;
+}
+
+.verify-result-card .footer-spec-benchmark strong {
+  color: #1C1917;
+}
+
+.verify-result-card .marker-line {
+  background: #1C1917;
+}
+
+.verify-result-card .marker-flag {
+  background: #FFFFFF;
+  border-color: #D6D3D1;
+  color: #78716C;
+}
+
+.verify-result-card .verdict-audit-footer {
+  border-top-color: rgba(120, 113, 108, 0.16);
+}
+
+.verify-result-card .audit-footer-header {
+  color: #78716C;
+}
+
+.verify-result-card .assumption-tag {
+  background: #FAF7F2;
+  border-color: rgba(120, 113, 108, 0.14);
+  color: #44403C;
+}
+
+.verify-result-card .assumption-tag:hover {
+  background: #F5EFEB;
+  border-color: rgba(234, 88, 12, 0.3);
+}
+
+.verify-result-card .assumption-tag .material-symbols-outlined {
+  color: #EA580C;
+}
+
+/* --------------------------------------------------------------------------
+   7. RESPONSIVE MEDIA QUERIES
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) {
+  .verify-portal-page {
+    padding: 24px 16px;
+  }
+  .verify-hero h2 {
+    font-size: 26px;
+  }
+  .verify-result-card {
+    padding: 20px;
+  }
+  .verify-hash-search {
+    flex-direction: column;
+  }
+  .verify-hash-submit {
+    padding: 12px;
+    justify-content: center;
+  }
+}

@@ -1,0 +1,61 @@
+# Render Blueprint — NODIQ-X (single same-origin service)
+#
+# Deploy: Render dashboard -> New + -> Blueprint -> pick this repo.
+# Render prompts once for the `sync: false` secrets; everything else is
+# fully specified here.
+#
+# Free plan caveats (accepted): spin-down after idle, 512MB RAM.
+# Persistent state (accounts, analyses, artifacts) lives in Supabase
+# PostgreSQL + Storage — see DEPLOY_SUPABASE.md; the four SUPABASE_*/
+# DATABASE_URL vars below are what make data survive restarts/redeploys.
+
+services:
+  - type: web
+    name: nodiq-x
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    dockerfilePath: ./deploy/Dockerfile
+    dockerContext: .
+    # Render forwards service env vars to `docker build` as build args, so
+    # the VITE_FIREBASE_* group is inlined into the frontend bundle at build
+    # time (changing them triggers a rebuild — they are build-time for Vite).
+    envVars:
+      # Render terminates TLS; without this, client IPs resolve to the proxy
+      # (breaking auth rate limiting) and Secure cookies/HSTS never engage.
+      - key: TRUST_PROXY
+        value: "true"
+      # Copilot cloud providers enabled (GROQ key set as a secret below)
+      - key: OFFLINE_MODE
+        value: "false"
+      # --- secrets (Render prompts at Blueprint creation) ---
+      # Server-only: AI Copilot provider key (never reaches the browser)
+      - key: GROQ_API_KEY
+        sync: false
+      # --- persistent persistence backend (Supabase) ---
+      # Server-only credentials: Postgres connection string + Storage
+      # service-role key. NEVER expose these to the React bundle (no VITE_).
+      - key: NODIQ_BACKEND
+        value: "supabase"
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_BUCKET
+        value: "nodiq-artifacts"
+      # --- build-time public config (Firebase Web keys are public) ---
+      - key: VITE_FIREBASE_API_KEY
+        sync: false
+      - key: VITE_FIREBASE_AUTH_DOMAIN
+        sync: false
+      - key: VITE_FIREBASE_PROJECT_ID
+        sync: false
+      - key: VITE_FIREBASE_STORAGE_BUCKET
+        sync: false
+      - key: VITE_FIREBASE_MESSAGING_SENDER_ID
+        sync: false
+      - key: VITE_FIREBASE_APP_ID
+        sync: false

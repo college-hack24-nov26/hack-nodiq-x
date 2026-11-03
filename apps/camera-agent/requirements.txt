@@ -1,0 +1,14 @@
+# NODIQ-X Camera Agent — Phase 1 dependencies
+#
+# The mvIMPACT Acquire Python binding is NOT pip-installable from PyPI.
+# It is built from the local Balluff Impact Acquire SDK installation
+# (MVIMPACT_ACQUIRE_DIR, default D:\) — see README.md, step 2:
+#
+#   cd /d "D:\LanguageBindings\Python"
+#   python -m build --no-isolation
+#   pip install --user dist\ImpactAcquire-*.whl
+#
+# Everything below is already satisfied by the NODIQ-X backend environment.
+
+numpy>=1.26
+opencv-python>=4.8

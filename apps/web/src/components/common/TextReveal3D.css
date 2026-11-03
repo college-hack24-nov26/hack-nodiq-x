@@ -1,0 +1,31 @@
+.text-reveal {
+  display: block;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  line-height: inherit;
+  word-spacing: normal;
+}
+
+.text-reveal__char {
+  display: inline-block;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+/* Apply 3D perspective to text */
+@supports (perspective: 1200px) {
+  .text-reveal {
+    perspective: 1200px;
+  }
+
+  .text-reveal__char {
+    transform-style: preserve-3d;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .text-reveal {
+    perspective: 800px;
+  }
+}

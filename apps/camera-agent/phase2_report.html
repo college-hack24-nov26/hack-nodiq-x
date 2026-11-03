@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODIQ-X — Phase 2 Report: Camera Agent + Website Connection</title>
+<style>
+  :root {
+    --bg:#0d1117; --panel:#141b22; --border:#252e33; --text:#e6edf3;
+    --muted:#8b949e; --accent:#22d3ee; --ok:#3fb950; --warn:#d29922;
+    --mono:"Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font:14px/1.55 "Segoe UI",system-ui,sans-serif;padding:32px 20px 64px}
+  .wrap{max-width:960px;margin:0 auto}
+  header{border-left:4px solid var(--accent);padding-left:16px;margin-bottom:28px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:2px;color:var(--muted)}
+  h1{margin:6px 0 4px;font-size:27px;font-weight:600}
+  .sub{color:var(--muted);font-size:13px}
+  section{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:18px}
+  h2{font-size:13px;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin:0 0 12px;font-family:var(--mono)}
+  table{width:100%;border-collapse:collapse}
+  td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.k{color:var(--muted);width:34%}
+  td.v{font-family:var(--mono);font-size:12.5px}
+  code,pre{font-family:var(--mono);font-size:12.5px}
+  code{background:#1c242d;padding:2px 6px;border-radius:4px}
+  pre{background:#0a0e13;border:1px solid var(--border);border-radius:8px;padding:12px 14px;overflow-x:auto;color:#c9d1d9;margin:8px 0 0}
+  .badge{display:inline-block;font-family:var(--mono);font-size:11px;padding:2px 10px;border-radius:999px;font-weight:600}
+  .ok{background:rgba(63,185,80,.15);color:var(--ok);border:1px solid rgba(63,185,80,.4)}
+  .warn{background:rgba(210,153,34,.15);color:var(--warn);border:1px solid rgba(210,153,34,.4)}
+  .flow{font-family:var(--mono);font-size:12.5px;color:var(--muted);text-align:center;padding:8px 0 2px;line-height:2}
+  .flow b{color:var(--accent);font-weight:600}
+  .equal{color:var(--ok);font-weight:700}
+  .note{border-left:3px solid var(--warn);background:rgba(210,153,34,.07);padding:10px 14px;border-radius:0 8px 8px 0;margin-top:10px;font-size:13px}
+  .note.ok{border-left-color:var(--ok);background:rgba(63,185,80,.07)}
+  ul{margin:8px 0 0;padding-left:20px}
+  li{margin:4px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">NODIQ-X / CAMERA AGENT — PHASE 2</div>
+  <h1>Local Camera Agent + Website Connection — COMPLETE</h1>
+  <div class="sub">Camera Agent → HTTP API → NODIQ-X Browser → Capture → File → runOnFile() → existing analysis pipeline. Engine untouched.</div>
+</header>
+
+<section>
+  <h2>1–4. Agent API (port 8765, live-tested)</h2>
+  <table>
+    <tr><td class="k">Port</td><td class="v">8765 — verified free, env-configurable (<code>NODIQ_CAMERA_PORT</code>)</td></tr>
+    <tr><td class="k">GET /status</td><td class="v"><span class="badge ok">200</span> <code>{"connected":true,"device_id":0,"model":"mvBlueFOX-ML/IGC205C","serial":"29605128","resolution":{"width":2592,"height":1944}}</code> — resolution read live from the sensor AOI, never hardcoded</td></tr>
+    <tr><td class="k">GET /capture</td><td class="v"><span class="badge ok">200</span> image/png — fresh frame every call, 3.9 MB @ 2592×1944, buffer unlocked, device closed after each request</td></tr>
+    <tr><td class="k">GET /preview</td><td class="v"><span class="badge ok">200</span> image/jpeg (quality 92) — single frame, no streaming (per Phase 2 spec)</td></tr>
+    <tr><td class="k">Camera busy</td><td class="v"><span class="badge warn">409</span> <code>{"error":"camera_busy"}</code> — verified against a REAL busy camera (ImpactControlCenter was holding it); no crash</td></tr>
+    <tr><td class="k">Unknown path</td><td class="v">404 JSON · Server: stdlib-only <code>agent_server.py</code>, serialized SDK access, no new dependencies</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>5–6. CORS &amp; Private Network Access (verified with curl preflights)</h2>
+  <table>
+    <tr><td class="k">CORS allow-list</td><td class="v"><code>http://localhost:5173</code>, <code>http://127.0.0.1:5173</code> (config: <code>NODIQ_CAMERA_ALLOWED_ORIGINS</code>)</td></tr>
+    <tr><td class="k">Allowed origin</td><td class="v">200 + <code>Access-Control-Allow-Origin: http://localhost:5173</code></td></tr>
+    <tr><td class="k">Foreign origin</td><td class="v">200 but ACAO header <b>withheld</b> — no wildcard, browser blocks the read</td></tr>
+    <tr><td class="k">PNA preflight</td><td class="v">OPTIONS → 204 with <code>Access-Control-Allow-Private-Network: true</code> + <code>Access-Control-Allow-Methods</code> + <code>Access-Control-Allow-Headers</code></td></tr>
+    <tr><td class="k">Browser proof</td><td class="v">Real Chromium page at localhost:5173 fetched /status + /capture from 127.0.0.1:8765 — <b>zero CSP violations, zero console errors</b></td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>7. CSP change (server.py — the only backend security edit)</h2>
+  <table>
+    <tr><td class="k">What changed</td><td class="v"><code>connect-src</code> only: appended <code>http://127.0.0.1:8765 http://localhost:8765</code> (port from <code>NODIQ_CAMERA_PORT</code>)</td></tr>
+    <tr><td class="k">What did NOT change</td><td class="v">script-src / style-src / img-src / frame-src / object-src / frame-ancestors all untouched; no wildcards; no headers removed</td></tr>
+    <tr><td class="k">Verified</td><td class="v">Served header inspected live: <code>... connect-src 'self' https://*.googleapis.com ... http://127.0.0.1:8765 http://localhost:8765; ...</code></td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>8–10. Files changed</h2>
+  <table>
+    <tr><td class="k">Camera agent (new)</td><td class="v"><code>agent_server.py</code> (HTTP API) · <code>camera.py</code> (+close_device) · <code>config.py</code> (port/origins env config)</td></tr>
+    <tr><td class="k">Backend (1 hunk)</td><td class="v"><code>server.py</code> — CSP connect-src only</td></tr>
+    <tr><td class="k">Frontend (new)</td><td class="v"><code>nodiq-x/src/services/microscopeAgent.js</code> — isolated agent client (getCameraStatus, captureImage → File, capturePreview), typed errors, configurable base URL</td></tr>
+    <tr><td class="k">Frontend (minimal)</td><td class="v"><code>nodiq-x/src/pages/Analysis.jsx</code> — 🔬 MICROSCOPE button + compact status panel + capture handler feeding runOnFile(); no redesign, lint clean, production build passes</td></tr>
+    <tr><td class="k">Untouched</td><td class="v">nodularity_pipeline.py · analysis_child.py · analyze_with_recovery.py · Nodularity-main/ · report_builder.py · services engine logic · upload workflow · api.js</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>11. Exact capture → runOnFile flow (as executed in the real browser)</h2>
+  <pre>🔬 MICROSCOPE click → GET /status (live: 🟢 MATRIX VISION mvBlueFOX-ML/IGC205C, 2592×1944)
+CAPTURE IMAGE click → GET /capture (fresh frame, PNG bytes)
+  → Blob → new File(...) 'microscope_20260930-162212.png'
+  → runOnFile(file)                 [EXISTING funnel, unchanged]
+  → START ANALYSIS → startAnalysis() → api.analyzeUpload(file)
+  → POST /api/analyze → 202 → poll → existing engine → results</pre>
+</section>
+
+<section>
+  <h2>12. Existing upload workflow — still working ✓</h2>
+  <table>
+    <tr><td class="k">Test</td><td class="v">Uploaded a camera image through the ORIGINAL file-input path (select → stage → START ANALYSIS)</td></tr>
+    <tr><td class="k">Result</td><td class="v"><span class="badge ok">ANALYSIS COMPLETE</span> — normal payload, artifacts, history row</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>13. Capture vs Upload parity (Step 13) — byte-for-byte PROOF</h2>
+  <table>
+    <tr><td class="k">A · Microscope capture</td><td class="v">ANL-D23A37 — count <b>21</b> · ISO <b>15.56</b> · JIS <b>60</b> · accuracy <b>95</b> · confidence <b>100</b></td></tr>
+    <tr><td class="k">B · Same bytes re-uploaded</td><td class="v">ANL-FC3DE1 — count <b>21</b> · ISO <b>15.56</b> · JIS <b>60</b> · accuracy <b>95</b> · confidence <b>100</b></td></tr>
+    <tr><td class="k">Verdict</td><td class="v"><span class="equal">IDENTICAL — the microscope is purely another input source; zero analysis drift</span></td></tr>
+  </table>
+  <div class="note ok">Controls: a genuinely different frame analyzed alongside produced different metrics (17 / 4.19 / 57.65), confirming the test detects differences. Byte identity was verified via the server-side stored hash of the original capture.</div>
+</section>
+
+<section>
+  <h2>14. Regression test (Step 14)</h2>
+  <table>
+    <tr><td class="k">Full suite</td><td class="v"><span class="badge ok">291 passed</span> <span class="badge warn">2 failed</span> — <code>tests/test_accuracy_bench.py</code> only</td></tr>
+    <tr><td class="k">Attribution</td><td class="v">Both failures are engine-benchmark assertions correlated with PRE-EXISTING uncommitted engine edits in this checkout (<code>nodularity_pipeline.py</code> +253, <code>analyze_with_recovery.py</code> +24 — modified before Phase 1/2; verified via git diff). Phase 2 changed none of those files. Reported honestly, not patched.</td></tr>
+    <tr><td class="k">Frontend</td><td class="v">oxlint: 0 errors · <code>npm run build</code>: success</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>15. Blockers — none</h2>
+  <ul>
+    <li>Camera-busy path proven real (ImpactControlCenter incident) and handled with clean 409 + friendly UI message + RETRY.</li>
+    <li>One operational note: close ImpactControlCenter/wxPropView before capturing (single-client camera).</li>
+  </ul>
+</section>
+
+<section>
+  <h2>16. Commands to run the system</h2>
+  <pre># terminal 1 — Flask API (port 8001)
+python server.py
+
+# terminal 2 — React SPA (port 5173, proxies /api -> 8001)
+cd nodiq-x &amp;&amp; npm run dev
+
+# terminal 3 — camera agent (port 8765)
+cd nodiq-camera-agent &amp;&amp; python agent_server.py
+
+# then open http://localhost:5173/new-analysis -> 🔬 MICROSCOPE
+# config: NODIQ_CAMERA_PORT, NODIQ_CAMERA_ALLOWED_ORIGINS, VITE_CAMERA_AGENT_URL</pre>
+</section>
+
+<section>
+  <h2>STOP condition honored</h2>
+  <div class="sub">No live video streaming · no exposure/gain controls · no focus detection · no calibration UI · no reports. Phase 3 (live preview + better capture UI) not started.</div>
+</section>
+
+</div>
+</body>
+</html>

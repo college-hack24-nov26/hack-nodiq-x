@@ -1,0 +1,106 @@
+.login-form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+.login-form__field { display: flex; flex-direction: column; gap: 0.5rem; }
+.login-form__field > span,
+.login-form__label { font-size: var(--fs-label); letter-spacing: 0.05em; color: var(--color-text-secondary); font-family: var(--font-ui); font-weight: 500; }
+
+.login-form__label-row { display: flex; justify-content: space-between; align-items: center; }
+.login-form__forgot {
+  font-size: var(--fs-label);
+  font-family: var(--font-body);
+  color: var(--color-primary);
+  letter-spacing: normal;
+}
+.login-form__forgot:hover { color: var(--color-primary-hover); }
+
+.login-form__field input {
+  padding: 0.8rem 0.95rem;
+  background: var(--color-elevated);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--fs-small);
+  font-family: inherit;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+.login-form__field input:focus { outline: none; border-color: var(--color-primary); }
+.login-form__field input:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.login-form__password-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.login-form__password-wrapper input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.login-form__password-toggle {
+  position: absolute;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color var(--dur-fast) var(--ease-out);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-form__password-toggle:hover:not(:disabled) {
+  color: var(--color-primary);
+}
+
+.login-form__password-toggle:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+
+.login-form__remember {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.login-form__remember input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.login-form__remember input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.login-form__remember span {
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.05em;
+}
+
+.login-form__error {
+  padding: 0.75rem 0.95rem;
+  background: rgba(239, 83, 80, 0.12);
+  border: 1px solid var(--color-error);
+  border-radius: var(--radius-md);
+  color: var(--color-error);
+  font-size: var(--fs-small);
+  text-align: center;
+  margin: -0.5rem 0 0.5rem 0;
+}
+
+.login-form__submit { 
+  width: 100%; 
+  margin-top: 0.25rem; 
+}
+

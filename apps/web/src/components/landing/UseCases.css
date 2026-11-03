@@ -1,0 +1,42 @@
+.usecases__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: var(--space-xl);
+  perspective: 1200px;
+}
+
+.usecases__card {
+  border-top: 2px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: all var(--dur-base) var(--ease-out);
+}
+
+.usecases__card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(255, 122, 24, 0.15);
+}
+
+.usecases__card .icon {
+  display: flex;
+  padding: 0.5rem;
+  background: var(--color-primary-dim);
+  border: 1px solid rgba(255, 122, 24, 0.3);
+  border-radius: 6px;
+  width: fit-content;
+  margin-bottom: 0.5rem;
+}
+
+.usecases__card h3 { font-size: var(--fs-body); margin-bottom: 0.4rem; }
+.usecases__card p { font-size: var(--fs-small); }
+
+@media (max-width: 960px) {
+  .usecases__grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .usecases__grid { grid-template-columns: 1fr; }
+}

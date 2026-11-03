@@ -1,0 +1,474 @@
+@import './variables.css';
+/* Fonts load once via <link> in index.html — no CSS @import duplication. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  color-scheme: dark;
+}
+
+/* Two-tier typography: html/body/#root carry the UI font (Inter) for all
+   product text; technical data — IDs, measurements, readouts — renders with
+   the tech tier (IBM Plex Mono) so numbers read as instrument output.
+   Distinction is CONTENT TYPE, never page type. */
+html,
+body,
+#root {
+  font-family: var(--font-ui);
+}
+
+/* Technical tier: genuinely technical content only (IDs, measurements,
+   readouts) — never whole paragraphs or normal interface copy. */
+.mono,
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-tech);
+  letter-spacing: 0.01em;
+}
+
+/* Browser-native controls do not inherit body typography by default —
+   every control must explicitly follow the product font. */
+button,
+input,
+textarea,
+select,
+option,
+optgroup {
+  font-family: inherit;
+}
+
+[data-theme="light"] body {
+  color-scheme: light;
+}
+
+#root { min-height: 100vh; }
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+p { color: var(--color-text-secondary); }
+
+a { color: inherit; text-decoration: none; }
+
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+img { max-width: 100%; display: block; }
+
+.container {
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding-left: var(--container-pad);
+  padding-right: var(--container-pad);
+}
+
+.section {
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.hero,
+.problem,
+.how,
+.features,
+.showcase,
+.usecases,
+.trust,
+.copilot,
+.testimonials,
+.faq,
+.final-cta {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* ===== Section backgrounds — dark theme ===== */
+.hero {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(255, 122, 24, 0.16), transparent 22%),
+    linear-gradient(180deg, #0d1315 0%, #121a1d 45%, #151d22 100%);
+}
+
+.problem {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(57, 194, 127, 0.12), transparent 25%),
+    linear-gradient(180deg, #121a1d 0%, #171f23 48%, var(--color-bg) 100%);
+}
+
+.how {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(96, 128, 255, 0.12), transparent 26%),
+    linear-gradient(180deg, #171f23 0%, #1b252a 45%, #12191d 100%);
+}
+
+.features {
+  background:
+    radial-gradient(circle at 70% 16%, rgba(255, 122, 24, 0.14), transparent 24%),
+    linear-gradient(180deg, #1a2327 0%, #1f2a2d 50%, #171d20 100%);
+}
+
+.showcase {
+  background:
+    radial-gradient(circle at 12% 15%, rgba(255, 122, 24, 0.1), transparent 18%),
+    linear-gradient(180deg, #11181b 0%, #1b262b 46%, #121b1f 100%);
+}
+
+.usecases {
+  background:
+    radial-gradient(circle at 75% 20%, rgba(59, 165, 255, 0.12), transparent 20%),
+    linear-gradient(180deg, #141d1f 0%, #1a262d 44%, #11171a 100%);
+}
+
+.why {
+  background:
+    radial-gradient(circle at 50% 8%, rgba(255, 122, 24, 0.12), transparent 24%),
+    linear-gradient(180deg, #111719 0%, #172228 40%, var(--color-bg) 100%);
+}
+
+.trust {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(255, 122, 24, 0.14), transparent 22%),
+    linear-gradient(180deg, #1a2227 0%, #202b30 42%, #141b1f 100%);
+}
+
+.copilot {
+  background:
+    radial-gradient(circle at 65% 12%, rgba(57, 194, 127, 0.11), transparent 20%),
+    linear-gradient(180deg, #171d20 0%, #1c282d 46%, #121a1e 100%);
+}
+
+.testimonials {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(255, 122, 24, 0.10), transparent 22%),
+    linear-gradient(180deg, #131a1d 0%, #1c2529 48%, #11191d 100%);
+}
+
+.faq {
+  background:
+    radial-gradient(circle at 70% 14%, rgba(96, 128, 255, 0.10), transparent 18%),
+    linear-gradient(180deg, #121a1d 0%, #172126 38%, var(--color-bg) 100%);
+}
+
+.final-cta {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(255, 122, 24, 0.18), transparent 24%),
+    linear-gradient(180deg, #1a2428 0%, #151d21 44%, var(--color-bg) 100%);
+}
+
+/* ===== Section backgrounds — light theme (audit tokens follow surfaces) ===== */
+[data-theme="light"] .hero {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(232, 93, 0, 0.08), transparent 22%),
+    linear-gradient(180deg, #FFFFFF 0%, #FAFBFB 60%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .problem {
+  background:
+    radial-gradient(circle at 80% 18%, rgba(30, 158, 90, 0.07), transparent 25%),
+    linear-gradient(180deg, #FAFBFB 0%, #F2F5F5 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .how {
+  background:
+    radial-gradient(circle at 30% 20%, rgba(96, 128, 255, 0.07), transparent 26%),
+    linear-gradient(180deg, #F2F5F6 0%, #EEF2F4 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .features {
+  background:
+    radial-gradient(circle at 70% 16%, rgba(232, 93, 0, 0.07), transparent 24%),
+    linear-gradient(180deg, #FAF7F3 0%, #F7F4F0 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .showcase {
+  background:
+    radial-gradient(circle at 12% 15%, rgba(232, 93, 0, 0.06), transparent 18%),
+    linear-gradient(180deg, #FFFFFF 0%, #F7F9F9 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .usecases {
+  background:
+    radial-gradient(circle at 75% 20%, rgba(59, 165, 255, 0.07), transparent 20%),
+    linear-gradient(180deg, #F3F7F8 0%, #EFF4F6 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .trust {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(232, 93, 0, 0.07), transparent 22%),
+    linear-gradient(180deg, #FBF6F2 0%, #F8F3EF 45%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .copilot {
+  background:
+    radial-gradient(circle at 65% 12%, rgba(30, 158, 90, 0.06), transparent 20%),
+    linear-gradient(180deg, #F2F7F5 0%, #EFF5F3 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .testimonials {
+  background:
+    radial-gradient(circle at 30% 18%, rgba(232, 93, 0, 0.05), transparent 22%),
+    linear-gradient(180deg, #FBFAF9 0%, #F7F6F5 50%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .faq {
+  background:
+    radial-gradient(circle at 70% 14%, rgba(96, 128, 255, 0.06), transparent 18%),
+    linear-gradient(180deg, #F4F7F9 0%, #F1F4F6 40%, #F5F6F7 100%);
+}
+
+[data-theme="light"] .final-cta {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(232, 93, 0, 0.1), transparent 24%),
+    linear-gradient(180deg, #FDF4EC 0%, #FAF1E9 45%, #F5F6F7 100%);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-oswald);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-sm);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--color-primary);
+  border-radius: 1px;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+.section-heading {
+  font-size: var(--fs-h2);
+  max-width: 620px;
+  /* ink (theme-aware, was hardcoded #FFFFFF — invisible on light surfaces
+     for any heading that doesn't use word spans) → brand accent */
+  background: linear-gradient(135deg, var(--heading-ink) 0%, var(--heading-ink) 45%, var(--color-primary) 55%, var(--color-primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.2;
+}
+
+/* Whole-word coloring: each .heading-word span carries its own SOLID
+   background, so the color always breaks between words — never mid-glyph
+   (usability audit issue 14). The h2's own gradient above only serves
+   unwrapped headings as a fallback and is hidden behind the spans. */
+.section-heading .heading-word {
+  background: var(--heading-ink);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-heading .heading-word--accent {
+  background: var(--color-primary);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-sub {
+  font-size: var(--fs-body-lg);
+  max-width: 560px;
+  margin-top: var(--space-sm);
+}
+
+/* Light theme: body copy inside a gradient-clipped .section-heading needs a
+   solid fill — the gradient's former white zone rendered invisible on light
+   surfaces (only the orange tail of each sentence was readable). */
+[data-theme="light"] .section-heading p {
+  -webkit-text-fill-color: var(--color-text-secondary);
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #FFFFFF;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
+::-webkit-scrollbar-thumb { background: var(--color-elevated); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
+
+/* ======================================================================
+   PRINT / PDF — when a report is printed, ONLY the report comes out.
+   The report pages render inside the dashboard layout, so the sidebar,
+   top bars and Copilot chrome would otherwise appear in the printout.
+   Any page that contains a .technical-report (ReportPreview) or a
+   .report-print-root is treated as a print-document page.
+   ====================================================================== */
+@media print {
+  @page {
+    size: Letter;
+    margin: 14mm;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* kill absolutely everything except the report article itself */
+  body:has(.technical-report) > #root,
+  body:has(.technical-report) * {
+    visibility: hidden;
+  }
+
+  .technical-report,
+  .technical-report * {
+    visibility: visible !important;
+  }
+
+  .technical-report {
+    position: absolute !important;
+    inset: 0 auto auto 0;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  /* belt-and-braces: hide known chrome explicitly (engines without :has) */
+  .app-chrome,
+  .nodiq-sidebar,
+  .sidebar,
+  .topbar,
+  .report-topbar,
+  .report-share-banner,
+  .copilot-page,
+  .rc-page {
+    display: none !important;
+  }
+
+  .dashboard-layout {
+    display: block !important;
+    min-height: 0 !important;
+  }
+
+  .dashboard-layout-shell {
+    margin-left: 0 !important;
+    width: 100% !important;
+  }
+
+  .dashboard-layout-content {
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  /* scroll containers must expand, not clip */
+  .report-preview-app,
+  .report-preview-canvas {
+    height: auto !important;
+    overflow: visible !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    display: block !important;
+  }
+}
+
+/* ---- rich-text tables & rules (Copilot + report AI sections) ---- */
+.rich-table-wrap {
+  margin: 4px 0 14px;
+  overflow-x: auto;
+}
+
+.rich-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.rich-table th,
+.rich-table td {
+  padding: 7px 12px;
+  border: 1px solid var(--nodiq-border-subtle, var(--color-border, #ddd));
+  text-align: left;
+  vertical-align: top;
+}
+
+.rich-table thead th {
+  font-family: var(--font-mono, monospace);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: var(--nodiq-surface-elevated, var(--color-bg, #f5f5f5));
+  color: var(--nodiq-text-secondary, var(--color-text-secondary, #555));
+  white-space: nowrap;
+}
+
+.rich-table tbody tr:nth-child(even) {
+  background: var(--nodiq-surface-elevated, rgba(0, 0, 0, 0.02));
+}
+
+.rich-table tbody tr:hover {
+  background: var(--nodiq-border-subtle, rgba(0, 0, 0, 0.05));
+}
+
+.rich-table code {
+  white-space: nowrap;
+}
+
+.rich-hr {
+  border: none;
+  border-top: 1px solid var(--nodiq-border-subtle, var(--color-border, #ddd));
+  margin: 14px 0;
+}
+
+/* markdown headings inside AI answers / report bodies (demoted to h4–h6) */
+.rich-heading {
+  margin: 14px 0 6px;
+  font-family: var(--font-ui, inherit);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--color-text);
+}
+
+.rich-heading:first-child {
+  margin-top: 0;
+}

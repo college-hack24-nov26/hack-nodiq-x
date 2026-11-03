@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NODIQ-X Camera Agent — Phase 1 Report</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #141b22; --border: #252e33;
+    --text: #e6edf3; --muted: #8b949e; --accent: #22d3ee;
+    --ok: #3fb950; --warn: #d29922; --err: #f85149;
+    --mono: "Cascadia Code", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 14px/1.55 "Segoe UI", system-ui, sans-serif; padding: 32px 20px 64px;
+  }
+  .wrap { max-width: 940px; margin: 0 auto; }
+  header { border-left: 4px solid var(--accent); padding-left: 16px; margin-bottom: 28px; }
+  .eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 2px; color: var(--muted); }
+  h1 { margin: 6px 0 4px; font-size: 28px; font-weight: 600; }
+  .sub { color: var(--muted); font-size: 13px; }
+  section {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 18px;
+  }
+  h2 { font-size: 13px; letter-spacing: 1.5px; color: var(--accent);
+       text-transform: uppercase; margin: 0 0 12px; font-family: var(--mono); }
+  table { width: 100%; border-collapse: collapse; }
+  td { padding: 7px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  td.k { color: var(--muted); width: 34%; }
+  td.v { font-family: var(--mono); font-size: 13px; }
+  code, pre { font-family: var(--mono); font-size: 12.5px; }
+  code { background: #1c242d; padding: 2px 6px; border-radius: 4px; }
+  pre {
+    background: #0a0e13; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; overflow-x: auto; color: #c9d1d9; margin: 8px 0 0;
+  }
+  .badge { display: inline-block; font-family: var(--mono); font-size: 11px;
+           padding: 2px 10px; border-radius: 999px; font-weight: 600; }
+  .ok   { background: rgba(63,185,80,.15);  color: var(--ok);  border: 1px solid rgba(63,185,80,.4); }
+  .warn { background: rgba(210,153,34,.15); color: var(--warn); border: 1px solid rgba(210,153,34,.4); }
+  .flow { font-family: var(--mono); font-size: 12.5px; color: var(--muted);
+          text-align: center; padding: 10px 0 2px; }
+  .flow b { color: var(--accent); font-weight: 600; }
+  .imgbox { text-align: center; margin-top: 12px; }
+  .imgbox img {
+    max-width: 100%; border: 1px solid var(--border); border-radius: 8px;
+    background: #000; image-rendering: pixelated;
+  }
+  .cap { color: var(--muted); font-size: 12px; margin-top: 8px; }
+  .note { border-left: 3px solid var(--warn); background: rgba(210,153,34,.07);
+          padding: 10px 14px; border-radius: 0 8px 8px 0; margin-top: 10px; font-size: 13px; }
+  ul { margin: 8px 0 0; padding-left: 20px; }
+  li { margin: 4px 0; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">NODIQ-X / CAMERA AGENT</div>
+  <h1>Phase 1 Report — MATRIX VISION Camera Connection</h1>
+  <div class="sub">Scope: Python → mvIMPACT Acquire → camera → capture → test_capture.png.
+  No NODIQ-X website or analysis code was touched.</div>
+</header>
+
+<section>
+  <h2>SDK &amp; Environment (verified on this machine)</h2>
+  <table>
+    <tr><td class="k">Impact Acquire SDK</td><td class="v">3.7.2.4495 — installed, root at <code>D:\</code> (env <code>MVIMPACT_ACQUIRE_DIR=D:\</code>)</td></tr>
+    <tr><td class="k">Official Python API</td><td class="v"><code>from mvIMPACT import acquire</code> <span class="badge ok">VERIFIED</span></td></tr>
+    <tr><td class="k">Binding</td><td class="v">compiled from local SWIG source (<code>D:\LanguageBindings\Python</code>) → <code>ImpactAcquire-3.7.2.4495-cp311-win_amd64.whl</code> → user site-packages</td></tr>
+    <tr><td class="k">Python</td><td class="v">3.11.8 (per-user install)</td></tr>
+    <tr><td class="k">Camera driver</td><td class="v"><code>mvBlueFOX.dll</code> 3.7.2 (System32) · PnP device Status <span class="badge ok">OK</span></td></tr>
+  </table>
+  <div class="note"><b>Note:</b> <code>import mvIMPACT</code> alone does not work, and there is no PyPI
+  wheel — the binding must be built from the SDK as documented by Balluff. Exact steps are in
+  <code>nodiq-camera-agent/README.md</code>.</div>
+</section>
+
+<section>
+  <h2>Camera Detection (Phase 1B — live enumeration)</h2>
+  <table>
+    <tr><td class="k">Camera detected</td><td class="v"><span class="badge ok">YES</span></td></tr>
+    <tr><td class="k">Model</td><td class="v">mvBlueFOX-ML/IGC205C</td></tr>
+    <tr><td class="k">Manufacturer</td><td class="v">MATRIX VISION <span style="color:var(--muted)">(reported after open; Balluff GmbH is the current owner)</span></td></tr>
+    <tr><td class="k">Device ID</td><td class="v">0</td></tr>
+    <tr><td class="k">Serial</td><td class="v">29605128</td></tr>
+    <tr><td class="k">Device family / state</td><td class="v">mvBlueFOX · "Present" · free (not in use)</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Single Capture (Phase 1C) &amp; Validation (Phase 1D)</h2>
+  <table>
+    <tr><td class="k">Capture result</td><td class="v"><span class="badge ok">SUCCESS</span></td></tr>
+    <tr><td class="k">Resolution (read from frame)</td><td class="v">2592 × 1944</td></tr>
+    <tr><td class="k">Pixel format</td><td class="v">RGBx888Packed — 3 channels @ 8 bit (4-byte pixels handled)</td></tr>
+    <tr><td class="k">Exposure / Gain used</td><td class="v">20000 µs / 0 dB (firmware defaults — no overrides set)</td></tr>
+    <tr><td class="k">Output file</td><td class="v">nodiq-camera-agent/test_capture.png (2,212,072 bytes, lossless PNG)</td></tr>
+    <tr><td class="k">Opens in OpenCV</td><td class="v">yes — (1944, 2592, 3) uint8</td></tr>
+    <tr><td class="k">Opens in Pillow</td><td class="v">yes — (2592, 1944) RGB</td></tr>
+    <tr><td class="k">Mean / Min / Max intensity</td><td class="v">≈ 1.5–4.3 / 0 / 73–75 (varies per frame)</td></tr>
+    <tr><td class="k">Image validation</td><td class="v"><span class="badge warn">WARN — nearly black frame</span></td></tr>
+  </table>
+  <div class="note"><b>Expected, honest outcome:</b> the captured frame is almost black — the lens is
+  capped or the microscope illumination is off. The agent reports
+  <i>"frame is nearly black — no usable micrograph signal; remove the lens cap / switch on the
+  microscope illumination"</i>, still saves the PNG for inspection, and exits with code 2
+  (capture OK, validation WARN). With the lens uncovered and light on, re-running
+  <code>python camera_agent.py</code> should yield a normal exposure and a clean PASS.</div>
+  <div class="imgbox">
+    <img src="test_capture.png" alt="Captured frame (currently nearly dark)" width="620">
+    <div class="cap">test_capture.png — live capture from the mvBlueFOX-ML/IGC205C (dark: lens cap / illumination off)</div>
+  </div>
+</section>
+
+<section>
+  <h2>Pipeline (Phase 1 scope only)</h2>
+  <div class="flow">Python → <b>mvIMPACT Acquire 3.7.2</b> → <b>mvBlueFOX-ML/IGC205C</b> → capture → <b>test_capture.png</b></div>
+  <div class="flow" style="color:var(--muted)">No web API · no /status /preview /capture endpoints · no CSP change · no website connection (Phase 2)</div>
+</section>
+
+<section>
+  <h2>Commands Used</h2>
+  <pre># one-time binding build (official method, no admin needed)
+cd /d "D:\LanguageBindings\Python"
+set MVIMPACT_ACQUIRE_DIR=D:\
+python -m build --no-isolation
+pip install --user dist\ImpactAcquire-3.7.2.4495-cp311-cp311-win_amd64.whl
+
+# Phase 1 runs
+cd /d "D:\hackathons\hi\nodiq-camera-agent"
+python camera_agent.py --list     :: enumeration  → exit 0, camera matched
+python camera_agent.py            :: capture      → exit 2 (saved + WARN: dark frame)
+python camera_agent.py --out X.png :: custom output path</pre>
+</section>
+
+<section>
+  <h2>Files Created (isolated — nothing else modified)</h2>
+  <table>
+    <tr><td class="k">nodiq-camera-agent/camera.py</td><td class="v">SDK layer: enumeration, safe open, single-frame capture → numpy</td></tr>
+    <tr><td class="k">nodiq-camera-agent/camera_agent.py</td><td class="v">CLI: list / capture / validate / save + typed errors</td></tr>
+    <tr><td class="k">nodiq-camera-agent/config.py</td><td class="v">device matching, timeout, validation thresholds</td></tr>
+    <tr><td class="k">nodiq-camera-agent/requirements.txt</td><td class="v">numpy + opencv (binding comes from the local SDK build)</td></tr>
+    <tr><td class="k">nodiq-camera-agent/README.md</td><td class="v">setup, usage, exit codes, operational notes</td></tr>
+    <tr><td class="k">nodiq-camera-agent/test_capture.png</td><td class="v">the captured frame (2592×1944)</td></tr>
+  </table>
+  <ul>
+    <li>NODIQ-X analysis pipeline: <b>untouched</b> (nodularity_pipeline.py, analysis_child.py, analyze_with_recovery.py, Nodularity-main)</li>
+    <li>Upload workflow &amp; frontend: <b>untouched</b></li>
+    <li>Exit codes: 0 OK · 2 saved+WARN · 3 SDK missing · 4 no camera · 5 open failed (busy) · 6 capture/write failed</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Operational Notes &amp; Next Step</h2>
+  <ul>
+    <li>Close <b>ImpactControlCenter / wxPropView</b> before capturing — the mvBlueFOX is
+        single-client; the agent then fails gracefully with a clear message if the device is busy
+        (verified logic; no traceback).</li>
+    <li>Acquisition timeout is bounded at 10 s; the driver buffers are always unlocked after copy.</li>
+    <li><b>Next physical step:</b> remove the lens cap / turn on the microscope illumination and re-run
+        <code>python camera_agent.py</code> for a full-intensity PASS capture.</li>
+    <li><b>Phase 2 (not started, by design):</b> localhost HTTP agent API + website "Capture from
+        Microscope" button feeding the existing <code>runOnFile()</code> funnel, plus the single CSP
+        <code>connect-src</code> addition identified in the Phase 0 audit.</li>
+  </ul>
+</section>
+
+</div>
+</body>
+</html>
