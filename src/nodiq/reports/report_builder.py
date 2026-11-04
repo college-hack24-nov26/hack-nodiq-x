@@ -1040,6 +1040,101 @@ def _render_pdf_mechanical_and_verification(pdf, report, title_prefix=""):
         pass
 
 
+def _render_evidence_images(pdf, evidence, items, heading, missing_note):
+    """Render evidence images in page-safe two-column rows."""
+    import io
+
+    prepared = []
+    failures = []
+    for key, title, aliases in items:
+        image_bytes = evidence.get(key)
+        if not image_bytes:
+            image_bytes = next(
+                (evidence.get(alias) for alias in aliases
+                 if evidence.get(alias)),
+                None,
+            )
+        if not image_bytes:
+            continue
+        try:
+            from PIL import Image
+
+            with Image.open(io.BytesIO(image_bytes)) as image:
+                image.load()
+                image.thumbnail((1400, 1400))
+                image = image.convert("RGB")
+                buffer = io.BytesIO()
+                image.save(buffer, format="JPEG", quality=88)
+                prepared.append((title, buffer.getvalue(), image.size))
+        except (ImportError, OSError, TypeError, ValueError):
+            failures.append(title)
+
+    if not prepared:
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(0, 8, pdf_safe_text(heading))
+        pdf.set_font("Helvetica", "", 9)
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(0, 5.5, pdf_safe_text(missing_note))
+    else:
+        available_width = pdf.w - pdf.l_margin - pdf.r_margin
+        column_width = (available_width - 8) / 2
+        caption_height = 7
+        max_image_height = (
+            pdf.page_break_trigger - pdf.t_margin - caption_height - 8
+        )
+        rows = [prepared[i:i + 2] for i in range(0, len(prepared), 2)]
+
+        # Keep the section heading with its first image row when possible.
+        first_row_height = max(
+            column_width * height / width
+            for _, _, (width, height) in rows[0]
+        )
+        if pdf.get_y() + 8 + first_row_height + caption_height > pdf.page_break_trigger:
+            pdf.add_page()
+
+        pdf.set_font("Helvetica", "B", 12)
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(0, 8, pdf_safe_text(heading))
+
+        for row in rows:
+            row_height = max(
+                column_width * height / width
+                for _, _, (width, height) in row
+            )
+            scale = min(1.0, max_image_height / row_height)
+            row_height *= scale
+            if pdf.get_y() + row_height + caption_height > pdf.page_break_trigger:
+                pdf.add_page()
+            row_y = pdf.get_y()
+
+            for column, (title, image_bytes, (width, height)) in enumerate(row):
+                image_width = column_width * scale
+                image_height = image_width * height / width
+                x = pdf.l_margin + column * (column_width + 8)
+                pdf.image(
+                    io.BytesIO(image_bytes),
+                    x=x,
+                    y=row_y,
+                    w=image_width,
+                    h=image_height,
+                )
+                pdf.set_xy(x, row_y + image_height + 2)
+                pdf.set_font("Helvetica", "", 9)
+                pdf.cell(image_width, 5, pdf_safe_text(title))
+
+            pdf.set_y(row_y + row_height + caption_height)
+
+    if failures:
+        pdf.set_font("Helvetica", "", 9)
+        pdf.set_x(pdf.l_margin)
+        pdf.multi_cell(
+            0, 5.5,
+            pdf_safe_text("Evidence images could not be embedded: "
+                          + ", ".join(failures) + "."),
+        )
+
+
 def _steel_pdf(report):
     """Render the steel grain-size report as PDF (fpdf2)."""
     try:
@@ -1206,60 +1301,19 @@ def _steel_pdf(report):
         block("8. Pipeline Comparison", cmp_lines)
 
     # 9. Evidence Micrographs & Grain-Boundary Maps
-    evid = report.get("_evidence_images") or {}
-    pdf.ln(2)
-    pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, pdf_safe_text("9. Evidence Micrographs (Original Micrograph / Segmentation Mask / Overlay)"),
-             new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Helvetica", "", 9)
-    _img_width = (pdf.w - pdf.l_margin - pdf.r_margin - 8) / 2
-    _placed = 0
-    _items = [
-        ("original", "Original Steel Micrograph"),
-        ("mask", "Grain-Boundary Segmentation Mask"),
-        ("overlay", "ASTM E112 Intercept / Detection Overlay"),
-    ]
-    for _key, _title in _items:
-        _bytes = evid.get(_key)
-        if not _bytes:
-            if _key == "mask":
-                _bytes = evid.get("gsat_mask") or evid.get("astm_mask")
-            elif _key == "overlay":
-                _bytes = evid.get("gsat_intercept") or evid.get("gsat_overlay") or evid.get("astm_overlay")
-        if not _bytes:
-            continue
-        try:
-            import io as _io
-            from PIL import Image as _PILImage
-            _im = _PILImage.open(_io.BytesIO(_bytes))
-            _cap = 1400
-            if max(_im.size) > _cap:
-                _im.thumbnail((_cap, _cap))
-            _w_px, _h_px = _im.size
-            _aspect = _h_px / float(_w_px or 1)
-            _h = _img_width * _aspect
-            _buf = _io.BytesIO()
-            _im.convert("RGB").save(_buf, format="JPEG", quality=88)
-            _buf.seek(0)
-            if pdf.get_y() + _h + 12 > 275:
-                pdf.add_page()
-            _y0 = pdf.get_y()
-            _x0 = pdf.l_margin if _placed % 2 == 0 else pdf.l_margin + _img_width + 8
-            pdf.image(_buf, x=_x0, y=_y0, w=_img_width, h=_h)
-            pdf.set_xy(_x0, _y0 + _h + 1)
-            pdf.cell(_img_width, 5.5, pdf_safe_text(f"{_placed + 1}. {_title}"))
-            if _placed % 2 == 1:
-                pdf.set_y(_y0 + _h + 8)
-            _placed += 1
-        except Exception:
-            continue
-    if not _placed:
-        mcell("- Micrograph visual evidence is not embedded in this document copy.")
-    elif _placed % 2 == 1:
-        pdf.set_y(_y0 + _h + 8)
-        pdf.ln(2)
-    else:
-        pdf.ln(2)
+    _render_evidence_images(
+        pdf,
+        report.get("_evidence_images") or {},
+        [
+            ("original", "1. Original Steel Micrograph", ()),
+            ("mask", "2. Grain-Boundary Segmentation Mask",
+             ("gsat_mask", "astm_mask")),
+            ("overlay", "3. ASTM E112 Intercept / Detection Overlay",
+             ("gsat_intercept", "gsat_overlay", "astm_overlay")),
+        ],
+        "9. Evidence Micrographs (Original Micrograph / Segmentation Mask / Overlay)",
+        "Micrograph visual evidence is not embedded in this document copy.",
+    )
 
     # 10. Segmentation Artifacts
     artifacts = report.get("artifacts") or []
@@ -1626,56 +1680,21 @@ def _gray_cast_iron_pdf(report):
     ]
     block("8. Experimental Metallurgical Interpretations", exp_lines)
 
-    # Segmentation Artifacts — embed the ACTUAL original micrograph, binary
-    # graphite mask and color overlay so the PDF is self-contained evidence.
-    evid = report.get("_evidence_images") or {}
-    pdf.ln(2)
-    pdf.set_font("Helvetica", "B", 12)
-    pdf.cell(0, 8, pdf_safe_text("Evidence Micrographs (Original / Mask / Overlay / Contours)"),
-             new_x="LMARGIN", new_y="NEXT")
-    pdf.set_font("Helvetica", "", 9)
-    _img_width = (pdf.w - pdf.l_margin - pdf.r_margin - 8) / 2
-    _placed = 0
-    for _kind, _title in (("original", "1. Original Micrograph"),
-                          ("flake_mask", "2. Binary Segmentation Mask"),
-                          ("flake_overlay", "3. Segmentation Overlay"),
-                          ("flake_contour", "4. Contour Boundaries")):
-        _bytes = evid.get(_kind)
-        if not _bytes:
-            continue
-        try:
-            import io as _io
-            from PIL import Image as _PILImage
-            _im = _PILImage.open(_io.BytesIO(_bytes))
-            _cap = 1400
-            if max(_im.size) > _cap:
-                _im.thumbnail((_cap, _cap))
-            _w_px, _h_px = _im.size
-            _aspect = _h_px / float(_w_px or 1)
-            _h = _img_width * _aspect
-            _buf = _io.BytesIO()
-            _im.convert("RGB").save(_buf, format="JPEG", quality=88)
-            _buf.seek(0)
-            if pdf.get_y() + _h + 12 > 275:
-                pdf.add_page()
-            _y0 = pdf.get_y()
-            _x0 = pdf.l_margin if _placed % 2 == 0 else pdf.l_margin + _img_width + 8
-            pdf.image(_buf, x=_x0, y=_y0, w=_img_width, h=_h)
-            pdf.set_xy(_x0, _y0 + _h + 1)
-            pdf.cell(_img_width, 5.5, pdf_safe_text(_title))
-            if _placed % 2 == 1:
-                pdf.set_y(_y0 + _h + 8)
-            _placed += 1
-        except Exception:
-            continue
-    if not _placed:
-        mcell("- Evidence micrographs are not stored for this analysis "
-              "(artifacts expired or persistent storage unavailable).")
-    elif _placed % 2 == 1:
-        pdf.set_y(_y0 + _h + 8)
-        pdf.ln(2)
-    else:
-        pdf.ln(2)
+    # Segmentation Artifacts — embed the original image, mask, overlay and
+    # contours so this PDF remains self-contained evidence.
+    _render_evidence_images(
+        pdf,
+        report.get("_evidence_images") or {},
+        [
+            ("original", "1. Original Micrograph", ()),
+            ("flake_mask", "2. Binary Segmentation Mask", ()),
+            ("flake_overlay", "3. Segmentation Overlay", ()),
+            ("flake_contour", "4. Contour Boundaries", ()),
+        ],
+        "Evidence Micrographs (Original / Mask / Overlay / Contours)",
+        "Evidence micrographs are not stored for this analysis "
+        "(artifacts expired or persistent storage unavailable).",
+    )
 
     artifacts = report.get("artifacts") or []
     art_lines = [f"{a.get('kind')} — {a.get('label')}" for a in artifacts]

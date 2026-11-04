@@ -19,8 +19,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-import report_builder as rb
-from services.morphology import classify_graphite_forms
+from nodiq.reports import report_builder as rb
+from nodiq.services.morphology import classify_graphite_forms
 
 cv2 = pytest.importorskip("cv2")
 np = pytest.importorskip("numpy")
@@ -44,12 +44,12 @@ def _synthetic_image():
 
 @pytest.fixture(scope="module")
 def engine():
-    from nodularity_pipeline import analyze_image
+    from nodiq.pipelines.nodularity_pipeline import analyze_image
     return analyze_image(_synthetic_image())
 
 
 def _erows(engine):
-    from services.nodule_data import enrich_rows
+    from nodiq.services.nodule_data import enrich_rows
     return enrich_rows(engine["rows"], engine["contours"])
 
 
@@ -97,7 +97,7 @@ def test_marumi_matches_hull_diameter_formula(engine):
     """marumi = area / (pi * r_hull^2), r_hull = half of the hull's largest
     point-pair distance (legacy get_graphite_length)."""
     for row, cnt in zip(engine["rows"], engine["contours"]):
-        from nodularity_pipeline import max_half_length
+        from nodiq.pipelines.nodularity_pipeline import max_half_length
         r = max_half_length(cnt)
         expected = cv2.contourArea(cnt) / ((r ** 2) * math.pi)
         assert row["roundness"] == pytest.approx(expected, abs=1e-3)
@@ -109,7 +109,7 @@ def test_marumi_matches_iso945_4_roundness_definition(engine):
     The hull max-distance pair IS the maximum Feret diameter, so
     marumi must equal 4A / (pi * l_m^2) for every particle."""
     for row, cnt in zip(engine["rows"], engine["contours"]):
-        from nodularity_pipeline import max_half_length
+        from nodiq.pipelines.nodularity_pipeline import max_half_length
         l_m = 2 * max_half_length(cnt)          # diameter, not radius
         expected = 4 * cv2.contourArea(cnt) / (math.pi * l_m ** 2)
         assert row["roundness"] == pytest.approx(expected, abs=1e-3)
@@ -119,7 +119,7 @@ def test_spheroidal_threshold_is_iso945_4_0_6():
     """ISO 945-4:2019 clause 3.3: spheroidal graphite = roundness >= 0.6.
     Synthetic ellipses with area/circumscribed-circle ratios on either
     side of 0.6 must classify accordingly (marumi = b/a for an ellipse)."""
-    from nodularity_pipeline import analyze_image
+    from nodiq.pipelines.nodularity_pipeline import analyze_image
     img = np.full((1024, 1024), 255, np.uint8)
     cv2.ellipse(img, (250, 250), (90, 59), 0, 0, 360, 0, -1)   # b/a ~ 0.65
     cv2.ellipse(img, (700, 700), (90, 49), 0, 0, 360, 0, -1)   # b/a ~ 0.55
@@ -136,7 +136,7 @@ def test_jis_bucket_boundaries_match_jis_g5502_2022_convention():
     0.4<eta<=0.7, 0.7<eta<=0.8, 0.8<eta<=1 — i.e. UPPER-inclusive.
     The legacy jis_bucket (<=0.2 -> 1, <=0.4 -> 2, <=0.7 -> 3,
     <=0.8 -> 4, else 5) implements exactly that convention."""
-    from nodularity_pipeline import jis_bucket
+    from nodiq.pipelines.nodularity_pipeline import jis_bucket
     assert jis_bucket(0.2) == 1     # eta = 0.2 is NOT in class II
     assert jis_bucket(0.21) == 2
     assert jis_bucket(0.4) == 2     # upper edge inclusive
@@ -187,7 +187,7 @@ def test_border_particle_present_but_excluded_from_inframe(engine):
 def test_border_clipping_lowers_measured_roundness():
     """A circle clipped by the frame measures marumi < 1 (incomplete shape),
     which is exactly why in-frame exists as a separate metric."""
-    from nodularity_pipeline import analyze_image
+    from nodiq.pipelines.nodularity_pipeline import analyze_image
     img = np.full((1024, 1024), 255, np.uint8)
     cv2.circle(img, (5, 512), 60, 0, -1)     # half-clipped circle
     cv2.circle(img, (700, 512), 60, 0, -1)   # same circle, interior
@@ -335,7 +335,7 @@ def test_pdf_evidence_images_are_paginated_and_embedded():
 def test_report_carries_methodology_note():
     """Reports must distinguish implemented methodology from certified
     standards compliance (Phase 10 of the methodology audit)."""
-    import report_builder as rb
+    from nodiq.reports import report_builder as rb
     record = {"id": "ANL-M", "filename": "x.png", "iso_nodularity_pct": 80.0,
               "jis_nodularity_pct": 85.0, "nodule_count": 1,
               "source_width": 10, "source_height": 10,
