@@ -94,6 +94,24 @@ analysis algorithm exists.
 `reports_generate_v2()` → `report_builder.build_report_data()` (**real measured values**)
 → download via `GET /api/reports/<id>/download?format=pdf|csv|json` (`to_pdf`/`to_csv`/`to_json`).
 
+## 7.1 PDF Report Export & Verification
+
+The PDF export workflow generates structured analysis reports with relevant results and available evidence images.
+
+### Evidence Image Handling
+- Preserves image aspect ratios while rendering evidence images.
+- Prevents images from overflowing report page boundaries.
+- Handles missing or corrupt evidence images without interrupting report generation.
+- Provides warnings when evidence images cannot be rendered.
+
+### Export Formats
+- PDF: Structured analysis report.
+- CSV: Tabular analysis data.
+- JSON: Structured report data.
+
+### Verification
+PDF output should be checked for valid file signatures, proper document termination, evidence-image rendering, and graceful handling of invalid images.
+
 ## 8. AI Copilot
 
 `Copilot.jsx` → `POST /api/copilot` → `ai/agent.handle_turn()` with ~18 tools that read
