@@ -128,3 +128,6 @@ ownership isolation, rate limits, storage backends, and the validity gate. CI: `
 - [docs/JUDGE_FILE_GUIDE.md](docs/JUDGE_FILE_GUIDE.md) — file-by-file guide
 - [docs/JUDGE_ARCHITECTURE.md](docs/JUDGE_ARCHITECTURE.md) — simple architecture flows
 - [docs/JUDGE_VIVA_CHEAT_SHEET.md](docs/JUDGE_VIVA_CHEAT_SHEET.md) — Q&A + honesty rules
+
+Mermaid Diagram :
+<img width="3399" height="4351" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/5f264e1e-ebe6-4332-ae6b-67caf1ff5650" />
